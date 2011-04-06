@@ -1,0 +1,13 @@
+#Wed Apr 06 11:33:26 CEST 2011
+eclipse.preferences.version=1
+encoding//.settings/org.eclipse.xtend.shared.ui.prefs=UTF-8
+encoding//src/Model.xmi=UTF-8
+encoding//src/metamodel/Checks.chk=UTF-8
+encoding//src/metamodel/Extensions.ext=UTF-8
+encoding//src/metamodel/metamodel.ecore=UTF-8
+encoding//src/template/GeneratorExtensions.ext=UTF-8
+encoding//src/template/Template.xpt=UTF-8
+encoding//src/workflow/generator.mwe=UTF-8
+encoding//src/workflow/generatorWithBackend.mwe=UTF-8
+encoding//src/workflow/generatorWithProfiler.mwe=UTF-8
+encoding/<project>=UTF-8
