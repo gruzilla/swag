@@ -6,3 +6,6 @@
 *.exe
 *.o
 *.so
+
+# unneccessary directories
+modelDrivenSwag/bin
