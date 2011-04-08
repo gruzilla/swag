@@ -14,9 +14,18 @@
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
         eType="#//Feature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relations" upperBound="-1"
+        eType="#//Relation" containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Feature">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="type" eType="#//Type"/>
   </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="Relation" abstract="true">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="partner" eType="#//Entity"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ManyToOne" eSuperTypes="#//Relation"/>
 </ecore:EPackage>

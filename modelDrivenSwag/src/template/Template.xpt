@@ -8,14 +8,20 @@
 
 «DEFINE javaClass FOR Entity»
 	«FILE name+".java"»
+		import javax.persistence.*;
+		@Entity
 		public class «name» {
+		
+			}
 			«FOREACH features AS f»
 				private «f.type.name» «f.name»;
 				
+				@Column
 				public void «f.setter()»(«f.type.name» «f.name») {
 					this.«f.name» = «f.name»;
 				}
 				
+
 				public «f.type.name» «f.getter()»() {
 					return «f.name»;
 				}

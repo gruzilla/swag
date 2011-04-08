@@ -2,14 +2,18 @@
 <metamodel:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://www.example.org/metamodel" xsi:schemaLocation="http://www.example.org/metamodel metamodel/metamodel.ecore">
   <types xsi:type="metamodel:Datatype" name="String"/>
   <types xsi:type="metamodel:Datatype" name="Integer"/>
+  <types xsi:type="metamodel:Datatype" name="Long"/>
+  <types xsi:type="metamodel:Datatype" name="Float"/>
   <types xsi:type="metamodel:Entity" name="Person">
     <features name="name" type="//@types.0"/>
     <features name="age" type="//@types.1"/>
-    <features name="address" type="//@types.3"/>
+    <features name="address" type="//@types.5"/>
+   <!-- <featuresId name="id" generationType="GenerationType.TABLE" type="//@types.2"/> -->
   </types>
   <types xsi:type="metamodel:Entity" name="Address">
     <features name="street" type="//@types.0"/>
     <features name="zip" type="//@types.0"/>
     <features name="city" type="//@types.0"/>
+<!--    <featuresId name="id" generationType="GenerationType.TABLE" type="//@types.2"/>-->
   </types>
 </metamodel:Model>
