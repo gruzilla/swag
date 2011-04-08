@@ -16,6 +16,8 @@
         eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="relations" upperBound="-1"
         eType="#//Relation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featuresId" eType="#//idFeature"
+        containment="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="Feature">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="name" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
@@ -28,4 +30,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="ManyToOne" eSuperTypes="#//Relation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="idFeature" eSuperTypes="#//Feature">
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="generationType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
 </ecore:EPackage>

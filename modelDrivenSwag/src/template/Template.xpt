@@ -11,8 +11,14 @@
 		import javax.persistence.*;
 		@Entity
 		public class «name» {
-		
+			private «featuresId.type.name» «featuresId.name»;
+			
+			@Id
+			@GeneratedValue(strategy = «featuresId.generationType»)
+			public «featuresId.type.name» «featuresId.getter()»() {
+				return «featuresId.name»;
 			}
+		
 			«FOREACH features AS f»
 				private «f.type.name» «f.name»;
 				
@@ -21,10 +27,30 @@
 					this.«f.name» = «f.name»;
 				}
 				
-
+				
+				«FOREACH relations AS rel»
+					«IF rel.partner.name.toString() ==f.type.name.toString() »
+						@«rel.metaType.toString().split(":").last()»
+					«ENDIF»
+				«ENDFOREACH»
 				public «f.type.name» «f.getter()»() {
 					return «f.name»;
 				}
+			«ENDFOREACH»
+			«FOREACH relations AS rel»
+				«IF rel.owner == false»
+				
+				private «rel.partner.name» «rel.partner.name.toFirstLower()»;
+				
+				@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.partner.name.toFirstLower()»")
+				public «rel.partner.name» get«rel.partner.name»() {
+					return «rel.partner.name.toFirstLower()»;
+				}
+				
+				public void set«rel.partner.name» («rel.partner.name» var«rel.partner.name») {
+					«rel.partner.name.toFirstLower()» = var«rel.partner.name»;
+				}
+				«ENDIF»
 			«ENDFOREACH»
 		}
 	«ENDFILE»
