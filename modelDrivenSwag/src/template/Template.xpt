@@ -14,7 +14,9 @@
 		«EXPAND id»
 		«FOREACH features AS f»
 				private «f.type.name» «f.name»;	«ENDFOREACH»
-		«EXPAND gettersAndSetters»			
+		«EXPAND Relations::relationAttributes»
+		«EXPAND gettersAndSetters»		
+		«EXPAND Relations::createRelations»	
 		}
 	«ENDFILE»
 «ENDDEFINE»
@@ -35,12 +37,10 @@
 
 «DEFINE gettersAndSetters FOR Entity»
 	«FOREACH features AS f»	
-				@Column	
-				«EXPAND Relations::createRelations(f)»		
+				@Column
 				«EXPAND getters(f)»
 				«EXPAND setters(f)»
 			«ENDFOREACH»
-			«EXPAND Relations::createImpliedRelations»	
 «ENDDEFINE»
 
 «DEFINE getters(Feature f) FOR Entity»

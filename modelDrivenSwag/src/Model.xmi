@@ -7,7 +7,6 @@
   <types xsi:type="metamodel:Entity" name="Person">
     <features name="name" type="//@types.0"/>
     <features name="age" type="//@types.1"/>
-    <features name="address" type="//@types.5"/>
     <relations xsi:type="metamodel:OneToOne" partner="//@types.5" owner="true"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>

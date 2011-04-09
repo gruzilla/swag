@@ -18,6 +18,8 @@ public class Address {
 	private String zip;
 	private String city;
 
+	private Person person;
+
 	@Column
 	public String getStreet() {
 		return street;
@@ -45,7 +47,6 @@ public class Address {
 		this.city = city;
 	}
 
-	private Person person;
 	@OneToOne(mappedBy = "person")
 	public Person getPerson() {
 		return person;

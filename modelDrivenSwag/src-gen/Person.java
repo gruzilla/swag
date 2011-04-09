@@ -16,6 +16,7 @@ public class Person {
 
 	private String name;
 	private Integer age;
+
 	private Address address;
 
 	@Column
@@ -36,14 +37,13 @@ public class Person {
 		this.age = age;
 	}
 
-	@Column
 	@OneToOne
 	public Address getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address address) {
-		this.address = address;
+	public void setAddress(Address varAddress) {
+		address = varAddress;
 	}
 
 }

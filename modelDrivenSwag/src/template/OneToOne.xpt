@@ -2,11 +2,12 @@
 
 «EXTENSION template::GeneratorExtensions»
 
-«DEFINE OneToOneNotOwner(Relation rel) FOR Entity»
-
-	«IF rel.owner == false»
-		private «rel.partner.name» «rel.partner.name.toFirstLower()»;
-		@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.partner.name.toFirstLower()»")
+«DEFINE OneToOne(Relation rel) FOR Entity»
+		«IF rel.owner == false»
+			@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.partner.name.toFirstLower()»")
+		«ELSE»
+			@«rel.metaType.toString().split(":").last()»
+		«ENDIF»
 		public «rel.partner.name» get«rel.partner.name»() {
 		return «rel.partner.name.toFirstLower()»;
 		}
@@ -14,11 +15,4 @@
 		public void set«rel.partner.name» («rel.partner.name» var«rel.partner.name») {
 		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;
 		}
-	«ENDIF»
-«ENDDEFINE»
-
-«DEFINE OneToOneOwner(Relation rel, String typeName) FOR Entity»
-			«IF rel.partner.name.toString() == typeName.toString() »
-			@«rel.metaType.toString().split(":").last()»
-		«ENDIF»
 «ENDDEFINE»

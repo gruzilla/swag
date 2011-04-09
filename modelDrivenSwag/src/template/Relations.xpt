@@ -2,18 +2,15 @@
 
 «EXTENSION template::GeneratorExtensions»
 
-«DEFINE createRelations (Feature f) FOR Entity»
+«DEFINE relationAttributes FOR Entity»
 	«FOREACH relations AS rel»
-		«IF rel.metaType.name == OneToOne.name»
-			«EXPAND OneToOne::OneToOneOwner(rel,f.type.name)»
-		«ENDIF»
-	«ENDFOREACH»
+		private «rel.partner.name» «rel.partner.name.toFirstLower()»;«ENDFOREACH»
 «ENDDEFINE»
 
-«DEFINE createImpliedRelations FOR Entity»
+«DEFINE createRelations FOR Entity»
 	«FOREACH relations AS rel»
 		«IF rel.metaType.name == OneToOne.name»
-			«EXPAND OneToOne::OneToOneNotOwner(rel)»
+			«EXPAND OneToOne::OneToOne(rel)»
 		«ENDIF»
 	«ENDFOREACH»
 «ENDDEFINE»
