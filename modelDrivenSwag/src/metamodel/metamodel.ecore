@@ -26,6 +26,7 @@
   <eClassifiers xsi:type="ecore:EClass" name="Relation" abstract="true">
     <eStructuralFeatures xsi:type="ecore:EReference" name="partner" eType="#//Entity"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EAttribute" name="unidirectional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>

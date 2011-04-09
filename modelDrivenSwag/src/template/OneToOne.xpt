@@ -3,16 +3,21 @@
 «EXTENSION template::GeneratorExtensions»
 
 «DEFINE OneToOne(Relation rel) FOR Entity»
-		«IF rel.owner == false»
-			@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.partner.name.toFirstLower()»")
-		«ELSE»
+		«IF rel.owner == true»
 			@«rel.metaType.toString().split(":").last()»
-		«ENDIF»
-		public «rel.partner.name» get«rel.partner.name»() {
+			«EXPAND writeGettersAndSetters(rel)»
+		«ELSE»
+			«IF rel.unidirectional == false»
+				@«rel.metaType.toString().split(":").last()» (mappedBy = "«name.toFirstLower()»")
+				«EXPAND writeGettersAndSetters(rel)»
+			«ENDIF»
+		«ENDIF»«ENDDEFINE»
+
+«DEFINE writeGettersAndSetters(Relation rel) FOR Entity»
+public «rel.partner.name» get«rel.partner.name»() {
 		return «rel.partner.name.toFirstLower()»;
 		}
 				
 		public void set«rel.partner.name» («rel.partner.name» var«rel.partner.name») {
 		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;
-		}
-«ENDDEFINE»
+		}«ENDDEFINE»

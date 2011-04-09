@@ -4,13 +4,24 @@
 
 «DEFINE relationAttributes FOR Entity»
 	«FOREACH relations AS rel»
-		private «rel.partner.name» «rel.partner.name.toFirstLower()»;«ENDFOREACH»
+		«IF rel.owner == true || rel.unidirectional == false»
+			«IF rel.metaType.name == OneToMany.name»
+				private Set<«rel.partner.name»> «rel.partner.name.toFirstLower()»;
+			«ELSE»
+				private «rel.partner.name» «rel.partner.name.toFirstLower()»;
+			«ENDIF»
+		«ENDIF»
+	«ENDFOREACH»
 «ENDDEFINE»
 
 «DEFINE createRelations FOR Entity»
 	«FOREACH relations AS rel»
 		«IF rel.metaType.name == OneToOne.name»
 			«EXPAND OneToOne::OneToOne(rel)»
+		«ELSEIF rel.metaType.name == OneToMany.name»
+			«EXPAND OneToMany::OneToMany(rel)»
+		«ELSEIF rel.metaType.name == ManyToOne.name»
+			«EXPAND ManyToOne::ManyToOne(rel)»
 		«ENDIF»
 	«ENDFOREACH»
 «ENDDEFINE»
