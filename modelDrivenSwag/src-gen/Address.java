@@ -47,7 +47,7 @@ public class Address {
 		this.city = city;
 	}
 
-	@OneToOne(mappedBy = "address")
+	@ManyToOne
 	public Person getPerson() {
 		return person;
 	}

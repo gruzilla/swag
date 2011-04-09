@@ -7,14 +7,14 @@
   <types xsi:type="metamodel:Entity" name="Person">
     <features name="name" type="//@types.0"/>
     <features name="age" type="//@types.1"/>
-    <relations xsi:type="metamodel:OneToOne" partner="//@types.5" owner="true"/>
+    <relations xsi:type="metamodel:OneToMany" partner="//@types.5"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>
   <types xsi:type="metamodel:Entity" name="Address">
     <features name="street" type="//@types.0"/>
     <features name="zip" type="//@types.0"/>
     <features name="city" type="//@types.0"/>
-    <relations xsi:type="metamodel:OneToOne" partner="//@types.4"/>
+    <relations xsi:type="metamodel:ManyToOne" partner="//@types.4" owner="true"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>
 </metamodel:Model>

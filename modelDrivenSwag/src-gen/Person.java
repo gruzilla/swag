@@ -1,3 +1,5 @@
+import java.util.Set;
+
 import javax.persistence.*;
 @Entity
 public class Person {
@@ -17,7 +19,7 @@ public class Person {
 	private String name;
 	private Integer age;
 
-	private Address address;
+	private Set<Address> address;
 
 	@Column
 	public String getName() {
@@ -37,12 +39,12 @@ public class Person {
 		this.age = age;
 	}
 
-	@OneToOne
-	public Address getAddress() {
+	@OneToMany(mappedBy = "person")
+	public Set<Address> getAddress() {
 		return address;
 	}
 
-	public void setAddress(Address varAddress) {
+	public void setAddress(Set<Address> varAddress) {
 		address = varAddress;
 	}
 
