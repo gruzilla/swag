@@ -5,3 +5,6 @@ Model model(Type this) :
 	
 List[Entity] entities(Model this) :
 	types.typeSelect(Entity);
+	
+List[Relation] relations(Model this) :
+	types.typeSelect(Relation);

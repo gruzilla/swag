@@ -1,0 +1,19 @@
+«IMPORT metamodel»
+
+«EXTENSION template::GeneratorExtensions»
+
+«DEFINE createRelations (Feature f) FOR Entity»
+	«FOREACH relations AS rel»
+		«IF rel.metaType.name == OneToOne.name»
+			«EXPAND OneToOne::OneToOneOwner(rel,f.type.name)»
+		«ENDIF»
+	«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE createImpliedRelations FOR Entity»
+	«FOREACH relations AS rel»
+		«IF rel.metaType.name == OneToOne.name»
+			«EXPAND OneToOne::OneToOneNotOwner(rel)»
+		«ENDIF»
+	«ENDFOREACH»
+«ENDDEFINE»
