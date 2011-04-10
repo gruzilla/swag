@@ -5,19 +5,20 @@
 «DEFINE OneToOne(Relation rel) FOR Entity»
 		«IF rel.owner == true»
 			@«rel.metaType.toString().split(":").last()»
-			«EXPAND writeGettersAndSetters(rel)»
+			«EXPAND relationGetter(rel)»
+			«EXPAND relationSetter(rel)»
 		«ELSE»
 			«IF rel.unidirectional == false»
 				@«rel.metaType.toString().split(":").last()» (mappedBy = "«name.toFirstLower()»")
-				«EXPAND writeGettersAndSetters(rel)»
+				«EXPAND relationGetter(rel)»
+				«EXPAND relationSetter(rel)»
 			«ENDIF»
 		«ENDIF»«ENDDEFINE»
+		
+«DEFINE relationGetter(Relation rel) FOR Entity»
+	public «rel.partner.name» «rel.getter()»() {
+		return «rel.partner.name.toFirstLower()»;}«ENDDEFINE»
 
-«DEFINE writeGettersAndSetters(Relation rel) FOR Entity»
-public «rel.partner.name» get«rel.partner.name»() {
-		return «rel.partner.name.toFirstLower()»;
-		}
-				
-		public void set«rel.partner.name» («rel.partner.name» var«rel.partner.name») {
-		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;
-		}«ENDDEFINE»
+«DEFINE relationSetter(Relation rel) FOR Entity»
+public void «rel.setter()» («rel.partner.name» var«rel.partner.name») {
+		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;}«ENDDEFINE»

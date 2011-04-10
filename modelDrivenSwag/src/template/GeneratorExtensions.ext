@@ -8,3 +8,8 @@ getter(Feature this) :
 setter(Feature this) :
 	"set"+name.toFirstUpper();
 	
+getter(Relation this) :
+	"get"+partner.name.toFirstUpper();
+	
+setter(Relation this) :
+	"set"+partner.name.toFirstUpper();

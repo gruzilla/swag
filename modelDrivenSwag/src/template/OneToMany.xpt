@@ -4,13 +4,15 @@
 
 «DEFINE OneToMany(Relation rel) FOR Entity»
 	@«rel.metaType.toString().split(":").last()» (mappedBy = "«name.toFirstLower()»")
-	«EXPAND writeGettersAndSetters(rel)» «ENDDEFINE»
+	«EXPAND relationGetter(rel)» 
+	«EXPAND relationSetter(rel)» «ENDDEFINE»
 
-«DEFINE writeGettersAndSetters(Relation rel) FOR Entity»
+«DEFINE relationGetter(Relation rel) FOR Entity»
 	public Set<«rel.partner.name»> get«rel.partner.name»() {
 		return «rel.partner.name.toFirstLower()»;
-	}
-				
+	}«ENDDEFINE»
+
+«DEFINE relationSetter(Relation rel) FOR Entity»
 	public void set«rel.partner.name» (Set<«rel.partner.name»> var«rel.partner.name») {
 		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;
 	}«ENDDEFINE»

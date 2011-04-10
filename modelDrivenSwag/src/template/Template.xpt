@@ -1,13 +1,16 @@
 «IMPORT metamodel»
 
 «EXTENSION template::GeneratorExtensions»
+
+
 «DEFINE main FOR Model»
 «EXPAND javaClass FOREACH entities()»
 «ENDDEFINE»
 
-«DEFINE javaClass FOR Entity»
+«DEFINE javaClass FOR metamodel::Entity»
 	«FILE name+".java"»
 		import javax.persistence.*;
+		import java.util.Set;
 		@Entity
 		public class «name» {
 		
@@ -26,13 +29,8 @@
 			
 			@Id
 			@GeneratedValue(strategy = «featuresId.generationType»)
-			public «featuresId.type.name» «featuresId.getter()»() {
-				return «featuresId.name»;
-			}
-			
-			public void «featuresId.setter()»(«featuresId.type.name» «featuresId.name») {
-				this.«featuresId.name» = «featuresId.name»;
-			}
+			«EXPAND getters(featuresId)»
+			«EXPAND setters(featuresId)»
 «ENDDEFINE»
 
 «DEFINE gettersAndSetters FOR Entity»
