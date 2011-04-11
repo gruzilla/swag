@@ -17,8 +17,8 @@
 		
 «DEFINE relationGetter(Relation rel) FOR Entity»
 	public «rel.partner.name» «rel.getter()»() {
-		return «rel.partner.name.toFirstLower()»;}«ENDDEFINE»
+		return «rel.attribute()»;}«ENDDEFINE»
 
 «DEFINE relationSetter(Relation rel) FOR Entity»
 public void «rel.setter()» («rel.partner.name» var«rel.partner.name») {
-		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;}«ENDDEFINE»
+		«rel.attribute()» = var«rel.partner.name»;}«ENDDEFINE»

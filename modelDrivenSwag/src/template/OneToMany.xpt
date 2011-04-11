@@ -8,11 +8,11 @@
 	«EXPAND relationSetter(rel)» «ENDDEFINE»
 
 «DEFINE relationGetter(Relation rel) FOR Entity»
-	public Set<«rel.partner.name»> get«rel.partner.name»() {
-		return «rel.partner.name.toFirstLower()»;
+	public Set<«rel.partner.name»> «rel.getter()»Set() {
+		return «rel.attribute()»Set;
 	}«ENDDEFINE»
 
 «DEFINE relationSetter(Relation rel) FOR Entity»
-	public void set«rel.partner.name» (Set<«rel.partner.name»> var«rel.partner.name») {
-		«rel.partner.name.toFirstLower()» = var«rel.partner.name»;
+	public void «rel.setter()» (Set<«rel.partner.name»> var«rel.partner.name») {
+		«rel.attribute()»Set = var«rel.partner.name»;
 	}«ENDDEFINE»

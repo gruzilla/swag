@@ -6,9 +6,9 @@
 	«FOREACH relations AS rel»
 		«IF rel.owner == true || rel.unidirectional == false»
 			«IF rel.metaType.name == OneToMany.name»
-				private Set<«rel.partner.name»> «rel.partner.name.toFirstLower()»;
+				private Set<«rel.partner.name»> «rel.attribute()»Set;
 			«ELSE»
-				private «rel.partner.name» «rel.partner.name.toFirstLower()»;
+				private «rel.partner.name» «rel.attribute()»;
 			«ENDIF»
 		«ENDIF»
 	«ENDFOREACH»

@@ -16,7 +16,7 @@
 		
 		«EXPAND id»
 		«FOREACH features AS f»
-				private «f.type.name» «f.name»;	«ENDFOREACH»
+				private «f.type.name» «f.attribute()»;	«ENDFOREACH»
 		«EXPAND Relations::relationAttributes»
 		«EXPAND gettersAndSetters»		
 		«EXPAND Relations::createRelations»	
@@ -43,12 +43,12 @@
 
 «DEFINE getters(Feature f) FOR Entity»
 	public «f.type.name» «f.getter()»() {
-		return «f.name»;
+		return «f.attribute()»;
 	}
 «ENDDEFINE»
 
 «DEFINE setters(Feature f) FOR Entity»
-	public void «f.setter()»(«f.type.name» «f.name») {
-		this.«f.name» = «f.name»;
+	public void «f.setter()»(«f.type.name» «f.attribute()») {
+		this.«f.attribute()» = «f.attribute()»;
 	}
 «ENDDEFINE»
