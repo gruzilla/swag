@@ -10,7 +10,6 @@ public class testclass {
 	public static void main(String[] args) throws Exception {
 		// TODO Auto-generated method stub
 			AddressDAO.setUpBeforeClass();
-			
 	}
 
 }
