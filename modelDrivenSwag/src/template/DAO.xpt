@@ -1,0 +1,15 @@
+«IMPORT metamodel»
+
+«EXTENSION template::GeneratorExtensions»
+
+«DEFINE dao(Entity entity) FOR Entity»
+		«FILE "swag/db/dao/" + entity.name + "DAO.java"»
+		package swag.db.dao;
+		
+		public class «entity.name»DAO {
+
+        
+        	
+		}
+	«ENDFILE»
+«ENDDEFINE»

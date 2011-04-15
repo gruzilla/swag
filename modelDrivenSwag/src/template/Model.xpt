@@ -1,0 +1,56 @@
+«IMPORT metamodel»
+
+«EXTENSION template::GeneratorExtensions»
+
+«DEFINE model(Entity entity) FOR Entity»
+		«FILE "swag/db/model/" + entity.name + ".java"»
+		package swag.db.model;
+		
+		import javax.persistence.*;
+		import java.util.Set;
+		
+		@Entity
+		«EXPAND Inheritance::inheritanceAnnotation(entity.bequeathesTo)»
+		public class «entity.name» «EXPAND Inheritance::inherits(entity.inherits)» {
+
+        «EXPAND id»
+        «FOREACH features AS f»
+				private «f.type.name» «f.attribute()»;
+		«ENDFOREACH»
+        «EXPAND Relations::relationAttributes»
+        «EXPAND gettersAndSetters»		
+		«EXPAND Relations::createRelations»	
+		}
+	«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE id FOR Entity»
+	«IF inherits == null»
+		private «featuresId.type.name» «featuresId.name»;
+			
+			@Id
+			@GeneratedValue(strategy = «featuresId.generationType»)
+			«EXPAND getters(featuresId)»
+			«EXPAND setters(featuresId)»
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE gettersAndSetters FOR Entity»
+	«FOREACH features AS f»	
+				@Column
+				«EXPAND getters(f)»
+				«EXPAND setters(f)»
+			«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE getters(Feature f) FOR Entity»
+	public «f.type.name» «f.getter()»() {
+		return «f.attribute()»;
+	}
+«ENDDEFINE»
+
+«DEFINE setters(Feature f) FOR Entity»
+	public void «f.setter()»(«f.type.name» «f.attribute()») {
+		this.«f.attribute()» = «f.attribute()»;
+	}
+«ENDDEFINE»
