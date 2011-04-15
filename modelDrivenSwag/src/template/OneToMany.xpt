@@ -13,6 +13,6 @@
 	}«ENDDEFINE»
 
 «DEFINE relationSetter(Relation rel) FOR Entity»
-	public void «rel.setter()» (Set<«rel.partner.name»> var«rel.partner.name») {
+	public void «rel.setter()»Set (Set<«rel.partner.name»> var«rel.partner.name») {
 		«rel.attribute()»Set = var«rel.partner.name»;
 	}«ENDDEFINE»
