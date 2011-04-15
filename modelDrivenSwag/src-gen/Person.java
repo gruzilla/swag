@@ -1,7 +1,8 @@
+import javax.persistence.*;
 import java.util.Set;
 
-import javax.persistence.*;
 @Entity
+@Inheritance(strategy = InheritanceType.JOINED)
 public class Person {
 
 	private Long id;
@@ -17,9 +18,10 @@ public class Person {
 	}
 
 	private String name;
+
 	private Integer age;
 
-	private Set<Address> address;
+	private Set<Address> addressSet;
 
 	@Column
 	public String getName() {
@@ -40,12 +42,12 @@ public class Person {
 	}
 
 	@OneToMany(mappedBy = "person")
-	public Set<Address> getAddress() {
-		return address;
+	public Set<Address> getAddressSet() {
+		return addressSet;
 	}
 
 	public void setAddress(Set<Address> varAddress) {
-		address = varAddress;
+		addressSet = varAddress;
 	}
 
 }

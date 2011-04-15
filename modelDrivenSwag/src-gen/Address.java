@@ -1,4 +1,6 @@
 import javax.persistence.*;
+import java.util.Set;
+
 @Entity
 public class Address {
 
@@ -15,7 +17,9 @@ public class Address {
 	}
 
 	private String street;
+
 	private String zip;
+
 	private String city;
 
 	private Person person;

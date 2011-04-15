@@ -11,26 +11,31 @@
 	«FILE name+".java"»
 		import javax.persistence.*;
 		import java.util.Set;
-		@Entity
-		public class «name» {
 		
-		«EXPAND id»
-		«FOREACH features AS f»
-				private «f.type.name» «f.attribute()»;	«ENDFOREACH»
-		«EXPAND Relations::relationAttributes»
-		«EXPAND gettersAndSetters»		
+		@Entity
+		«EXPAND Inheritance::inheritanceAnnotation(bequeathesTo)»
+		public class «name» «EXPAND Inheritance::inherits(inherits)» {
+
+        «EXPAND id»
+        «FOREACH features AS f»
+				private «f.type.name» «f.attribute()»;
+		«ENDFOREACH»
+        «EXPAND Relations::relationAttributes»
+        «EXPAND gettersAndSetters»		
 		«EXPAND Relations::createRelations»	
 		}
 	«ENDFILE»
 «ENDDEFINE»
 
 «DEFINE id FOR Entity»
+	«IF inherits == null»
 		private «featuresId.type.name» «featuresId.name»;
 			
 			@Id
 			@GeneratedValue(strategy = «featuresId.generationType»)
 			«EXPAND getters(featuresId)»
 			«EXPAND setters(featuresId)»
+	«ENDIF»
 «ENDDEFINE»
 
 «DEFINE gettersAndSetters FOR Entity»

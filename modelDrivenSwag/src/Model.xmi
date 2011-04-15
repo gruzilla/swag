@@ -4,7 +4,7 @@
   <types xsi:type="metamodel:Datatype" name="Integer"/>
   <types xsi:type="metamodel:Datatype" name="Long"/>
   <types xsi:type="metamodel:Datatype" name="Float"/>
-  <types xsi:type="metamodel:Entity" name="Person">
+  <types xsi:type="metamodel:Entity" name="Person" bequeathesTo="//@types.6 //@types.7">
     <features name="name" type="//@types.0"/>
     <features name="age" type="//@types.1"/>
     <relations xsi:type="metamodel:OneToMany" partner="//@types.5"/>
@@ -16,5 +16,11 @@
     <features name="city" type="//@types.0"/>
     <relations xsi:type="metamodel:ManyToOne" partner="//@types.4" owner="true"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Student" inherits="//@types.4">
+    <features name="matrnr" type="//@types.1"/>
+  </types>
+  <types xsi:type="metamodel:Entity" name="Professor" inherits="//@types.4">
+    <features name="salary" type="//@types.3"/>
   </types>
 </metamodel:Model>
