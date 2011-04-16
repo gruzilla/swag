@@ -10,4 +10,4 @@
 # unneccessary directories
 modelDrivenSwag/bin
 .metadata
-modelDrivenSwag/src-gen
+modelDrivenSwag/src-gen/*
