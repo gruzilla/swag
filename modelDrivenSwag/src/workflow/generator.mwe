@@ -27,10 +27,12 @@
 	<component id="generator" class="org.eclipse.xpand2.Generator">
 		<metaModel idRef="mm_emf"/>
 		<expand
-			value="template::Template::main FOR model" />		
+			value="template::Template::main FOR model" />				
 		<outlet path="${src-gen}" >
-			<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+		<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
+		<postprocessor class="org.eclipse.xpand2.output.XmlBeautifier" />
 		</outlet>
+
 	</component>
 	
 </workflow>

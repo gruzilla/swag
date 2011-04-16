@@ -1,10 +1,12 @@
 «IMPORT metamodel»
-
 «EXTENSION template::GeneratorExtensions»
-
-
 «DEFINE main FOR Model»
+«EXPAND config-»
 «EXPAND javaClass FOREACH entities()»
+«ENDDEFINE»
+
+«DEFINE config FOR metamodel::Model»
+	«EXPAND persistenceXml::persistence(this)»
 «ENDDEFINE»
 
 «DEFINE javaClass FOR metamodel::Entity»
