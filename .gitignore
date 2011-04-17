@@ -11,3 +11,4 @@
 modelDrivenSwag/bin
 .metadata
 modelDrivenSwag/src-gen/*
+!.gitignore
