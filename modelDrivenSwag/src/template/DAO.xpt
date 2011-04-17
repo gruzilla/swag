@@ -3,13 +3,130 @@
 «EXTENSION template::GeneratorExtensions»
 
 «DEFINE dao(Entity entity) FOR Entity»
-		«FILE "swag/db/dao/" + entity.name + "DAO.java"»
-		package swag.db.dao;
-		
-		public class «entity.name»DAO {
+	«FILE "swag/db/dao/" + entity.name + "DAO.java"»
+	package swag.db.dao;
+	
+	import javax.persistence.*;
+	import swag.db.model.«entity.name»;
+	
+	public class «entity.name»DAO {
 
-        
-        	
+        private static EntityManager entityManager;
+		private static EntityManagerFactory entityManagerFactory;
+		private static String PERSISTENCE_UNIT_NAME;
+
+		private «entity.name» «entity.name.toFirstLower()»;
+		
+		public «entity.name»DAO(«entity.name» «entity.name.toFirstLower()») {
+			this.«entity.name.toFirstLower()» = «entity.name.toFirstLower()»;
+		}
+		
+		«EXPAND setUpBeforeClass(entity)»
+		
+		public static void initializeEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
+			«entity.name»DAO.entityManagerFactory = entityManagerFactory;
+			«entity.name»DAO.entityManager = «entity.name»DAO.entityManagerFactory.createEntityManager();
+		}
+		
+		public static EntityManager getEntityManager() {
+			return «entity.name»DAO.entityManager;
+		}
+		
+		«EXPAND delete(entity)»
+		«EXPAND get(entity)»
+		«EXPAND persist(entity)»
+		«EXPAND update(entity)»
+		«EXPAND refresh(entity)»
+		«EXPAND rollBackTransaction»
+		«EXPAND shutdown»
 		}
 	«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE setUpBeforeClass(Entity entity) FOR Entity»
+public static void setUpBeforeClass() throws Exception {
+	PERSISTENCE_UNIT_NAME = "«model().connector.persistenceUnit»";
+	«entity.name»DAO.initializeEntityManagerFactory(Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME));
+}
+«ENDDEFINE»
+
+«DEFINE delete(Entity entity) FOR Entity»
+public void delete(«entity.name» «entity.name.toFirstLower()») {
+try {
+	entityManager.getTransaction().begin();
+	entityManager.remove(«entity.name.toFirstLower()»);
+		entityManager.getTransaction().commit();
+	}
+	catch (RuntimeException runTime) {
+		rollBackTransaction();
+		throw runTime;
+	}
+}
+«ENDDEFINE»
+
+«DEFINE get(Entity entity) FOR Entity»
+public «entity.name» get(«entity.featuresId.type.name» key) {
+	return entityManager.find(«entity.name».class, key);
+}
+«ENDDEFINE»
+
+«DEFINE persist(Entity entity) FOR Entity»		
+public void persist(«entity.name» «entity.name.toFirstLower()») {
+	entityManager.getTransaction().begin();
+	try {
+		entityManager.persist(«entity.name.toFirstLower()»);
+			entityManager.getTransaction().commit();
+		}
+	catch(RuntimeException e) {
+		rollBackTransaction();
+		throw e;
+	}
+}
+«ENDDEFINE»
+
+«DEFINE update(Entity entity) FOR Entity»	
+public «entity.name» update(«entity.name» «entity.name.toFirstLower()») {
+	«entity.name» merged;
+	entityManager.getTransaction().begin();
+	try {
+		merged = entityManager.merge(«entity.name.toFirstLower()»);
+			entityManager.getTransaction().commit();
+			return merged;
+		}
+	catch(RuntimeException e) {
+		rollBackTransaction();
+		throw e;
+	}
+}
+«ENDDEFINE»
+
+«DEFINE refresh(Entity entity) FOR Entity»	
+public void refresh(«entity.name» «entity.name.toFirstLower()») {
+	try {
+		entityManager.refresh(«entity.name.toFirstLower()»);
+	}
+	catch(RuntimeException e) {
+		throw e;
+	}
+}
+«ENDDEFINE»
+
+«DEFINE rollBackTransaction FOR Entity»
+private void rollBackTransaction() {
+	if (entityManager.getTransaction().isActive())
+		entityManager.getTransaction().rollback();
+}
+«ENDDEFINE»
+
+«DEFINE shutdown FOR Entity»
+public static void shutdown() {
+	if(entityManager != null &&
+			entityManager.isOpen()) {
+		entityManager.close();
+	}
+	if(entityManagerFactory != null &&
+			entityManagerFactory.isOpen()) {
+		entityManagerFactory.close();
+	}
+}
 «ENDDEFINE»
