@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="swag" default="compile" basedir=".">
+  <target name="init" description="Initialize settings.">
+    <property environment="env"/>
+    <property name="glassfish.home" value="${env.GLASSFISH_HOME}"/>
+    <property name="src.dir" value="src"/>
+    <property name="src-gen.dir" value="src-gen"/>
+    <property name="tests-src.dir" value="tests"/>
+    
+    <property name="build.dir" value="build"/>
+    <property name="reports.dir" value="junitreport"/>
+    
+    <property name="lib.dir" value="lib"/>
+    
+    <property name="javac.source" value="1.6"/>
+    
+    <path id="project.classpath" >
+      <fileset dir="${lib.dir}">
+	<include name="**/*.jar"/>
+      </fileset>
+      <fileset dir="${glassfish.home}/modules">
+	<include name="**/org.eclipse*.jar"/>
+	<include name="**/javax.persistence.jar"/>
+      </fileset>
+      <pathelement location="${build.dir}"/>
+    </path>
+  </target>
+  
+  <target name="check" depends="init">
+    <fail unless="env.GLASSFISH_HOME">
+      #### You must install GlassFish V3 and set the GLASSFISH_HOME variable
+    </fail>
+    <available property="src-gen.exists" file="${src-gen.dir}" type="dir"/>
+    <fail unless="src-gen.exists">
+      #### src-gen folder doesn't exists. Please run the mde-workflow with eclipse ####
+    </fail>
+  </target>
+  
+  <target name="build" depends="check">
+    <mkdir dir="${build.dir}"/>
+    <copy todir="${build.dir}">
+      <fileset dir="${src-gen.dir}">
+	<include name="**/META-INF/*"/>
+      </fileset>
+    </copy>
+    <javac srcdir="${src.dir}:${src-gen.dir}:${tests-src.dir}"
+	   destdir="${build.dir}"
+	   debug="on"
+	   deprecation="on"
+	   classpathref="project.classpath" />
+  </target>
+
+  <target name="run" depends="build">
+    <junit printsummary="yes" haltonfailure="yes">
+      <classpath refid="project.classpath" />
+      <formatter type="plain" usefile="false"/>
+      
+      <batchtest fork="yes">
+	<fileset dir="${build.dir}" includes="tests/**/*.class" excludes="tests/**/utility/*.class" />
+      </batchtest>
+    </junit>
+  </target>
+
+  <target name="clean" depends="init">
+    <delete includeemptydirs="true">
+      <fileset dir="build"/>
+    </delete>
+  </target>
+
+
+</project>
