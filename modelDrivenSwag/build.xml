@@ -3,7 +3,7 @@
   <target name="init" description="Initialize settings.">
     <property environment="env"/>
     <property name="glassfish.home" value="${env.GLASSFISH_HOME}"/>
-    <property name="src.dir" value="src"/>
+  <!--  <property name="src.dir" value="src"/>-->
     <property name="src-gen.dir" value="src-gen"/>
     <property name="tests-src.dir" value="tests"/>
     
@@ -43,7 +43,7 @@
 	<include name="**/META-INF/*"/>
       </fileset>
     </copy>
-    <javac srcdir="${src.dir}:${src-gen.dir}:${tests-src.dir}"
+    <javac srcdir="${src-gen.dir}:${tests-src.dir}"
 	   destdir="${build.dir}"
 	   debug="on"
 	   deprecation="on"

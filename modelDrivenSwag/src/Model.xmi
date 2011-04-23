@@ -23,5 +23,5 @@
   <types xsi:type="metamodel:Entity" name="Professor" inherits="//@types.4">
     <features name="salary" type="//@types.3"/>
   </types>
-  <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swag" jdbcUser="swag" jdbcPassword="swag" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
+  <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>
