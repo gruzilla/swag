@@ -55,7 +55,13 @@ public void delete(«entity.name» «entity.name.toFirstLower()») {
 «ENDDEFINE»
 
 «DEFINE get(Entity entity) FOR Entity»
-public «entity.name» get(«entity.featuresId.type.name» key) {
+public «entity.name» get(
+	«IF entity.inherits == null-»
+		«entity.featuresId.type.name-»
+	«ELSE-»
+		«entity.inherits.featuresId.type.name-»
+	«ENDIF-»
+	 key) {
 	«EXPAND EntityManager»
 	«entity.name» «entity.name.toFirstLower()» = entityManager.find(«entity.name».class, key);
 	shutdown(entityManager);

@@ -11,5 +11,6 @@
 «DEFINE inheritanceAnnotation(List[Entity] children) FOR Entity-»
 	«IF children.size > 0»
 		@Inheritance(strategy=InheritanceType.JOINED)
+		@PrimaryKeyJoinColumn
 	«ENDIF-»
 «ENDDEFINE»
