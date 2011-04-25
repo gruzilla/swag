@@ -9,8 +9,10 @@
 		«EXPAND property(model.connector.jdbcPrefix+".url", model.connector.jdbcUrl)-»
 		«EXPAND property(model.connector.jdbcPrefix+".user", model.connector.jdbcUser)-»
 		«EXPAND property(model.connector.jdbcPrefix+".password", model.connector.jdbcPassword)-»
-		<property name="eclipselink.ddl-generation" value="create-tables" />
+		<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
 		<property name="eclipselink.ddl-generation.output-mode"	value="database" />		
+		<property name="eclipselink.logging.logger" value="DefaultLogger"/>
+		<property name="eclipselink.logging.level" value="WARNING"/>
 		</properties>
 		</persistence-unit>
 		</persistence>

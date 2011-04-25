@@ -10,5 +10,6 @@
 # unneccessary directories
 modelDrivenSwag/bin
 .metadata
+modelDrivenSwag/build
 modelDrivenSwag/src-gen/*
 !.gitignore

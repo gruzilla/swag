@@ -30,9 +30,9 @@
     <fail unless="env.GLASSFISH_HOME">
       #### You must install GlassFish V3 and set the GLASSFISH_HOME variable
     </fail>
-    <available property="src-gen.exists" file="${src-gen.dir}" type="dir"/>
+    <available property="src-gen.exists" file="${src-gen.dir}/META-INF"/>
     <fail unless="src-gen.exists">
-      #### src-gen folder doesn't exists. Please run the mde-workflow with eclipse ####
+      #### src-gen folder is empty. Please run the mde-workflow with eclipse ####
     </fail>
   </target>
   
@@ -53,7 +53,7 @@
   <target name="run" depends="build">
     <junit printsummary="yes" haltonfailure="yes">
       <classpath refid="project.classpath" />
-      <formatter type="plain" usefile="false"/>
+      <formatter type="brief" usefile="false"/>
       
       <batchtest fork="yes">
 	<fileset dir="${build.dir}" includes="tests/**/*.class" excludes="tests/**/utility/*.class" />
