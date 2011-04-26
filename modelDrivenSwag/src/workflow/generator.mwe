@@ -30,9 +30,8 @@
 			value="template::Template::main FOR model" />				
 		<outlet path="${src-gen}" >
 		<postprocessor class="org.eclipse.xpand2.output.JavaBeautifier" />
-		<postprocessor class="org.eclipse.xpand2.output.XmlBeautifier" />
+		<postprocessor class="org.eclipse.xtend.typesystem.xsd.XMLBeautifier"/>
 		</outlet>
-
 	</component>
 	
 </workflow>
