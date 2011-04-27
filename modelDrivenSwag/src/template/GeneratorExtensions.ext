@@ -19,3 +19,6 @@ getter(Relation this) :
 	
 setter(Relation this) :
 	"set"+partner.name.toFirstUpper();
+
+String getUID() : JAVA 
+javaExtensions.SerialVersionUIDEx.getSerialVersionUID();
