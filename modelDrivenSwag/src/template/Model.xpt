@@ -8,11 +8,15 @@
 		
 		import javax.persistence.*;
 		import java.util.Set;
+		import java.io.Serializable;
+		import java.util.Date;
 		
 		@Entity
 		«EXPAND Inheritance::inheritanceAnnotation(entity.bequeathesTo)»
-		public class «entity.name» «EXPAND Inheritance::inherits(entity.inherits)» {
-
+		public class «entity.name» «EXPAND Inheritance::inherits(entity.inherits)» implements Serializable {
+		
+		private static final long serialVersionUID = «getUID()»L;
+		
         «EXPAND id»
         «FOREACH features AS f»
 				private «f.type.name» «f.attribute()»;
@@ -20,6 +24,7 @@
         «EXPAND Relations::relationAttributes»
         «EXPAND gettersAndSetters»		
 		«EXPAND Relations::createRelations»	
+		«EXPAND equalsAndHashCode»
 		}
 	«ENDFILE»
 «ENDDEFINE»
@@ -53,4 +58,48 @@
 	public void «f.setter()»(«f.type.name» «f.attribute()») {
 		this.«f.attribute()» = «f.attribute()»;
 	}
+«ENDDEFINE»
+
+«DEFINE equalsAndHashCode FOR Entity»
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) return true;
+		if (obj == null || getClass() != obj.getClass()) return false;
+		
+		«name.toFirstUpper()» other = («name.toFirstUpper()») obj;
+		
+		«EXPAND Relations::relationAttributeEquals»
+		«EXPAND featuresEqual»
+		
+		return true;
+	}
+	
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		
+		«EXPAND Relations::relationAttributeHash»
+		«EXPAND featuresHash»
+		
+		return result;
+	}
+«ENDDEFINE»
+
+
+«DEFINE featuresEqual FOR Entity»
+	«FOREACH features AS f»
+		if («f.name» == null) {
+			if (other.«f.name» != null)
+				return false;
+		} else if (!«f.name».equals(other.«f.name»))
+			return false;
+	«ENDFOREACH-»
+«ENDDEFINE»
+
+«DEFINE featuresHash FOR Entity»
+	«FOREACH features AS f»	
+		result = prime * result + ((«f.name» == null) ? 0 : «f.name».hashCode());
+	«ENDFOREACH-»
 «ENDDEFINE»
