@@ -4,17 +4,15 @@
   <types xsi:type="metamodel:Datatype" name="Integer"/>
   <types xsi:type="metamodel:Datatype" name="Long"/>
   <types xsi:type="metamodel:Datatype" name="Float"/>
-  <types xsi:type="metamodel:Entity" name="Person" bequeathesTo="//@types.6 //@types.7">
+  <types xsi:type="metamodel:Entity" name="Person" owns="//@types.8" bequeathesTo="//@types.6 //@types.7">
     <features name="name" type="//@types.0"/>
     <features name="age" type="//@types.1"/>
-    <relations xsi:type="metamodel:OneToMany" partner="//@types.5"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Address">
+  <types xsi:type="metamodel:Entity" name="Address" ownedBy="//@types.8">
     <features name="street" type="//@types.0"/>
     <features name="zip" type="//@types.0"/>
     <features name="city" type="//@types.0"/>
-    <relations xsi:type="metamodel:ManyToOne" partner="//@types.4" owner="true"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>
   <types xsi:type="metamodel:Entity" name="Student" inherits="//@types.4">
@@ -23,5 +21,6 @@
   <types xsi:type="metamodel:Entity" name="Professor" inherits="//@types.4">
     <features name="salary" type="//@types.3"/>
   </types>
+  <types xsi:type="metamodel:OneToMany" name="otherAddr" owner="//@types.4" slave="//@types.5"/>
   <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>

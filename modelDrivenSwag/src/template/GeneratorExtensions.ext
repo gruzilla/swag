@@ -11,14 +11,39 @@ setter(Feature this) :
 attribute(Feature this) :
 	name.toFirstLower();
 	
-attribute(Relation this) :
-	partner.name.toFirstLower();
+attribute(Relation rel, Entity entity) :
+		rel.name == null ?
+			rel.partner(entity).name.toFirstLower() :
+			rel.name + rel.partner(entity).name.toFirstUpper()
+		;
+
+partner(Relation rel, Entity entity) :
+	rel.isOwner(entity) ? rel.slave : rel.owner;
+
+otherPartner(Relation rel, Entity entity) :
+	rel.isOwner(entity) ? rel.owner : rel.slave;
+
+isOwner(Relation rel, Entity entity) :
+	rel.owner == entity;
+
+isSlave(Relation rel, Entity entity) :
+	rel.owner != entity;
+
+/*
+	(oppositeRelation == null ?
+		(mirrorRelation == null ?
+			partner.name.toFirstLower() :
+			(mirrorRelation.name == null ? "" : mirrorRelation.name.toFirstLower()) + partner.name.toFirstUpper()
+		) :
+		(oppositeRelation.name == null ? "" : oppositeRelation.name.toFirstLower()) + partner.name.toFirstUpper()
+	);
+*/
 	
-getter(Relation this) :
-	"get"+partner.name.toFirstUpper();
+getter(Relation rel, Entity ent) :
+	"get"+attribute(rel, ent).toFirstUpper();
 	
-setter(Relation this) :
-	"set"+partner.name.toFirstUpper();
+setter(Relation rel, Entity ent) :
+	"set"+attribute(rel, ent).toFirstUpper();
 
 String getUID() : JAVA 
 javaExtensions.SerialVersionUIDEx.getSerialVersionUID();

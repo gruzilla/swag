@@ -41,7 +41,7 @@
 «ENDDEFINE»
 
 «DEFINE gettersAndSetters FOR Entity»
-	«FOREACH features AS f»	
+	«FOREACH features AS f»
 				@Column(«IF f.nullable == false»nullable = false«ENDIF»)
 				«EXPAND getters(f)»
 				«EXPAND setters(f)»

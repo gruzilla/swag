@@ -17,8 +17,10 @@
   <eClassifiers xsi:type="ecore:EClass" name="Entity" eSuperTypes="#//Type">
     <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
         eType="#//Feature" containment="true"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="relations" upperBound="-1"
-        eType="#//Relation" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owns" upperBound="-1" eType="#//Relation"
+        eOpposite="#//Relation/owner"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBy" upperBound="-1" eType="#//Relation"
+    	eOpposite="#//Relation/slave"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="featuresId" eType="#//idFeature"
         containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inherits" eType="#//Entity"
@@ -32,14 +34,15 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="nullable" lowerBound="1"
         eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
-  <eClassifiers xsi:type="ecore:EClass" name="Relation" abstract="true">
-    <eStructuralFeatures xsi:type="ecore:EReference" name="partner" eType="#//Entity"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="owner" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+  <eClassifiers xsi:type="ecore:EClass" name="Relation" abstract="true" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="owner" lowerBound="1" eType="#//Entity"
+        eOpposite="#//Entity/owns"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="slave" lowerBound="1" eType="#//Entity"
+        eOpposite="#//Entity/ownedBy"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unidirectional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>
-  <eClassifiers xsi:type="ecore:EClass" name="ManyToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="idFeature" eSuperTypes="#//Feature">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="generationType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

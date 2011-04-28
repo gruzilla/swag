@@ -1,8 +1,0 @@
-«IMPORT metamodel»
-
-«EXTENSION template::GeneratorExtensions»
-
-«DEFINE ManyToOne(Relation rel) FOR Entity»
-	@«rel.metaType.toString().split(":").last()»
-	«EXPAND OneToOne::relationGetter(rel)»
-	«EXPAND OneToOne::relationSetter(rel)» «ENDDEFINE»

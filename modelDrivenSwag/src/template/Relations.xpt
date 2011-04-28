@@ -3,49 +3,49 @@
 «EXTENSION template::GeneratorExtensions»
 
 «DEFINE relationAttributes FOR Entity»
-	«FOREACH relations AS rel»
-		«IF rel.owner == true || rel.unidirectional == false»
-			«IF rel.metaType.name == OneToMany.name»
-				private Set<«rel.partner.name»> «rel.attribute()»Set;
-			«ELSE»
-				private «rel.partner.name» «rel.attribute()»;
-			«ENDIF»
+	«FOREACH {owns, ownedBy} AS list»
+	«FOREACH list AS rel»
+		«IF rel.metaType.name == OneToMany.name»
+			«EXPAND OneToMany::relationAttribute(rel)»
+		«ELSEIF rel.metaType.name == OneToOne.name»
+			«EXPAND OneToOne::relationAttribute(rel)»
 		«ENDIF»
-	«ENDFOREACH»
+	«ENDFOREACH-»
+	«ENDFOREACH-»
 «ENDDEFINE»
 
 «DEFINE createRelations FOR Entity»
-	«FOREACH relations AS rel»
+	«FOREACH {owns, ownedBy} AS list»
+	«FOREACH list AS rel»
 		«IF rel.metaType.name == OneToOne.name»
 			«EXPAND OneToOne::OneToOne(rel)»
 		«ELSEIF rel.metaType.name == OneToMany.name»
 			«EXPAND OneToMany::OneToMany(rel)»
-		«ELSEIF rel.metaType.name == ManyToOne.name»
-			«EXPAND ManyToOne::ManyToOne(rel)»
 		«ENDIF»
-	«ENDFOREACH»
+	«ENDFOREACH-»
+	«ENDFOREACH-»
 «ENDDEFINE»
 
 «DEFINE relationAttributeEquals FOR Entity»
-	«FOREACH relations AS rel»
-		«IF rel.owner == true || rel.unidirectional == false»
-			«IF rel.metaType.name == OneToMany.name»
-				if (!«rel.attribute()»Set.equals(other.«rel.attribute()»Set)) return false;
-			«ELSE»
-				if (!«rel.attribute()».equals(other.«rel.attribute()»)) return false;
-			«ENDIF-»
-		«ENDIF-»
+	«FOREACH {owns, ownedBy} AS list»
+	«FOREACH list AS rel»
+		«IF rel.metaType.name == OneToOne.name»
+			«EXPAND OneToOne::relationEquals(rel)»
+		«ELSEIF rel.metaType.name == OneToMany.name»
+			«EXPAND OneToMany::relationEquals(rel)»
+		«ENDIF»
+	«ENDFOREACH-»
 	«ENDFOREACH-»
 «ENDDEFINE»
 
 «DEFINE relationAttributeHash FOR Entity»
-	«FOREACH relations AS rel»
-		«IF rel.owner == true || rel.unidirectional == false»
-			«IF rel.metaType.name == OneToMany.name»
-				result = prime * result + ((«rel.attribute()»Set == null) ? 0 : «rel.attribute()»Set.hashCode());
-			«ELSE»
-				result = prime * result + ((«rel.attribute()» == null) ? 0 : «rel.attribute()».hashCode());
-			«ENDIF-»
-		«ENDIF-»
+	«FOREACH {owns, ownedBy} AS list»
+	«FOREACH list AS rel»
+		«IF rel.metaType.name == OneToOne.name»
+			«EXPAND OneToOne::relationHash(rel)»
+		«ELSEIF rel.metaType.name == OneToMany.name»
+			«EXPAND OneToMany::relationHash(rel)»
+		«ENDIF»
+	«ENDFOREACH-»
 	«ENDFOREACH-»
 «ENDDEFINE»

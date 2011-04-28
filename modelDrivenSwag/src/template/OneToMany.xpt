@@ -3,16 +3,50 @@
 «EXTENSION template::GeneratorExtensions»
 
 «DEFINE OneToMany(Relation rel) FOR Entity»
-	@«rel.metaType.toString().split(":").last()» (mappedBy = "«name.toFirstLower()»")
+	«IF rel.isOwner(this)»
+	@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.name + rel.otherPartner(this).name.toFirstUpper()»")
+	«ENDIF»
 	«EXPAND relationGetter(rel)» 
 	«EXPAND relationSetter(rel)» «ENDDEFINE»
 
+«DEFINE relationAttribute(Relation rel) FOR Entity»
+	«IF rel.isOwner(this)»
+		private Set<«rel.partner(this).name»> «rel.attribute(this)»Set;
+	«ELSEIF rel.unidirectional == false»
+		private «rel.partner(this).name» «rel.attribute(this)»;
+	«ENDIF»
+«ENDDEFINE»
+
 «DEFINE relationGetter(Relation rel) FOR Entity»
-	public Set<«rel.partner.name»> «rel.getter()»Set() {
-		return «rel.attribute()»Set;
-	}«ENDDEFINE»
+	«IF rel.isOwner(this)»
+	public Set<«rel.partner(this).name»> «rel.getter(this)»Set() {
+		return «rel.attribute(this)»Set;
+	}«ELSE»
+	public «rel.partner(this).name» «rel.getter(this)»() {
+		return «rel.attribute(this)»;
+	}«ENDIF»«ENDDEFINE»
 
 «DEFINE relationSetter(Relation rel) FOR Entity»
-	public void «rel.setter()»Set (Set<«rel.partner.name»> var«rel.partner.name») {
-		«rel.attribute()»Set = var«rel.partner.name»;
-	}«ENDDEFINE»
+	«IF rel.isOwner(this)»
+	public void «rel.setter(this)»Set (Set<«rel.partner(this).name»> var«rel.partner(this).name») {
+		«rel.attribute(this)»Set = var«rel.partner(this).name»;
+	}«ELSE»
+	public void «rel.setter(this)»(«rel.partner(this).name» var«rel.partner(this).name») {
+		«rel.attribute(this)» = var«rel.partner(this).name»;
+	}«ENDIF»«ENDDEFINE»
+	
+«DEFINE relationEquals(Relation rel) FOR Entity»
+	«IF rel.isOwner(this)»
+		if (!«rel.attribute(this)»Set.equals(other.«rel.attribute(this)»Set)) return false;
+	«ELSEIF rel.unidirectional == false»
+		if (!«rel.attribute(this)».equals(other.«rel.attribute(this)»)) return false;
+	«ENDIF»
+«ENDDEFINE»
+
+«DEFINE relationHash(Relation rel) FOR Entity»
+	«IF rel.isOwner(this)»
+		result = prime * result + ((«rel.attribute(this)»Set == null) ? 0 : «rel.attribute(this)»Set.hashCode());
+	«ELSEIF rel.unidirectional == false»
+		result = prime * result + ((«rel.attribute(this)» == null) ? 0 : «rel.attribute(this)».hashCode());
+	«ENDIF»
+«ENDDEFINE»
