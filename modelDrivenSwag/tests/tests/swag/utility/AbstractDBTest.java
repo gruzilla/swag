@@ -21,9 +21,9 @@ public class AbstractDBTest {
 	protected static String PERSISTENCE_UNIT_NAME = null;
 
 	private static String DATABASE_DRIVER = "org.postgresql.Driver";
-	private static String DATABASE_URL = "jdbc:postgresql://localhost/swag";
-	private static String DATABASE_USER = "swag";
-	private static String DATABASE_PASSWORD = "swag";
+	private static String DATABASE_URL = "jdbc:postgresql://localhost/swa";
+	private static String DATABASE_USER = "swa";
+	private static String DATABASE_PASSWORD = "swa11";
 	private static final String DATASET = "testdataset.xml";
 	private static IDatabaseTester databaseTester = null;
 	private static EntityManagerFactory emf = null;
