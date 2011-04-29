@@ -6,16 +6,13 @@ import org.junit.Assert;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-
-import swag.db.dao.PersonDAO;
-import swag.db.model.Person;
 import tests.swag.utility.AbstractDBTest;
 
 
 
 public class PersonTest extends AbstractDBTest {
 	
-	private static PersonDAO personDAO = new PersonDAO();
+/*	private static PersonDAO personDAO = new PersonDAO();
 	@BeforeClass
 	public static void initDAO() throws Exception {
 		PersonDAO.initializeEntityManagerFactory(getEntityManagerFactory());
@@ -37,4 +34,5 @@ public class PersonTest extends AbstractDBTest {
 		another.setAge(25);
 		personDAO.persist(another);
 	}
+	*/
 }

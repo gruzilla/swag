@@ -16,13 +16,13 @@
 			@EmbeddedId
 			private «entity.name»PK «entity.name.toFirstLower()»PK;
 			
-	        «FOREACH features AS f»
+	        «FOREACH entity.features AS f»
 					private «f.type.name» «f.attribute()»;
 			«ENDFOREACH»
 			
 			public «entity.name»() {}
 			
-	        «EXPAND gettersAndSetters»
+	        «EXPAND gettersAndSetters(entity)»
 		}
 	«ENDFILE»
 	«FILE "swag/db/model/" + entity.name + "PK.java"»
@@ -86,8 +86,8 @@
 	«ENDFILE»
 «ENDDEFINE»
 
-«DEFINE gettersAndSetters FOR Entity»
-	«FOREACH features AS f»	
+«DEFINE gettersAndSetters(AssociationEntity entity) FOR Entity»
+	«FOREACH entity.features AS f»	
 				@Column(«IF f.nullable == false»nullable = false«ENDIF»)
 				«EXPAND getters(f)»
 				«EXPAND setters(f)»
