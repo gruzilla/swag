@@ -14,7 +14,7 @@
 		public class «entity.name»  {
 
 			@EmbeddedId
-			private «entity.name»PK «entity.name»PK;
+			private «entity.name»PK «entity.name.toFirstLower()»PK;
 			
 	        «FOREACH features AS f»
 					private «f.type.name» «f.attribute()»;
