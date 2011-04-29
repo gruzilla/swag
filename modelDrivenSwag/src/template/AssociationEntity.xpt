@@ -38,13 +38,12 @@
 			
 			private static final long serialVersionUID = «getUID()»L;
 			
-			@ManyToOne
 			private «entity.relation.owner.name.toFirstUpper()» «entity.relation.ownerAttribute()»;
-			@ManyToOne
 			private «entity.relation.slave.name.toFirstUpper()» «entity.relation.slaveAttribute()»;
 			
 			public «entity.name»PK() {}
 			
+			@ManyToOne
 			public «entity.relation.owner.name.toFirstUpper()» get«entity.relation.ownerAttribute().toFirstUpper()»() {
 				return this.«entity.relation.ownerAttribute()»;
 			}
@@ -53,6 +52,7 @@
 				this.«entity.relation.ownerAttribute()» = lol;
 			}
 			
+			@ManyToOne
 			public «entity.relation.slave.name.toFirstUpper()» get«entity.relation.slaveAttribute().toFirstUpper()»() {
 				return «entity.relation.slaveAttribute()»;
 			}
