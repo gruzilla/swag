@@ -25,11 +25,11 @@
 
 			@EmbeddedId
 			public «entity.name»PK get«entity.name»PK() {
-				return «entity.name.toLowerCase()»PK
+				return «entity.name.toFirstLower()»PK;
 			}
 			
 			public void set«entity.name»PK(«entity.name»PK primaryKey) {
-				«entity.name.toLowerCase()»PK = primaryKey;
+				«entity.name.toFirstLower()»PK = primaryKey;
 			}
 		}
 	«ENDFILE»

@@ -92,7 +92,9 @@
   <types xsi:type="metamodel:OneToOne" name="to" owner="//@types.12" slave="//@types.16"/>
   <types xsi:type="metamodel:OneToMany" name="from" owner="//@types.8" slave="//@types.7"/>
   <types xsi:type="metamodel:OneToMany" name="to" owner="//@types.8" slave="//@types.7"/>
-  <types xsi:type="metamodel:AssociationEntity" name="UserResourceCount" relation="//@types.29"/>
+  <types xsi:type="metamodel:AssociationEntity" name="UserResourceCount" relation="//@types.29">
+    <features name="amount" type="//@types.1"/>
+  </types>
   <types xsi:type="metamodel:ManyToMany" name="has" owner="//@types.8" slave="//@types.21" associates="//@types.28"/>
   <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>
