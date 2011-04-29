@@ -13,7 +13,6 @@
 		@Entity
 		public class «entity.name»  {
 
-			@EmbeddedId
 			private «entity.name»PK «entity.name.toFirstLower()»PK;
 			
 	        «FOREACH entity.features AS f»
@@ -23,6 +22,15 @@
 			public «entity.name»() {}
 			
 	        «EXPAND gettersAndSetters(entity)»
+
+			@EmbeddedId
+			public «entity.name»PK get«entity.name»PK() {
+				return «entity.name.toLowerCase()»PK
+			}
+			
+			public void set«entity.name»PK(«entity.name»PK primaryKey) {
+				«entity.name.toLowerCase()»PK = primaryKey;
+			}
 		}
 	«ENDFILE»
 	«FILE "swag/db/model/" + entity.name + "PK.java"»
