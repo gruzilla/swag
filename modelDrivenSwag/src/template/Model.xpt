@@ -30,13 +30,20 @@
 «ENDDEFINE»
 
 «DEFINE id FOR Entity»
-	«IF inherits == null»
+	«IF featuresId == null»
+	// ====================================================
+	// 
+	// 			ERROR! ID-FEATURE IS MISSING!
+	// 
+	// ====================================================
+	«ENDIF»
+	«IF inherits == null && featuresId != null»
 		private «featuresId.type.name» «featuresId.name»;
-			
-			@Id
-			@GeneratedValue(strategy = «featuresId.generationType»)
-			«EXPAND getters(featuresId)»
-			«EXPAND setters(featuresId)»
+		
+		@Id
+		@GeneratedValue(strategy = «featuresId.generationType == null ? "GenerationType.TABLE" : featuresId.generationType»)
+		«EXPAND getters(featuresId)»
+		«EXPAND setters(featuresId)»
 	«ENDIF»
 «ENDDEFINE»
 

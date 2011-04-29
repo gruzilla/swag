@@ -9,7 +9,7 @@
 			«EXPAND relationSetter(rel)»
 		«ELSE»
 			«IF rel.unidirectional == false»
-				@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.name + rel.otherPartner(this).name.toFirstUpper()»")
+				@«rel.metaType.toString().split(":").last()» (mappedBy = "«(rel.name == null ? "" : rel.name) + rel.otherPartner(this).name.toFirstUpper()»")
 				«EXPAND relationGetter(rel)»
 				«EXPAND relationSetter(rel)»
 			«ENDIF»
@@ -22,13 +22,13 @@
 «ENDDEFINE»
 
 «DEFINE relationGetter(Relation rel) FOR Entity»
-	public Set<«rel.partner(this).name»> «rel.getter(this)»Set() {
-		return «rel.attribute(this)»Set;
+	public «rel.partner(this).name» «rel.getter(this)»() {
+		return «rel.attribute(this)»;
 	}«ENDDEFINE»
 
 «DEFINE relationSetter(Relation rel) FOR Entity»
-	public void «rel.setter(this)»Set (Set<«rel.partner(this).name»> var«rel.partner(this).name») {
-		«rel.attribute(this)»Set = var«rel.partner(this).name»;
+	public void «rel.setter(this)» («rel.partner(this).name» var«rel.partner(this).name») {
+		«rel.attribute(this)» = var«rel.partner(this).name»;
 	}«ENDDEFINE»
 
 «DEFINE relationEquals(Relation rel) FOR Entity»

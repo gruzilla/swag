@@ -1,0 +1,107 @@
+«IMPORT metamodel»
+
+«EXTENSION template::GeneratorExtensions»
+
+«DEFINE associate(AssociationEntity entity) FOR Entity»
+	«FILE "swag/db/model/" + entity.name + ".java"»
+		package swag.db.model;
+		
+		import javax.persistence.*;
+		import java.util.Set;
+		import java.util.Date;
+		
+		@Entity
+		public class «entity.name»  {
+
+			@EmbeddedId
+			private «entity.name»PK «entity.name»PK;
+			
+	        «FOREACH features AS f»
+					private «f.type.name» «f.attribute()»;
+			«ENDFOREACH»
+			
+			public «entity.name»() {}
+			
+	        «EXPAND gettersAndSetters»
+		}
+	«ENDFILE»
+	«FILE "swag/db/model/" + entity.name + "PK.java"»
+		package swag.db.model;
+		
+		import javax.persistence.*;
+		import java.util.Set;
+		import java.util.Date;
+		import java.io.Serializable;
+		
+		@Embeddable
+		public class «entity.name»PK implements Serializable {
+			
+			private static final long serialVersionUID = «getUID()»L;
+			
+			@ManyToOne
+			private «entity.owner.partner.name.toFirstUpper()» «entity.owner.partner.name.toFirstLower()»;
+			@ManyToOne
+			private «entity.slave.partner.name.toFirstUpper()» «entity.slave.partner.name.toFirstLower()»;
+			
+			public «entity.name»PK() {}
+			
+			public «entity.owner.partner.name.toFirstUpper()» get«entity.owner.partner.name.toFirstUpper()»() {
+				return this.«entity.owner.partner.name.toFirstLower()»;
+			}
+			
+			public void set«entity.owner.partner.name.toFirstUpper()»(«entity.owner.partner.name.toFirstUpper()» lol) {
+				this.«entity.owner.partner.name.toFirstLower()» = lol;
+			}
+			
+			public «entity.slave.partner.name.toFirstUpper()» get«entity.slave.partner.name.toFirstUpper()»() {
+				return «entity.slave.partner.name.toFirstLower()»;
+			}
+			
+			public void set«entity.slave.partner.name.toFirstUpper()»(«entity.slave.partner.name.toFirstUpper()» rofl) {
+				this.«entity.slave.partner.name.toFirstLower()» = rofl;
+			}
+			
+			@Override
+			public boolean equals(Object obj) {
+				if (this == obj) return true;
+				if (obj == null || getClass() != obj.getClass()) return false;
+				
+				«entity.name»PK other = («entity.name»PK) obj;
+				
+				if (!«entity.owner.partner.name.toFirstLower()».equals(other.«entity.owner.partner.name.toFirstLower()») return false;
+				if (!«entity.slave.partner.name.toFirstLower()».equals(other.«entity.slave.partner.name.toFirstLower()») return false;
+				
+				return true;
+			}
+			
+			@Override
+			public int hashCode() {
+				final int prime = 31;
+				int result = 1;
+				result = prime * result + ((«entity.owner.partner.name.toFirstLower()» == null) ? 0 : «entity.owner.partner.name.toFirstLower()».hashCode());
+				result = prime * result + ((«entity.slave.partner.name.toFirstLower()» == null) ? 0 : «entity.slave.partner.name.toFirstLower()».hashCode());
+				return result;
+			}
+		}
+	«ENDFILE»
+«ENDDEFINE»
+
+«DEFINE gettersAndSetters FOR Entity»
+	«FOREACH features AS f»	
+				@Column(«IF f.nullable == false»nullable = false«ENDIF»)
+				«EXPAND getters(f)»
+				«EXPAND setters(f)»
+			«ENDFOREACH»
+«ENDDEFINE»
+
+«DEFINE getters(Feature f) FOR Entity»
+	public «f.type.name» «f.getter()»() {
+		return «f.attribute()»;
+	}
+«ENDDEFINE»
+
+«DEFINE setters(Feature f) FOR Entity»
+	public void «f.setter()»(«f.type.name» «f.attribute()») {
+		this.«f.attribute()» = «f.attribute()»;
+	}
+«ENDDEFINE»

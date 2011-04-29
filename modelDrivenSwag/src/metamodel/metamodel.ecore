@@ -19,10 +19,10 @@
         eType="#//Feature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="owns" upperBound="-1" eType="#//Relation"
         eOpposite="#//Relation/owner"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBy" upperBound="-1" eType="#//Relation"
-    	eOpposite="#//Relation/slave"/>
-    <eStructuralFeatures xsi:type="ecore:EReference" name="featuresId" eType="#//idFeature"
-        containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="ownedBy" upperBound="-1"
+        eType="#//Relation" eOpposite="#//Relation/slave"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="featuresId" lowerBound="1"
+        eType="#//idFeature" containment="true"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="inherits" eType="#//Entity"
         eOpposite="#//Entity/bequeathesTo"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="bequeathesTo" upperBound="-1"
@@ -40,6 +40,8 @@
     <eStructuralFeatures xsi:type="ecore:EReference" name="slave" lowerBound="1" eType="#//Entity"
         eOpposite="#//Entity/ownedBy"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unidirectional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="associates" eType="#//AssociationEntity"
+        eOpposite="#//AssociationEntity/relation"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>
@@ -53,5 +55,11 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jdbcPassword" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="persistenceUnit" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="jdbcPrefix" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
+  </eClassifiers>
+  <eClassifiers xsi:type="ecore:EClass" name="AssociationEntity" eSuperTypes="#//Type">
+    <eStructuralFeatures xsi:type="ecore:EReference" name="features" upperBound="-1"
+        eType="#//Feature" containment="true"/>
+    <eStructuralFeatures xsi:type="ecore:EReference" name="relation" lowerBound="1"
+        eType="#//Relation" eOpposite="#//Relation/associates"/>
   </eClassifiers>
 </ecore:EPackage>

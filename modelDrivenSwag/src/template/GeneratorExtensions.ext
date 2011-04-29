@@ -11,11 +11,11 @@ setter(Feature this) :
 attribute(Feature this) :
 	name.toFirstLower();
 	
-attribute(Relation rel, Entity entity) :
-		rel.name == null ?
-			rel.partner(entity).name.toFirstLower() :
-			rel.name + rel.partner(entity).name.toFirstUpper()
-		;
+attribute(Relation this, Entity entity) :
+		(name == null ?
+			partner(entity).name.toFirstLower() :
+			name + partner(entity).name.toFirstUpper()
+		);
 
 partner(Relation rel, Entity entity) :
 	rel.isOwner(entity) ? rel.slave : rel.owner;
@@ -46,4 +46,4 @@ setter(Relation rel, Entity ent) :
 	"set"+attribute(rel, ent).toFirstUpper();
 
 String getUID() : JAVA 
-javaExtensions.SerialVersionUIDEx.getSerialVersionUID();
+	javaExtensions.SerialVersionUIDEx.getSerialVersionUID();
