@@ -13,7 +13,6 @@
 		@Entity
 		public class «entity.name»  {
 
-			@EmbeddedId
 			private «entity.name»PK «entity.name.toFirstLower()»PK;
 			
 	        «FOREACH features AS f»
@@ -21,6 +20,15 @@
 			«ENDFOREACH»
 			
 			public «entity.name»() {}
+			
+			@EmbeddedId
+			public «entity.name»PK get«entity.name»PK() {
+				return «entity.name.toLowerCase()»PK
+			}
+			
+			public void set«entity.name»PK(«entity.name»PK primaryKey) {
+				«entity.name.toLowerCase()»PK = primaryKey;
+			}
 			
 	        «EXPAND gettersAndSetters»
 		}
