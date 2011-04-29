@@ -5,6 +5,8 @@
 «DEFINE OneToMany(Relation rel) FOR Entity»
 	«IF rel.isOwner(this)»
 	@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.name + rel.otherPartner(this).name.toFirstUpper()»")
+	«ELSE»
+	@ManyToOne
 	«ENDIF»
 	«EXPAND relationGetter(rel)» 
 	«EXPAND relationSetter(rel)» «ENDDEFINE»
