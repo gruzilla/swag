@@ -30,7 +30,7 @@
 «ENDDEFINE»
 
 «DEFINE id FOR Entity»
-	«IF featuresId == null»
+	«IF inherits == null && featuresId == null»
 	// ====================================================
 	// 
 	// 			ERROR! ID-FEATURE IS MISSING!

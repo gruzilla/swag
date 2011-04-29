@@ -16,6 +16,11 @@ attribute(Relation this, Entity entity) :
 			partner(entity).name.toFirstLower() :
 			name + partner(entity).name.toFirstUpper()
 		);
+slaveAttribute(Relation this) :
+	this.attribute(this.slave);
+
+ownerAttribute(Relation this) :
+	this.attribute(this.owner);
 
 partner(Relation rel, Entity entity) :
 	rel.isOwner(entity) ? rel.slave : rel.owner;

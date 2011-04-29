@@ -9,7 +9,7 @@
 			«EXPAND relationSetter(rel)»
 		«ELSE»
 			«IF rel.unidirectional == false»
-				@«rel.metaType.toString().split(":").last()» (mappedBy = "«(rel.name == null ? "" : rel.name) + rel.otherPartner(this).name.toFirstUpper()»")
+				@«rel.metaType.toString().split(":").last()» (mappedBy = "«(rel.name == null ? rel.otherPartner(this).name.toFirstLower() : rel.name + rel.otherPartner(this).name.toFirstUpper())»")
 				«EXPAND relationGetter(rel)»
 				«EXPAND relationSetter(rel)»
 			«ENDIF»

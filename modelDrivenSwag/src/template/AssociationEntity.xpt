@@ -39,26 +39,26 @@
 			private static final long serialVersionUID = «getUID()»L;
 			
 			@ManyToOne
-			private «entity.owner.partner.name.toFirstUpper()» «entity.owner.partner.name.toFirstLower()»;
+			private «entity.relation.owner.name.toFirstUpper()» «entity.relation.ownerAttribute()»;
 			@ManyToOne
-			private «entity.slave.partner.name.toFirstUpper()» «entity.slave.partner.name.toFirstLower()»;
+			private «entity.relation.slave.name.toFirstUpper()» «entity.relation.slaveAttribute()»;
 			
 			public «entity.name»PK() {}
 			
-			public «entity.owner.partner.name.toFirstUpper()» get«entity.owner.partner.name.toFirstUpper()»() {
-				return this.«entity.owner.partner.name.toFirstLower()»;
+			public «entity.relation.owner.name.toFirstUpper()» get«entity.relation.ownerAttribute().toFirstUpper()»() {
+				return this.«entity.relation.ownerAttribute()»;
 			}
 			
-			public void set«entity.owner.partner.name.toFirstUpper()»(«entity.owner.partner.name.toFirstUpper()» lol) {
-				this.«entity.owner.partner.name.toFirstLower()» = lol;
+			public void set«entity.relation.ownerAttribute().toFirstUpper()»(«entity.relation.owner.name.toFirstUpper()» lol) {
+				this.«entity.relation.ownerAttribute()» = lol;
 			}
 			
-			public «entity.slave.partner.name.toFirstUpper()» get«entity.slave.partner.name.toFirstUpper()»() {
-				return «entity.slave.partner.name.toFirstLower()»;
+			public «entity.relation.slave.name.toFirstUpper()» get«entity.relation.slaveAttribute().toFirstUpper()»() {
+				return «entity.relation.slaveAttribute()»;
 			}
 			
-			public void set«entity.slave.partner.name.toFirstUpper()»(«entity.slave.partner.name.toFirstUpper()» rofl) {
-				this.«entity.slave.partner.name.toFirstLower()» = rofl;
+			public void set«entity.relation.slaveAttribute().toFirstUpper()»(«entity.relation.slave.name.toFirstUpper()» rofl) {
+				this.«entity.relation.slaveAttribute()» = rofl;
 			}
 			
 			@Override
@@ -68,8 +68,8 @@
 				
 				«entity.name»PK other = («entity.name»PK) obj;
 				
-				if (!«entity.owner.partner.name.toFirstLower()».equals(other.«entity.owner.partner.name.toFirstLower()») return false;
-				if (!«entity.slave.partner.name.toFirstLower()».equals(other.«entity.slave.partner.name.toFirstLower()») return false;
+				if (!«entity.relation.ownerAttribute()».equals(other.«entity.relation.ownerAttribute()»)) return false;
+				if (!«entity.relation.slaveAttribute()».equals(other.«entity.relation.slaveAttribute()»)) return false;
 				
 				return true;
 			}
@@ -78,8 +78,8 @@
 			public int hashCode() {
 				final int prime = 31;
 				int result = 1;
-				result = prime * result + ((«entity.owner.partner.name.toFirstLower()» == null) ? 0 : «entity.owner.partner.name.toFirstLower()».hashCode());
-				result = prime * result + ((«entity.slave.partner.name.toFirstLower()» == null) ? 0 : «entity.slave.partner.name.toFirstLower()».hashCode());
+				result = prime * result + ((«entity.relation.ownerAttribute()» == null) ? 0 : «entity.relation.ownerAttribute()».hashCode());
+				result = prime * result + ((«entity.relation.slaveAttribute()» == null) ? 0 : «entity.relation.slaveAttribute()».hashCode());
 				return result;
 			}
 		}

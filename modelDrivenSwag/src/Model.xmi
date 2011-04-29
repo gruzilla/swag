@@ -1,32 +1,76 @@
 <?xml version="1.0" encoding="ASCII"?>
 <metamodel:Model xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:metamodel="http://www.example.org/metamodel" xsi:schemaLocation="http://www.example.org/metamodel metamodel/metamodel.ecore" name="swag">
+  <!-- 0 -->
   <types xsi:type="metamodel:Datatype" name="String"/>
+  
+  <!-- 1 -->
   <types xsi:type="metamodel:Datatype" name="Integer"/>
+  
+  <!-- 2 -->
   <types xsi:type="metamodel:Datatype" name="Long"/>
+  
+  <!-- 3 -->
   <types xsi:type="metamodel:Datatype" name="Float"/>
-  <types xsi:type="metamodel:Entity" name="Person" owns="//@types.8 //@types.10" bequeathesTo="//@types.6 //@types.7">
+  
+  <!-- 4  e:Person -->
+  <types xsi:type="metamodel:Entity" name="Person" owns="//@types.6 //@types.10 //@types.12 //@types.15" bequeathesTo="//@types.7 //@types.8">
     <features name="name" type="//@types.0"/>
     <features name="age" type="//@types.1"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Address" ownedBy="//@types.8">
+  
+  <!-- 5  e:Address -->
+  <types xsi:type="metamodel:Entity" name="Address" ownedBy="//@types.6">
     <features name="street" type="//@types.0"/>
     <features name="zip" type="//@types.0"/>
     <features name="city" type="//@types.0"/>
     <featuresId name="id" type="//@types.2" generationType="GenerationType.TABLE"/>
   </types>
+  
+  <!-- 6  r:otherAddr -->
+  <types xsi:type="metamodel:OneToMany" name="otherAddr" owner="//@types.4" slave="//@types.5"/>
+  
+  <!-- 7  e:Student -->
   <types xsi:type="metamodel:Entity" name="Student" inherits="//@types.4">
     <features name="matrnr" type="//@types.1"/>
   </types>
+  
+  <!-- 8  e:Professor -->
   <types xsi:type="metamodel:Entity" name="Professor" inherits="//@types.4">
     <features name="salary" type="//@types.3"/>
   </types>
-  <types xsi:type="metamodel:OneToMany" name="otherAddr" owner="//@types.4" slave="//@types.5"/>
+  
+  <!-- 9  e:Contact -->
   <types xsi:type="metamodel:Entity" name="Contact" ownedBy="//@types.10">
     <features name="phone" type="//@types.0"/>
     <features name="email" type="//@types.0"/>
     <featuresId name="id" type="//@types.2"/>
   </types>
+  
+  <!-- 10 r:OneToOne-->
   <types xsi:type="metamodel:OneToOne" owner="//@types.4" slave="//@types.9"/>
+  
+  <!-- 11 e:Map -->
+  <types xsi:type="metamodel:Entity" name="Map" ownedBy="//@types.12">
+    <features name="worldname" type="//@types.0"/>
+    <features name="maxplayers" type="//@types.1"/>
+    <featuresId name="mapid" type="//@types.2"/>
+  </types>
+  
+  <!-- 12 r:playsIn -->
+  <types xsi:type="metamodel:ManyToMany" name="playsIn" owner="//@types.4" slave="//@types.11"/>
+  
+  <!-- 13 e:Ressource -->
+  <types xsi:type="metamodel:Entity" name="Ressource" ownedBy="//@types.15">
+    <featuresId name="resid" type="//@types.2"/>
+  </types>
+  
+  <!-- 14 ae:RessourceAmount -->
+  <types xsi:type="metamodel:AssociationEntity" name="RessourceAmount" relation="//@types.15">
+  </types>
+  
+  <!-- 15 r:playsIn -->
+  <types xsi:type="metamodel:ManyToMany" associates="//@types.14" name="hasRes" owner="//@types.4" slave="//@types.13"/>
+  
   <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>

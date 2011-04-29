@@ -10,3 +10,9 @@ context Entity ERROR "Duplicate entity "+name :
 
 context Entity ERROR "No id feature for entity "+name + " defined" :
    !(inherits==null && featuresId==null);
+
+context OneToMany ERROR "No owner side defined for relation " + name :
+	model().entities().owns.select(e|e == this).size >= 1;
+
+context OneToMany ERROR "No ownedBy side defined for relation " + name :
+	model().entities().ownedBy.select(e|e == this).size >= 1;

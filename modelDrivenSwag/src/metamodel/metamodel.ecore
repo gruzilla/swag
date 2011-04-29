@@ -45,6 +45,7 @@
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>
+  <eClassifiers xsi:type="ecore:EClass" name="ManyToMany" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="idFeature" eSuperTypes="#//Feature">
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="generationType" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EString"/>
   </eClassifiers>

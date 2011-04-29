@@ -7,6 +7,8 @@
 	«FOREACH list AS rel»
 		«IF rel.metaType.name == OneToMany.name»
 			«EXPAND OneToMany::relationAttribute(rel)»
+		«ELSEIF rel.metaType.name == ManyToMany.name»
+			«EXPAND ManyToMany::relationAttribute(rel)»
 		«ELSEIF rel.metaType.name == OneToOne.name»
 			«EXPAND OneToOne::relationAttribute(rel)»
 		«ENDIF»
@@ -19,6 +21,8 @@
 	«FOREACH list AS rel»
 		«IF rel.metaType.name == OneToOne.name»
 			«EXPAND OneToOne::OneToOne(rel)»
+		«ELSEIF rel.metaType.name == ManyToMany.name»
+			«EXPAND ManyToMany::ManyToMany(rel)»
 		«ELSEIF rel.metaType.name == OneToMany.name»
 			«EXPAND OneToMany::OneToMany(rel)»
 		«ENDIF»
@@ -31,6 +35,8 @@
 	«FOREACH list AS rel»
 		«IF rel.metaType.name == OneToOne.name»
 			«EXPAND OneToOne::relationEquals(rel)»
+		«ELSEIF rel.metaType.name == ManyToMany.name»
+			«EXPAND ManyToMany::relationEquals(rel)»
 		«ELSEIF rel.metaType.name == OneToMany.name»
 			«EXPAND OneToMany::relationEquals(rel)»
 		«ENDIF»
@@ -43,6 +49,8 @@
 	«FOREACH list AS rel»
 		«IF rel.metaType.name == OneToOne.name»
 			«EXPAND OneToOne::relationHash(rel)»
+		«ELSEIF rel.metaType.name == ManyToMany.name»
+			«EXPAND ManyToMany::relationHash(rel)»
 		«ELSEIF rel.metaType.name == OneToMany.name»
 			«EXPAND OneToMany::relationHash(rel)»
 		«ENDIF»

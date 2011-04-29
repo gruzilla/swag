@@ -4,7 +4,7 @@
 
 «DEFINE OneToMany(Relation rel) FOR Entity»
 	«IF rel.isOwner(this)»
-	@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.name + rel.otherPartner(this).name.toFirstUpper()»")
+	@«rel.metaType.toString().split(":").last()» (mappedBy = "«(rel.name==null ? rel.otherPartner(this).name.toFirstLower() : rel.name + rel.otherPartner(this).name.toFirstUpper())»")
 	«ELSE»
 	@ManyToOne
 	«ENDIF»
