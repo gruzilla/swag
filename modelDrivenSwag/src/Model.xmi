@@ -12,7 +12,7 @@
     <features name="time" type="//@types.4"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="User" owns="//@types.26 //@types.27 //@types.29">
+  <types xsi:type="metamodel:Entity" name="User" owns="//@types.26 //@types.27 //@types.29 //@types.30 //@types.32 //@types.36">
     <features name="username" type="//@types.0"/>
     <features name="password" type="//@types.0"/>
     <features name="name" type="//@types.0"/>
@@ -21,66 +21,66 @@
     <features name="timezone" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="MapObject" bequeathesTo="//@types.10 //@types.14">
+  <types xsi:type="metamodel:Entity" name="MapObject" ownedBy="//@types.41" bequeathesTo="//@types.10 //@types.14">
     <features name="name" type="//@types.0"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Squad" inherits="//@types.9">
+  <types xsi:type="metamodel:Entity" name="Squad" owns="//@types.31 //@types.33" ownedBy="//@types.30 //@types.34" inherits="//@types.9">
     <features name="movementspeed" type="//@types.5"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Troop">
+  <types xsi:type="metamodel:Entity" name="Troop" ownedBy="//@types.31 //@types.35">
     <features name="level" type="//@types.1"/>
     <features name="creationTime" type="//@types.4"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="SquadMovement" owns="//@types.24 //@types.25">
+  <types xsi:type="metamodel:Entity" name="SquadMovement" owns="//@types.24 //@types.25" ownedBy="//@types.33">
     <features name="startTime" type="//@types.4"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Map">
+  <types xsi:type="metamodel:Entity" name="Map" owns="//@types.40" ownedBy="//@types.32">
     <features name="name" type="//@types.0"/>
     <features name="maxUsers" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Base" inherits="//@types.9">
+  <types xsi:type="metamodel:Entity" name="Base" ownedBy="//@types.36" inherits="//@types.9">
     <features name="creationTime" type="//@types.4"/>
     <features name="isStarterBase" type="//@types.6"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="BaseSquare">
+  <types xsi:type="metamodel:Entity" name="BaseSquare" owns="//@types.37" ownedBy="//@types.39">
     <features name="positionX" type="//@types.1"/>
     <features name="positionY" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="MapSquare" ownedBy="//@types.24 //@types.25">
+  <types xsi:type="metamodel:Entity" name="MapSquare" owns="//@types.34 //@types.38 //@types.41" ownedBy="//@types.24 //@types.25 //@types.40">
     <features name="positionX" type="//@types.1"/>
     <features name="positionY" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Building" bequeathesTo="//@types.19 //@types.20">
+  <types xsi:type="metamodel:Entity" name="Building" owns="//@types.39" bequeathesTo="//@types.19 //@types.20">
     <features name="level" type="//@types.1"/>
     <features name="currentHealth" type="//@types.1"/>
     <features name="maxHealth" type="//@types.1"/>
     <features name="creationTime" type="//@types.4"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="SquareBoost">
+  <types xsi:type="metamodel:Entity" name="SquareBoost" ownedBy="//@types.37 //@types.38 //@types.46">
     <features name="level" type="//@types.5"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="ResourceBuilding" inherits="//@types.17"/>
-  <types xsi:type="metamodel:Entity" name="TroopBuilding" inherits="//@types.17">
+  <types xsi:type="metamodel:Entity" name="ResourceBuilding" ownedBy="//@types.47" inherits="//@types.17"/>
+  <types xsi:type="metamodel:Entity" name="TroopBuilding" owns="//@types.43" inherits="//@types.17">
     <features name="buildingType" type="//@types.0"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Resources" ownedBy="//@types.29">
+  <types xsi:type="metamodel:Entity" name="Resources" owns="//@types.46 //@types.47" ownedBy="//@types.29 //@types.45">
     <features name="name" type="//@types.0"/>
     <features name="defaultResource" type="//@types.6"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="TroopBuildingTypes">
+  <types xsi:type="metamodel:Entity" name="TroopBuildingTypes" ownedBy="//@types.42 //@types.43">
     <features name="type" type="//@types.0"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="TroopTypes">
+  <types xsi:type="metamodel:Entity" name="TroopTypes" owns="//@types.35 //@types.42 //@types.45">
     <features name="name" type="//@types.0"/>
     <features name="baseMovementSpeed" type="//@types.5"/>
     <features name="baseAttackStrength" type="//@types.5"/>
@@ -96,5 +96,23 @@
     <features name="amount" type="//@types.1"/>
   </types>
   <types xsi:type="metamodel:ManyToMany" name="has" owner="//@types.8" slave="//@types.21" associates="//@types.28"/>
+  <types xsi:type="metamodel:OneToMany" name="belongsTo" owner="//@types.8" slave="//@types.10"/>
+  <types xsi:type="metamodel:OneToMany" name="partOf" owner="//@types.10" slave="//@types.11"/>
+  <types xsi:type="metamodel:ManyToMany" name="playsOn" owner="//@types.8" slave="//@types.13"/>
+  <types xsi:type="metamodel:OneToOne" name="moves" owner="//@types.10" slave="//@types.12"/>
+  <types xsi:type="metamodel:OneToMany" name="isOn" owner="//@types.16" slave="//@types.10"/>
+  <types xsi:type="metamodel:OneToMany" name="isOf" owner="//@types.23" slave="//@types.11"/>
+  <types xsi:type="metamodel:OneToMany" name="belongsTo" owner="//@types.8" slave="//@types.14"/>
+  <types xsi:type="metamodel:OneToOne" name="boostedBy" owner="//@types.15" slave="//@types.18"/>
+  <types xsi:type="metamodel:OneToOne" name="boostedBy" owner="//@types.16" slave="//@types.18"/>
+  <types xsi:type="metamodel:OneToOne" name="builtOn" owner="//@types.17" slave="//@types.15"/>
+  <types xsi:type="metamodel:OneToMany" name="partOf" owner="//@types.13" slave="//@types.16"/>
+  <types xsi:type="metamodel:OneToMany" name="isOn" owner="//@types.16" slave="//@types.9"/>
+  <types xsi:type="metamodel:OneToMany" name="builtBy" owner="//@types.23" slave="//@types.22"/>
+  <types xsi:type="metamodel:OneToMany" name="builds" owner="//@types.20" slave="//@types.22"/>
+  <types xsi:type="metamodel:AssociationEntity" name="TroopCost" relation="//@types.45"/>
+  <types xsi:type="metamodel:ManyToMany" name="costs" owner="//@types.23" slave="//@types.21" associates="//@types.44"/>
+  <types xsi:type="metamodel:OneToMany" name="boosts" owner="//@types.21" slave="//@types.18"/>
+  <types xsi:type="metamodel:OneToMany" name="produces" owner="//@types.21" slave="//@types.19"/>
   <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>
