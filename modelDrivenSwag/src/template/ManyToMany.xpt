@@ -8,7 +8,7 @@
 		@«rel.metaType.toString().split(":").last()»
 		@JoinTable(name="«rel.owner.name»_«rel.slave.name»_association")
 		«ELSEIF rel.unidirectional == false»
-		@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.ownerAttribute()»Set")
+		@«rel.metaType.toString().split(":").last()»(mappedBy = "«rel.ownerAttribute()»Set")
 		«ENDIF»
 	«ELSE»
 		«EXPAND AssociationEntity::associate(rel.associates)»

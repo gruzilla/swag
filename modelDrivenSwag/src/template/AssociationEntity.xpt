@@ -34,7 +34,7 @@
 				«entity.name.toFirstLower()»PK = primaryKey;
 			}
 			
-			@ManyToOne
+			@ManyToOne(optional=«entity.relation.optional»)
 			@MapsId("«entity.relation.owner.name.toFirstLower()+entity.relation.owner.featuresId.attribute().toUpperCase()»")
 			public «entity.relation.owner.name.toFirstUpper()» get«entity.relation.slaveAttribute().toFirstUpper()»() {
 				return this.«entity.relation.slaveAttribute()»;
@@ -44,7 +44,7 @@
 				this.«entity.relation.slaveAttribute()» = lol;
 			}
 			
-			@ManyToOne
+			@ManyToOne(optional=«entity.relation.optional»)
 			@MapsId("«entity.relation.slave.name.toFirstLower()+entity.relation.slave.featuresId.attribute().toUpperCase()»")
 			public «entity.relation.slave.name.toFirstUpper()» get«entity.relation.ownerAttribute().toFirstUpper()»() {
 				return «entity.relation.ownerAttribute()»;
