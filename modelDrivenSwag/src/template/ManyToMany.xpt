@@ -13,9 +13,9 @@
 	«ELSE»
 		«EXPAND AssociationEntity::associate(rel.associates)»
 		«IF rel.isOwner(this)»
-			@OneToMany (mappedBy = "«rel.slave.name+rel.slave.featuresId.attribute().toFirstUpper()»")
+			@OneToMany (mappedBy = "«rel.ownerAttribute()»")
 		«ELSE»
-			@OneToMany (mappedBy = "«rel.owner.name+rel.owner.featuresId.attribute().toFirstUpper()»")
+			@OneToMany (mappedBy = "«rel.slaveAttribute()»")
 		«ENDIF»
 	«ENDIF»
 	«EXPAND relationGetter(rel)» 

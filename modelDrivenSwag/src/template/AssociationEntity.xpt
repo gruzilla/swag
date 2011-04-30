@@ -8,7 +8,7 @@
 		
 		import javax.persistence.*;
 		import java.util.Set;
-		import java.util.Date;
+		import java.sql.Date;
 		
 		@Entity
 		public class «entity.name»  {
