@@ -10,7 +10,7 @@
 		import java.util.Set;
 		import java.sql.Date;
 		
-		@Entity
+		@Entity(name="swa_«entity.name.toFirstLower()»")
 		public class «entity.name»  {
 
 			private «entity.name»PK «entity.name.toFirstLower()»PK;
