@@ -14,6 +14,8 @@
 		public class «entity.name»  {
 
 			private «entity.name»PK «entity.name.toFirstLower()»PK;
+			private «entity.relation.owner.name.toFirstUpper()» «entity.relation.slaveAttribute()»;
+			private «entity.relation.slave.name.toFirstUpper()» «entity.relation.ownerAttribute()»;
 			
 	        «FOREACH entity.features AS f»
 					private «f.type.name» «f.attribute()»;
@@ -31,6 +33,27 @@
 			public void set«entity.name»PK(«entity.name»PK primaryKey) {
 				«entity.name.toFirstLower()»PK = primaryKey;
 			}
+			
+			@ManyToOne
+			@MapsId("«entity.relation.owner.name.toFirstLower()+entity.relation.owner.featuresId.attribute().toUpperCase()»")
+			public «entity.relation.owner.name.toFirstUpper()» get«entity.relation.slaveAttribute().toFirstUpper()»() {
+				return this.«entity.relation.slaveAttribute()»;
+			}
+			
+			public void set«entity.relation.slaveAttribute().toFirstUpper()»(«entity.relation.owner.name.toFirstUpper()» lol) {
+				this.«entity.relation.slaveAttribute()» = lol;
+			}
+			
+			@ManyToOne
+			@MapsId("«entity.relation.slave.name.toFirstLower()+entity.relation.slave.featuresId.attribute().toUpperCase()»")
+			public «entity.relation.slave.name.toFirstUpper()» get«entity.relation.ownerAttribute().toFirstUpper()»() {
+				return «entity.relation.ownerAttribute()»;
+			}
+			
+			public void set«entity.relation.ownerAttribute().toFirstUpper()»(«entity.relation.slave.name.toFirstUpper()» rofl) {
+				this.«entity.relation.ownerAttribute()» = rofl;
+			}
+			
 		}
 	«ENDFILE»
 	«FILE "swag/db/model/" + entity.name + "PK.java"»
@@ -45,28 +68,28 @@
 		public class «entity.name»PK implements Serializable {
 			
 			private static final long serialVersionUID = «getUID()»L;
+			«LET entity.relation.owner.name.toFirstLower()+entity.relation.owner.featuresId.attribute().toUpperCase() AS ownerId»
+			«LET entity.relation.slave.name.toFirstLower()+entity.relation.slave.featuresId.attribute().toUpperCase() AS slaveId»
 			
-			private «entity.relation.owner.name.toFirstUpper()» «entity.relation.ownerAttribute()»;
-			private «entity.relation.slave.name.toFirstUpper()» «entity.relation.slaveAttribute()»;
+			private «entity.relation.owner.featuresId.type.name» «ownerId»;
+			private «entity.relation.slave.featuresId.type.name» «slaveId»;
 			
 			public «entity.name»PK() {}
 			
-			@ManyToOne
-			public «entity.relation.owner.name.toFirstUpper()» get«entity.relation.ownerAttribute().toFirstUpper()»() {
-				return this.«entity.relation.ownerAttribute()»;
+			public «entity.relation.owner.featuresId.type.name» get«ownerId.toFirstUpper()»() {
+				return «ownerId»;
 			}
 			
-			public void set«entity.relation.ownerAttribute().toFirstUpper()»(«entity.relation.owner.name.toFirstUpper()» lol) {
-				this.«entity.relation.ownerAttribute()» = lol;
+			public void set«ownerId.toFirstUpper()»(«entity.relation.owner.featuresId.type.name» zomgbbq) {
+				this.«ownerId» = zomgbbq;
 			}
 			
-			@ManyToOne
-			public «entity.relation.slave.name.toFirstUpper()» get«entity.relation.slaveAttribute().toFirstUpper()»() {
-				return «entity.relation.slaveAttribute()»;
+			public «entity.relation.slave.featuresId.type.name» get«slaveId.toFirstUpper()»() {
+				return «slaveId»;
 			}
 			
-			public void set«entity.relation.slaveAttribute().toFirstUpper()»(«entity.relation.slave.name.toFirstUpper()» rofl) {
-				this.«entity.relation.slaveAttribute()» = rofl;
+			public void set«slaveId.toFirstUpper()»(«entity.relation.slave.featuresId.type.name» ygos) {
+				this.«slaveId» = ygos;
 			}
 			
 			@Override
@@ -76,8 +99,8 @@
 				
 				«entity.name»PK other = («entity.name»PK) obj;
 				
-				if (!«entity.relation.ownerAttribute()».equals(other.«entity.relation.ownerAttribute()»)) return false;
-				if (!«entity.relation.slaveAttribute()».equals(other.«entity.relation.slaveAttribute()»)) return false;
+				if (!«ownerId».equals(other.«ownerId»)) return false;
+				if (!«slaveId».equals(other.«slaveId»)) return false;
 				
 				return true;
 			}
@@ -86,10 +109,13 @@
 			public int hashCode() {
 				final int prime = 31;
 				int result = 1;
-				result = prime * result + ((«entity.relation.ownerAttribute()» == null) ? 0 : «entity.relation.ownerAttribute()».hashCode());
-				result = prime * result + ((«entity.relation.slaveAttribute()» == null) ? 0 : «entity.relation.slaveAttribute()».hashCode());
+				result = prime * result + ((«ownerId» == null) ? 0 : «ownerId».hashCode());
+				result = prime * result + ((«slaveId» == null) ? 0 : «slaveId».hashCode());
 				return result;
 			}
+			
+			«ENDLET»
+			«ENDLET»
 		}
 	«ENDFILE»
 «ENDDEFINE»

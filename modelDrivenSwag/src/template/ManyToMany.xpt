@@ -6,19 +6,16 @@
 	«IF rel.associates == null»
 		«IF rel.isOwner(this)»
 		@«rel.metaType.toString().split(":").last()»
-		@JoinTable(
-			name="«rel.owner.name»_«rel.slave.name»_association",
-			joinColumns={@JoinColumn(name="«rel.owner.name»_id", referencedColumnName="«rel.owner.featuresId.name»")},
-			inverseJoinColumns={@JoinColumn(name="«rel.slave.name»_id", referencedColumnName="«rel.slave.featuresId.name»")})
+		@JoinTable(name="«rel.owner.name»_«rel.slave.name»_association")
 		«ELSEIF rel.unidirectional == false»
 		@«rel.metaType.toString().split(":").last()» (mappedBy = "«rel.ownerAttribute()»Set")
 		«ENDIF»
 	«ELSE»
 		«EXPAND AssociationEntity::associate(rel.associates)»
 		«IF rel.isOwner(this)»
-			@OneToMany (mappedBy = "«rel.associates.name+"PK."+rel.slaveAttribute()»")
+			@OneToMany (mappedBy = "«rel.slave.name+rel.slave.featuresId.attribute().toFirstUpper()»")
 		«ELSE»
-			@OneToMany (mappedBy = "«rel.associates.name+"PK."+rel.ownerAttribute()»")
+			@OneToMany (mappedBy = "«rel.owner.name+rel.owner.featuresId.attribute().toFirstUpper()»")
 		«ENDIF»
 	«ENDIF»
 	«EXPAND relationGetter(rel)» 
