@@ -42,11 +42,11 @@
     <features name="maxUsers" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="Base" ownedBy="//@types.36" inherits="//@types.9">
+  <types xsi:type="metamodel:Entity" name="Base" owns="//@types.48" ownedBy="//@types.36" inherits="//@types.9">
     <features name="creationTime" type="//@types.4"/>
     <features name="isStarterBase" type="//@types.6"/>
   </types>
-  <types xsi:type="metamodel:Entity" name="BaseSquare" owns="//@types.37" ownedBy="//@types.39">
+  <types xsi:type="metamodel:Entity" name="BaseSquare" owns="//@types.37" ownedBy="//@types.39 //@types.48">
     <features name="positionX" type="//@types.1"/>
     <features name="positionY" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
@@ -114,5 +114,6 @@
   <types xsi:type="metamodel:ManyToMany" name="costs" owner="//@types.23" slave="//@types.21" associates="//@types.44"/>
   <types xsi:type="metamodel:OneToMany" name="boosts" owner="//@types.21" slave="//@types.18"/>
   <types xsi:type="metamodel:OneToMany" name="produces" owner="//@types.21" slave="//@types.19"/>
+  <types xsi:type="metamodel:OneToMany" name="belongsToBase" owner="//@types.14" slave="//@types.15"/>
   <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>
