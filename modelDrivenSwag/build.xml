@@ -21,6 +21,7 @@
       <fileset dir="${glassfish.home}/modules">
 	<include name="**/org.eclipse*.jar"/>
 	<include name="**/javax.persistence.jar"/>
+	<include name="**/bean-validator.jar"/>
       </fileset>
       <pathelement location="${build.dir}"/>
     </path>
