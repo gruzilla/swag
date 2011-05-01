@@ -71,11 +71,7 @@ public class ResourceBuildingTest extends AbstractDBTest {
 		//and another one
 		ResourceBuilding building2 = createBuilding(res);
 		resourceBuildingDAO.persist(building2);
-		//add the building association to the resources
-		res.getProducesResourceBuildingSet().add(building);
-		res.getProducesResourceBuildingSet().add(building2);
-		//update the resources in the db
-		resourcesDAO.update(res);
+	
 	}
 	
 	public static ResourceBuilding createBuilding(Resources produces) {

@@ -42,13 +42,10 @@ public class AbstractDBTest {
 	public static EntityManagerFactory getEntityManagerFactory() {
 		return emf;
 	}
-	
-	@Before
-	public void setupDatabase() throws Exception {
+		public void setupDatabase() throws Exception {
 		//setup();		
 	}
 	
-	@After
 	public void tearDownDatabase() throws Exception {
 		//PersistenceManager.createPersistenceManager("lol");
 		//close();
@@ -72,8 +69,6 @@ public class AbstractDBTest {
 		dataSet = new FlatXmlDataSetBuilder().build(new File(DATASET));
 		databaseTester.setDataSet(dataSet);
 	}
-	
-	@AfterClass
 	public static void clear() throws Exception {
 		databaseTester = new JdbcDatabaseTester(DATABASE_DRIVER,
 				DATABASE_URL, 
