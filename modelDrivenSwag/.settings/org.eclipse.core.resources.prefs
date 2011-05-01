@@ -1,9 +1,10 @@
-#Fri Apr 15 14:22:24 CEST 2011
+#Sun May 01 14:26:48 CEST 2011
 eclipse.preferences.version=1
 encoding//.settings/org.eclipse.xtend.shared.ui.prefs=UTF-8
 encoding//src/metamodel/Checks.chk=UTF-8
 encoding//src/metamodel/Extensions.ext=UTF-8
 encoding//src/metamodel/metamodel.ecore=UTF-8
+encoding//src/metamodel/metamodel.ecore_diagram=UTF-8
 encoding//src/template/GeneratorExtensions.ext=UTF-8
 encoding//src/template/Template.xpt=UTF-8
 encoding//src/workflow/generator.mwe=UTF-8

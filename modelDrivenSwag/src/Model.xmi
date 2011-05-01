@@ -114,6 +114,6 @@
   <types xsi:type="metamodel:ManyToMany" name="costs" owner="//@types.23" slave="//@types.21" associates="//@types.44"/>
   <types xsi:type="metamodel:OneToMany" name="boosts" owner="//@types.21" slave="//@types.18"/>
   <types xsi:type="metamodel:OneToMany" name="produces" owner="//@types.21" slave="//@types.19"/>
-  <types xsi:type="metamodel:OneToMany" name="belongsToBase" owner="//@types.14" slave="//@types.15"/>
+  <types xsi:type="metamodel:OneToMany" name="isOn" owner="//@types.14" slave="//@types.15"/>
   <connector jdbcDriver="org.postgresql.Driver" jdbcUrl="jdbc:postgresql://localhost/swa" jdbcUser="swa" jdbcPassword="swa11" persistenceUnit="foo" jdbcPrefix="javax.persistence.jdbc"/>
 </metamodel:Model>

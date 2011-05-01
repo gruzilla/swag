@@ -42,8 +42,6 @@
     <eStructuralFeatures xsi:type="ecore:EAttribute" name="unidirectional" eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean"/>
     <eStructuralFeatures xsi:type="ecore:EReference" name="associates" eType="#//AssociationEntity"
         eOpposite="#//AssociationEntity/relation"/>
-    <eStructuralFeatures xsi:type="ecore:EAttribute" name="optional" lowerBound="1"
-        eType="ecore:EDataType http://www.eclipse.org/emf/2002/Ecore#//EBoolean" defaultValueLiteral="true"/>
   </eClassifiers>
   <eClassifiers xsi:type="ecore:EClass" name="OneToOne" eSuperTypes="#//Relation"/>
   <eClassifiers xsi:type="ecore:EClass" name="OneToMany" eSuperTypes="#//Relation"/>
