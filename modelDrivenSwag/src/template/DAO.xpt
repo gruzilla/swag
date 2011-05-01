@@ -12,9 +12,11 @@
 	public class «entity.name»DAO {
 
         private static EntityManagerFactory entityManagerFactory;
+        private static EntityManager entityManager;
         
         public static void initializeEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
 			«entity.name»DAO.entityManagerFactory = entityManagerFactory;
+			entityManager = entityManagerFactory.createEntityManager();
 		}
 		
 		«EXPAND delete(entity)»
@@ -33,18 +35,16 @@ EntityManager entityManager = entityManagerFactory.createEntityManager();«ENDDE
 
 «DEFINE CommitAndShutdown FOR Entity-»
 entityManager.getTransaction().commit();
-shutdown(entityManager);«ENDDEFINE»
+«ENDDEFINE»
 
 «DEFINE Catch FOR Entity-»
 catch (RuntimeException e) {
 	rollBackTransaction(entityManager);
-	shutdown(entityManager);
 	throw e;
 }«ENDDEFINE»
 
 «DEFINE delete(Entity entity) FOR Entity»
 public void delete(«entity.name» «entity.name.toFirstLower()») {
-	«EXPAND EntityManager»
 	try {
 		entityManager.getTransaction().begin();
 		entityManager.remove(«entity.name.toFirstLower()»);
@@ -62,16 +62,13 @@ public «entity.name» get(
 		«entity.inherits.featuresId.type.name-»
 	«ENDIF-»
 	 key) {
-	«EXPAND EntityManager»
 	«entity.name» «entity.name.toFirstLower()» = entityManager.find(«entity.name».class, key);
-	shutdown(entityManager);
 	return «entity.name.toFirstLower()»;
 }
 «ENDDEFINE»
 
 «DEFINE persist(Entity entity) FOR Entity»		
 public void persist(«entity.name» «entity.name.toFirstLower()») {
-	«EXPAND EntityManager»
 	entityManager.getTransaction().begin();
 	try {
 		entityManager.persist(«entity.name.toFirstLower()»);
@@ -83,7 +80,6 @@ public void persist(«entity.name» «entity.name.toFirstLower()») {
 
 «DEFINE update(Entity entity) FOR Entity»
 public «entity.name» update(«entity.name» «entity.name.toFirstLower()») {
-	«EXPAND EntityManager»
 	«entity.name» merged;
 	entityManager.getTransaction().begin();
 	try {
@@ -97,7 +93,6 @@ public «entity.name» update(«entity.name» «entity.name.toFirstLower()») {
 
 «DEFINE refresh(Entity entity) FOR Entity-»
 public void refresh(«entity.name» «entity.name.toFirstLower()») {
-	«EXPAND EntityManager»
 	try {
 		entityManager.refresh(«entity.name.toFirstLower()»);
 	}

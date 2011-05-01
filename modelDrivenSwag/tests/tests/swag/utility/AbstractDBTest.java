@@ -1,6 +1,7 @@
 package tests.swag.utility;
 
 
+import java.io.File;
 import java.net.MalformedURLException;
 
 import javax.persistence.EntityManagerFactory;
@@ -11,7 +12,9 @@ import org.dbunit.JdbcDatabaseTester;
 import org.dbunit.dataset.DataSetException;
 import org.dbunit.dataset.IDataSet;
 import org.dbunit.dataset.xml.FlatXmlDataSetBuilder;
+import org.dbunit.operation.DatabaseOperation;
 import org.junit.After;
+import org.junit.AfterClass;
 import org.junit.Before;
 import org.junit.BeforeClass;
 
@@ -40,10 +43,12 @@ public class AbstractDBTest {
 		return emf;
 	}
 	
+	@Before
 	public void setupDatabase() throws Exception {
 		setup();		
 	}
 	
+	@After
 	public void tearDownDatabase() throws Exception {
 		//PersistenceManager.createPersistenceManager("lol");
 		close();
@@ -64,10 +69,10 @@ public class AbstractDBTest {
 				DATABASE_URL, 
 				DATABASE_USER, 
 				DATABASE_PASSWORD);
-		//dataSet = new FlatXmlDataSetBuilder().build(new File(DATASET));
-		//databaseTester.setDataSet(dataSet);
+		dataSet = new FlatXmlDataSetBuilder().build(new File(DATASET));
+		databaseTester.setDataSet(dataSet);
 	}
-	/*
+	
 	@AfterClass
 	public static void clear() throws Exception {
 		databaseTester = new JdbcDatabaseTester(DATABASE_DRIVER,
@@ -77,5 +82,5 @@ public class AbstractDBTest {
 		IDataSet dataSet = new FlatXmlDataSetBuilder().build(new File(DATASET));
 		DatabaseOperation.DELETE_ALL.execute(databaseTester.getConnection(), dataSet);
 	}
-		*/
+		
 }
