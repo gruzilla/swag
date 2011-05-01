@@ -45,13 +45,13 @@ public class AbstractDBTest {
 	
 	@Before
 	public void setupDatabase() throws Exception {
-		setup();		
+		//setup();		
 	}
 	
 	@After
 	public void tearDownDatabase() throws Exception {
 		//PersistenceManager.createPersistenceManager("lol");
-		close();
+		//close();
 	}
 	
 	private void setup() throws Exception {
