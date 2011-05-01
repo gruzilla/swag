@@ -6,7 +6,7 @@
 	«IF rel.isOwner(this)»
 	@«rel.metaType.toString().split(":").last()» (mappedBy = "«(rel.name==null ? rel.otherPartner(this).name.toFirstLower() : rel.name + rel.otherPartner(this).name.toFirstUpper())»")
 	«ELSE»
-	@ManyToOne
+	@ManyToOne(optional=«rel.optional»)
 	«ENDIF»
 	«EXPAND relationGetter(rel)» 
 	«EXPAND relationSetter(rel)» «ENDDEFINE»
