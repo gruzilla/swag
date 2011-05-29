@@ -11,12 +11,10 @@
 	
 	public class «entity.name»DAO {
 
-        private static EntityManagerFactory entityManagerFactory;
-        private static EntityManager entityManager;
-        
-        public static void initializeEntityManagerFactory(EntityManagerFactory entityManagerFactory) {
-			«entity.name»DAO.entityManagerFactory = entityManagerFactory;
-			entityManager = entityManagerFactory.createEntityManager();
+        private EntityManager entityManager;
+		
+		public «entity.name»DAO(EntityManager entityManager) {
+			this.entityManager = entityManager;
 		}
 		
 		«EXPAND delete(entity)»
@@ -24,8 +22,6 @@
 		«EXPAND persist(entity)»
 		«EXPAND update(entity)»
 		«EXPAND refresh(entity)»
-		«EXPAND rollBackTransaction»
-		«EXPAND shutdown»
 		}
 	«ENDFILE»
 «ENDDEFINE»
@@ -45,12 +41,7 @@ catch (RuntimeException e) {
 
 «DEFINE delete(Entity entity) FOR Entity»
 public void delete(«entity.name» «entity.name.toFirstLower()») {
-	try {
-		entityManager.getTransaction().begin();
 		entityManager.remove(«entity.name.toFirstLower()»);
-		«EXPAND CommitAndShutdown»
-	}
-	«EXPAND Catch»
 }
 «ENDDEFINE»
 
@@ -69,50 +60,20 @@ public «entity.name» get(
 
 «DEFINE persist(Entity entity) FOR Entity»		
 public void persist(«entity.name» «entity.name.toFirstLower()») {
-	entityManager.getTransaction().begin();
-	try {
 		entityManager.persist(«entity.name.toFirstLower()»);
-		«EXPAND CommitAndShutdown»
-	}
-	«EXPAND Catch»
 }
 «ENDDEFINE»
 
 «DEFINE update(Entity entity) FOR Entity»
 public «entity.name» update(«entity.name» «entity.name.toFirstLower()») {
 	«entity.name» merged;
-	entityManager.getTransaction().begin();
-	try {
-		merged = entityManager.merge(«entity.name.toFirstLower()»);
-		«EXPAND CommitAndShutdown»
-		return merged;
-		}
-	«EXPAND Catch»
+	merged = entityManager.merge(«entity.name.toFirstLower()»);
+	return merged;
 }
 «ENDDEFINE»
 
 «DEFINE refresh(Entity entity) FOR Entity-»
 public void refresh(«entity.name» «entity.name.toFirstLower()») {
-	try {
 		entityManager.refresh(«entity.name.toFirstLower()»);
-	}
-	catch(RuntimeException e) {
-		throw e;
-	}
-}
-«ENDDEFINE»
-
-«DEFINE rollBackTransaction FOR Entity»
-private void rollBackTransaction(EntityManager entityManager) {
-	if (entityManager.getTransaction().isActive())
-		entityManager.getTransaction().rollback();
-}
-«ENDDEFINE»
-
-«DEFINE shutdown FOR Entity»
-public static void shutdown(EntityManager entityManager) {
-	if(entityManager != null &&	entityManager.isOpen()) {
-		entityManager.close();
-	}
 }
 «ENDDEFINE»
