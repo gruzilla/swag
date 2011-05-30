@@ -42,7 +42,7 @@ $.extend($.swag.Menu.prototype, {
 				ref.initClickController(controller);
 			});
 		} else {
-			this.pointHandlers[controller].handle();
+			this.handle(controller);
 		}
 	},
 	
@@ -51,6 +51,11 @@ $.extend($.swag.Menu.prototype, {
 	 */
 	initClickController: function(controller) {
 		this.pointHandlers[controller] = new (eval("$."+controller))();
+		this.handle(controller);
+	},
+	
+	handle: function(controller) {
 		this.pointHandlers[controller].handle();
+		$.swag.Main.INSTANCE.updateLayout();
 	}
 });

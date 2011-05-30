@@ -1,6 +1,8 @@
-require(["jquery.bind", "jquery.ui"], function() {
+require(["jquery.bind", "jquery.ui", "md5"], function() {
 
 	$.swag = {};
+	
+	// constructor
 	$.swag.Main = function() {
 		jQuery.fx.interval=60;
 		
@@ -18,6 +20,19 @@ require(["jquery.bind", "jquery.ui"], function() {
 		require(needed, this.allLoaded.bind(this));
 	};
 	
+	// static attributes
+	$.swag.Main.DIALOG_DEFAULT = {
+		modal: true,
+		buttons: [
+			{
+				text: "Ok",
+				click: function() { $(this).dialog("close"); }
+			}
+		]
+	};
+	
+	
+	// methods
 	$.extend($.swag.Main.prototype, {
 		
 		allLoaded: function() {
@@ -50,6 +65,15 @@ require(["jquery.bind", "jquery.ui"], function() {
 		 */
 		initMenu: function() {
 			this.menu = new $.swag.Menu();
+		},
+		
+		/**
+		 * fixes all inputs for layouting
+		 */
+		updateLayout: function() {
+			$('button').button();
+			$('input:submit').button();
+			$('a.button').button();
 		}
 	});
 	

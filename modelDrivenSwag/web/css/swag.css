@@ -19,6 +19,13 @@ div#iewarning {
 }
 
 
+/************** CONTENT *************/
+#content {
+	padding-top: 30px;
+	clear: both;
+}
+
+
 /************** MENU ****************/
 #menu li {
 	display: inline-block;
@@ -32,3 +39,39 @@ div#iewarning {
 #menu li:HOVER {
 	background-color: #ACACFF;
 }
+
+/************* FORMS ***************/
+/* proper layouting */
+form dl, dl.labels {
+	margin:0em;
+	font-size:100%;
+	margin-top:0.5em
+}
+form dt, dl.labels dt {
+	float:left;
+	clear:left;
+	width:10em;
+	margin-bottom:0.8em;
+	color:#555;
+	text-align:right;
+	font-weight:normal;
+	font-family:Verdana;
+	position:relative /*IEWin hack*/
+}
+form dd, dl.labels dd {
+	clear:right;
+	margin-left:10.5em;
+	margin-bottom:0.8em;
+	font-size:100%;
+	font-style:normal;
+	padding-left:0.5em
+}
+form dd.submit, dl.labels dd.submit	{
+	margin-top:2em
+}
+/* now give it color */
+.formhelp	{ color:#777; font-size:90% }
+.reqd	{ color:#c00; font-weight:bold }
+.help	{ cursor:help; }
+
+	

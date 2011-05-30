@@ -16,5 +16,7 @@
     <h1>Hello World!</h1>
     <%@ include file="elements/menu.jsp" %>
     <%@ include file="elements/iewarning.jsp" %>
+    
+    <div id="content"></div>
 </body>
 </html> 
