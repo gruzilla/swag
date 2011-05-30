@@ -1,0 +1,34 @@
+html, body {
+	height: 100%;
+	padding: 0;
+	margin: 0;
+	overflow: hidden;
+	font-family: Futura, sans-serif;
+}
+
+a {
+	color: #333333;
+}
+
+a:visited {
+	color: #333333;
+}
+
+div#iewarning {
+	display:none;
+}
+
+
+/************** MENU ****************/
+#menu li {
+	display: inline-block;
+	padding: 5px;
+	margin-right: 10px;
+	float: left;
+	width: 100px;
+	background-color: #EFEFEF;
+	cursor: pointer;
+}
+#menu li:HOVER {
+	background-color: #ACACFF;
+}
