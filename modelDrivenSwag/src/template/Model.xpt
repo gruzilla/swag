@@ -6,11 +6,13 @@
 		«FILE "swag/db/model/" + entity.name + ".java"»
 		package swag.db.model;
 		
+		import javax.xml.bind.annotation.XmlRootElement;
 		import javax.persistence.*;
 		import java.util.Set;
 		import java.io.Serializable;
-		import java.sql.Date;
+		import java.util.Date;
 		
+		@XmlRootElement
 		@Entity(name="swa_«entity.name.toFirstLower()»")
 		«EXPAND Inheritance::inheritanceAnnotation(entity.bequeathesTo)»
 		public class «entity.name» «EXPAND Inheritance::inherits(entity.inherits)» implements Serializable {
@@ -50,6 +52,7 @@
 «DEFINE gettersAndSetters FOR Entity»
 	«FOREACH features AS f»
 				@Column(«IF f.nullable == false»nullable = false«ENDIF»)
+				«IF f.type.name == "Date"»@Temporal(TemporalType.TIMESTAMP)«ENDIF»
 				«EXPAND getters(f)»
 				«EXPAND setters(f)»
 			«ENDFOREACH»

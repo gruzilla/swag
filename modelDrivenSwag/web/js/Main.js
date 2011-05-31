@@ -21,6 +21,7 @@ require(["jquery.bind", "jquery.ui", "md5"], function() {
 	};
 	
 	// static attributes
+	$.swag.Main.BASE = '/resources';
 	$.swag.Main.DIALOG_DEFAULT = {
 		modal: true,
 		buttons: [

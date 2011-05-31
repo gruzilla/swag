@@ -10,7 +10,7 @@
 <!DOCTYPE resources PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Resource Definitions //EN" "http://www.sun.com/software/appserver/dtds/sun-resources_1_3.dtd">
 <resources>
    <jdbc-resource jndi-name="swag" pool-name="swag_pool"/>
-   <jdbc-connection-pool name="swag_pool" datasource-classname="org.postgresql.ds.PGPoolingDataSource">
+   <jdbc-connection-pool name="swag_pool" res-type="javax.sql.ConnectionPoolDataSource" datasource-classname="org.postgresql.ds.PGConnectionPoolDataSource">
        <property name="databaseName" value="swa"/>
        <property name="serverName" value="localhost"/>
        <property name="portNumber" value="5432"/>
@@ -18,6 +18,7 @@
        <property name="password" value="«model.connector.jdbcPassword»"/>
        <property name="URL" value="«model.connector.jdbcUrl»"/>
        <property name="driverClass" value="«model.connector.jdbcDriver»"/>
+       <property name="JDBC30DataSource" value="true"/>
    </jdbc-connection-pool>
 </resources>
 «ENDFILE»

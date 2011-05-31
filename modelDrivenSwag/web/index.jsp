@@ -6,7 +6,6 @@
 	<base href="http://localhost:8080/">
 	<script data-main="js/Main" src="js/require-jquery.js"></script>
 	<style>
-		@import "css/jquery.svg.css";
 		@import "css/swag.css";
 		@import "css/ui-lightness/jquery-ui-1.8.6.custom.css";
 	</style> 
