@@ -1,32 +1,50 @@
 «IMPORT metamodel»
 «EXTENSION template::GeneratorExtensions»
+
+«DEFINE property(String name, String value) FOR Model»
+<property name="«name»" value="«value»" />«ENDDEFINE»
+
 «DEFINE persistence(Model model) FOR Model-»
-		«FILE "META-INF/persistence.xml"-»
-«EXPAND header»
-		<properties>
-		<exclude-unlisted-classes>false</exclude-unlisted-classes>
-		«EXPAND property(model.connector.jdbcPrefix+".driver",model.connector.jdbcDriver)-»
-		«EXPAND property(model.connector.jdbcPrefix+".url", model.connector.jdbcUrl)-»
-		«EXPAND property(model.connector.jdbcPrefix+".user", model.connector.jdbcUser)-»
-		«EXPAND property(model.connector.jdbcPrefix+".password", model.connector.jdbcPassword)-»
-		<property name="eclipselink.ddl-generation" value="drop-and-create-tables" />
-		<property name="eclipselink.ddl-generation.output-mode"	value="database" />		
-		<property name="eclipselink.logging.logger" value="DefaultLogger"/>
-		<property name="eclipselink.logging.level" value="WARNING"/>
-		</properties>
-		</persistence-unit>
-		</persistence>
+«FILE "../setup/swag.xml"-»
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE resources PUBLIC "-//Sun Microsystems, Inc.//DTD Application Server 9.0 Resource Definitions //EN" "http://www.sun.com/software/appserver/dtds/sun-resources_1_3.dtd">
+<resources>
+   <jdbc-resource jndi-name="swag" pool-name="swag_pool"/>
+   <jdbc-connection-pool name="swag_pool" res-type="javax.sql.ConnectionPoolDataSource" datasource-classname="org.postgresql.ds.PGConnectionPoolDataSource">
+       <property name="databaseName" value="swa"/>
+       <property name="serverName" value="localhost"/>
+       <property name="portNumber" value="5432"/>
+       <property name="user" value="«model.connector.jdbcUser»"/>
+       <property name="password" value="«model.connector.jdbcPassword»"/>
+       <property name="URL" value="«model.connector.jdbcUrl»"/>
+       <property name="driverClass" value="«model.connector.jdbcDriver»"/>
+       <property name="JDBC30DataSource" value="true"/>
+   </jdbc-connection-pool>
+</resources>
+«ENDFILE»
+
+«FILE "../src/META-INF/persistence.xml"-»
+	«EXPAND header»
+    <properties>
+      <property name="toplink.ddl-generation" value="drop-and-create-tables"/>
+	  <property name="toplink.ddl-generation.output-mode" value="both"/>
+      <property name="toplink.logging.level" value="FINE"/>
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="eclipselink.ddl-generation.output-mode" value="database"/>
+      <property name="eclipselink.logging.logger" value="DefaultLogger"/>
+      <property name="eclipselink.logging.level" value="WARNING"/>
+    </properties>
+  </persistence-unit>
+</persistence>
 		
 	«ENDFILE»
 «ENDDEFINE»
 
 «DEFINE header FOR Model-»
-<?xml version="1.0" encoding="UTF-8" ?>
-<persistence xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd"
-	version="2.0" xmlns="http://java.sun.com/xml/ns/persistence">
-	<persistence-unit name="«connector.persistenceUnit»">«ENDDEFINE»
-
-
-«DEFINE property(String name, String value) FOR Model»
-<property name="«name»" value="«value»" />«ENDDEFINE»
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/persistence"
+    xsi:schemaLocation="http://java.sun.com/xml/ns/persistence http://java.sun.com/xml/ns/persistence/persistence_2_0.xsd" version="2.0">
+  <persistence-unit name="swag" transaction-type="JTA">
+    <jta-data-source>«connector.persistenceUnit»</jta-data-source>
+«ENDDEFINE»

@@ -1,72 +1,132 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<project name="swag" default="compile" basedir=".">
-  <target name="init" description="Initialize settings.">
-    <property environment="env"/>
-    <property name="glassfish.home" value="${env.GLASSFISH_HOME}"/>
-  <!--  <property name="src.dir" value="src"/>-->
-    <property name="src-gen.dir" value="src-gen"/>
-    <property name="tests-src.dir" value="tests"/>
-    
-    <property name="build.dir" value="build"/>
-    <property name="reports.dir" value="junitreport"/>
-    
-    <property name="lib.dir" value="lib"/>
-    
-    <property name="javac.source" value="1.6"/>
-    
-    <path id="project.classpath" >
-      <fileset dir="${lib.dir}">
-	<include name="**/*.jar"/>
-      </fileset>
-      <fileset dir="${glassfish.home}/modules">
-	<include name="**/org.eclipse*.jar"/>
-	<include name="**/javax.persistence.jar"/>
-	<include name="**/bean-validator.jar"/>
-      </fileset>
-      <pathelement location="${build.dir}"/>
-    </path>
-  </target>
-  
-  <target name="check" depends="init">
-    <fail unless="env.GLASSFISH_HOME">
-      #### You must install GlassFish V3 and set the GLASSFISH_HOME variable
-    </fail>
-    <available property="src-gen.exists" file="${src-gen.dir}/META-INF"/>
-    <fail unless="src-gen.exists">
-      #### src-gen folder is empty. Please run the mde-workflow with eclipse ####
-    </fail>
-  </target>
-  
-  <target name="build" depends="check">
-    <mkdir dir="${build.dir}"/>
-    <copy todir="${build.dir}">
-      <fileset dir="${src-gen.dir}">
-	<include name="**/META-INF/*"/>
-      </fileset>
-    </copy>
-    <javac srcdir="${src-gen.dir}:${tests-src.dir}"
-	   destdir="${build.dir}"
-	   debug="on"
-	   deprecation="on"
-	   classpathref="project.classpath" />
-  </target>
+<project name="swag" default="run" basedir=".">
+	<target name="init" description="Initialize settings.">
+		<property environment="env"/>
+		<property name="glassfish.home" value="${env.GLASSFISH_HOME}"/>
+		<property name="domain.dir" value="${glassfish.home}/domains/domain1"/>
+		<property name="admin.cli.jar" value="${glassfish.home}/modules/admin-cli.jar"/>
+		<property name="src.dir" value="src"/>
+		<property name="src-gen.dir" value="src-gen"/>
+		<property name="tests-src.dir" value="tests"/>
+		
+		<property name="build.dir" value="build"/>
+		<property name="reports.dir" value="junitreport"/>
+		<property name="javac.source" value="1.6"/>
+		
+		<property name="setup.dir" value="setup"/>
+		<property name="lib.dir" value="lib" />
+		<property name="dist.dir" value="dist" />
+		<property name="datasourceFile.name" value="swag.xml"/>
+		<property name="warFile.name" value="swag"/>
+		
+		<property name="web.dir" value="web" />
+		<property name="web.src.dir" value="${web.dir}/src" />
+		<property name="web.view.dir" value="${web.dir}/view" />
+		<property name="web.config.dir" value="${web.dir}/config" />
+		<property name="web.build.dir" value="${web.dir}/build" />
+		
+		<path id="project.classpath">
+			<fileset dir="${glassfish.home}/lib">
+				<include name="javaee.jar"/>
+			</fileset>
+			<fileset dir="${lib.dir}">
+				<include name="**/*.jar"/>
+			</fileset>
+			<fileset dir="${glassfish.home}/modules">
+				<include name="**/org.eclipse*.jar"/>
+				<include name="**/javax.persistence.jar"/>
+				<include name="**/bean-validator.jar"/>
+			</fileset>
+			<pathelement location="${build.dir}"/>
+		</path>
+	</target>
+	
+	<target name="check" depends="init">
+		<fail unless="env.GLASSFISH_HOME">
+			#### You must install GlassFish V3 and set the GLASSFISH_HOME variable
+		</fail>
+		<available property="src-gen.exists" file="${src-gen.dir}/swag/db/model"/>
+		<fail unless="src-gen.exists">
+			#### src-gen folder is empty. Please run the mde-workflow with eclipse ####
+		</fail>
+	</target>
+	
+	<target name="build" depends="check">
+		<mkdir dir="${build.dir}"/>
+		<copy todir="${build.dir}">
+			<fileset dir="${src-gen.dir}">
+				<include name="**/META-INF/*"/>
+			</fileset>
+		</copy>
+		<javac srcdir="${src-gen.dir}:${tests-src.dir}"
+			destdir="${build.dir}"
+			debug="on"
+			deprecation="on"
+			classpathref="project.classpath" />
+		<mkdir dir="${web.build.dir}/WEB-INF/classes" />
+		<javac classpathref="project.classpath"
+			srcdir="${web.src.dir}"
+			destdir="${web.build.dir}/WEB-INF/classes"
+			debug="${javac.debug}"
+			deprecation="${javac.deprecation}" />
+	</target>
 
-  <target name="run" depends="build">
-    <junit printsummary="yes" haltonfailure="yes">
-      <classpath refid="project.classpath" />
-      <formatter type="brief" usefile="false"/>
-      
-      <batchtest fork="yes">
-	<fileset dir="${build.dir}" includes="tests/**/*.class" excludes="tests/**/utility/*.class" />
-      </batchtest>
-    </junit>
-  </target>
+	<target name="run" depends="build">
+		<junit printsummary="yes" haltonfailure="yes">
+			<classpath refid="project.classpath" />
+			<formatter type="brief" usefile="false"/>
+			
+			<batchtest fork="yes">
+				<fileset dir="${build.dir}" includes="tests/**/*.class" excludes="tests/**/utility/*.class" />
+			</batchtest>
+		</junit>
+	</target>
 
-  <target name="clean" depends="init">
-    <delete includeemptydirs="true">
-      <fileset dir="build"/>
-    </delete>
-  </target>
+	<target name="dist" depends="build">
+		<mkdir dir="${dist.dir}" />
+		<copy todir="${web.build.dir}">
+				<fileset dir="${web.view.dir}" />
+				<fileset dir="${web.config.dir}" includes="WEB-INF/**" />
+		</copy>
+		<copy todir="${web.build.dir}/WEB-INF/classes">
+			<fileset dir="${web.config.dir}" includes="*.properties"/>
+			<fileset dir="${web.src.dir}" includes="*.properties"/>
+			<fileset dir="${web.src.dir}" includes="META-INF/**" />
+		</copy>
+		<jar jarfile="${dist.dir}/${warFile.name}.war" basedir="${web.build.dir}"/>
+	</target>
+	
+	<target name="deploy" depends="dist">
+		<java jar="${admin.cli.jar}" fork="true" spawn="false">
+			<arg line="deploy ${dist.dir}/${warFile.name}.war"/>
+		</java>
+	</target>
+	
+	<target name="undeploy" depends="check">
+		<java jar="${admin.cli.jar}" fork="true" spawn="false">
+			<arg line="undeploy ${warFile.name}"/>
+		</java>
+	</target>
+	
+	<target name="redeploy" depends="undeploy,deploy"/>
+	
+	<target name="clean">
+		<delete includeemptydirs="true">
+			<fileset dir="build"/>
+		</delete>
+		<delete dir="${dist.dir}"/>
+		<delete dir="${web.build.dir}"/>
+ 		<java jar="${admin.cli.jar}" fork="true" spawn="false">
+			<arg line="delete-jdbc-connection-pool --cascade=true dst_pool"/>
+		</java>
+	</target>
 
+	<target name="setup" depends="check">
+		<copy file="${lib.dir}/postgresql-8.4-702.jdbc4.jar"	todir="${domain.dir}/lib/ext"/>
+		<copy file="${lib.dir}/log4j-1.2.16.jar"				todir="${domain.dir}/lib/ext"/>
+		<java jar="${admin.cli.jar}" fork="true" spawn="false">
+			<arg line="add-resources ${setup.dir}/${datasourceFile.name}"/>
+		</java>
+	</target>
 
 </project>
