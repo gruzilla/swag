@@ -4,6 +4,8 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.ejb.EJB;
+import javax.ejb.Singleton;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -19,18 +21,19 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
+
 import swag.db.model.User;
 
-@Stateful
+@Singleton
 @Path("auth")
 public class Authentication {
 	@SuppressWarnings("unused")
 	@Context
 	private UriInfo context;
 	
-	@PersistenceContext(unitName="swag",type=PersistenceContextType.TRANSACTION)
+	@PersistenceContext 
 	private EntityManager em;
-
+	
 	/**
 	 * Default constructor. 
 	 */
@@ -43,10 +46,13 @@ public class Authentication {
 	 */
 	@POST @Path("login")
 	@Produces("application/json")
-	public Object login(@FormParam("username") String username, @FormParam("hashed") String hashedpw) {
+
+	public Object login(@FormParam("username") String username, @FormParam("hashed") String hashedpw) { 
+		System.out.println("logging in");
 		if (em == null) return "em is null";
 		TypedQuery<User> qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname", User.class);
 		qry.setParameter("uname", username);
+		System.out.println("authenticating");
 		List<User> result = qry.getResultList();
 		
 		if (result.size() != 1) return "user not found";
