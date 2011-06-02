@@ -4,8 +4,11 @@ import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
+import javax.annotation.ManagedBean;
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.ejb.Stateless;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -19,10 +22,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
+import org.apache.log4j.Logger;
+
 import swag.db.model.User;
 
-@Stateful
+@ManagedBean
 @Path("auth")
+@SessionScoped
 public class Authentication {
 	@SuppressWarnings("unused")
 	@Context
@@ -30,7 +36,11 @@ public class Authentication {
 	
 	@PersistenceContext(unitName="swag",type=PersistenceContextType.TRANSACTION)
 	private EntityManager em;
+	
+	@EJB
+	private StatefulBlahLocal blah;
 
+	
 	/**
 	 * Default constructor. 
 	 */
@@ -43,40 +53,9 @@ public class Authentication {
 	 */
 	@POST @Path("login")
 	@Produces("application/json")
+
 	public Object login(@FormParam("username") String username, @FormParam("hashed") String hashedpw) {
-		if (em == null) return "em is null";
-		TypedQuery<User> qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname", User.class);
-		qry.setParameter("uname", username);
-		List<User> result = qry.getResultList();
-		
-		if (result.size() != 1) return "user not found";
-		
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			
-			hashedpw += result.get(0).getSalt();
-			
-			md.update(hashedpw.getBytes());
-			byte[] digest = md.digest();
-			String sha1 = "";
-			for ( int i=0; i < digest.length; i++ ) {
-				String s = Integer.toHexString( digest[i]&0xFF );
-				sha1 += (s.length() == 1 ) ? "0"+s : s;
-			}
-			
-			qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname AND u.password LIKE :pwd", User.class);
-			qry.setParameter("uname", username);
-			qry.setParameter("pwd", sha1);
-			result = qry.getResultList();
-			
-			if (result.size() == 1) {
-				return result.get(0);
-			} else {
-				return "not found with pw "+sha1;
-			}
-		} catch (NoSuchAlgorithmException e) {
-			return "no such algorithm";
-		}
+		return blah.login(username, hashedpw);
 	}
 
 	/**
