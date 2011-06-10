@@ -6,10 +6,12 @@
 	«FILE "swag/db/model/" + entity.name + ".java"»
 		package swag.db.model;
 		
+		import javax.xml.bind.annotation.*;
 		import javax.persistence.*;
 		import java.util.Set;
 		import java.util.Date;
 		
+		@XmlRootElement
 		@Entity(name="swa_«entity.name.toFirstLower()»")
 		public class «entity.name»  {
 
@@ -123,6 +125,8 @@
 «DEFINE gettersAndSetters(AssociationEntity entity) FOR Entity»
 	«FOREACH entity.features AS f»	
 				@Column(«IF f.nullable == false»nullable = false«ENDIF»)
+				«IF f.type.name == "Date"»@Temporal(TemporalType.TIMESTAMP)«ENDIF»
+				«IF f.xmltransient»@XmlTransient«ENDIF»
 				«EXPAND getters(f)»
 				«EXPAND setters(f)»
 			«ENDFOREACH»

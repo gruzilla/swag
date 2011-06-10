@@ -73,5 +73,5 @@ form dd.submit, dl.labels dd.submit	{
 .formhelp	{ color:#777; font-size:90% }
 .reqd	{ color:#c00; font-weight:bold }
 .help	{ cursor:help; }
-
-	
+.error	{ color:#c00; font-weight: bold; display: none}
+.error small { color: #000; font-weight: normal }

@@ -3,7 +3,7 @@
 <head>
 	<meta http-equiv="content-type" content="text/html; charset=utf-8" />
 	<title>SWAG</title>
-	<base href="http://localhost:8080/">
+	<base href="http://<%=request.getServerName()%>:8080/">
 	<script data-main="js/Main" src="js/require-jquery.js"></script>
 	<style>
 		@import "css/swag.css";

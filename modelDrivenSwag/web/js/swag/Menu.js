@@ -20,7 +20,8 @@ $.extend($.swag.Menu.prototype, {
 	
 	checkMenuPoint: function(point) {
 		point = $(point);
-		if (point.attr('data-show') == 'authenticated' && sessionStorage.getItem("authenticated")) {
+		if (point.attr('data-show') == 'authenticated' && !sessionStorage.getItem("authenticated")
+		|| point.attr('data-show') == 'not-authenticated' && sessionStorage.getItem("authenticated")) {
 			point.hide();
 		} else {
 			point.show();
@@ -50,6 +51,12 @@ $.extend($.swag.Menu.prototype, {
 	 * after menu-point-controller has been loaded call handle-function on it
 	 */
 	initClickController: function(controller) {
+		for (var cont in this.pointHandlers) {
+			if (cont != controller && this.pointHandlers[cont] && this.pointHandlers[cont].destruct) {
+				this.pointHandlers[cont].destruct();
+				this.pointHandlers[cont] = null;
+			}
+		}
 		this.pointHandlers[controller] = new (eval("$."+controller))();
 		this.handle(controller);
 	},

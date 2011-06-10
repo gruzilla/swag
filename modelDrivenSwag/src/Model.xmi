@@ -14,7 +14,7 @@
   </types>
   <types xsi:type="metamodel:Entity" name="User" owns="//@types.26 //@types.27 //@types.29 //@types.30 //@types.32 //@types.36">
     <features name="username" type="//@types.0"/>
-    <features name="password" type="//@types.0"/>
+    <features name="password" type="//@types.0" xmltransient="true"/>
     <features name="name" type="//@types.0"/>
     <features name="address" type="//@types.0"/>
     <features name="salt" type="//@types.0"/>

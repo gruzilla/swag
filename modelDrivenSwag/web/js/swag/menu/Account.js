@@ -8,4 +8,11 @@ $.extend($.swag.menu.Account.prototype, {
 	handle: function() {
 		alert("account");
 	}
+	
+	/**
+	 * is called by Menu.js when the user changes the menu point
+	 */
+	,destruct: function() {
+		alert("destructing account");
+	}
 });

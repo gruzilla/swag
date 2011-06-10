@@ -26,7 +26,7 @@
 «FILE "../src/META-INF/persistence.xml"-»
 	«EXPAND header»
     <properties>
-      <property name="toplink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="toplink.ddl-generation" value="create-tables"/>
 	  <property name="toplink.ddl-generation.output-mode" value="both"/>
       <property name="toplink.logging.level" value="FINE"/>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

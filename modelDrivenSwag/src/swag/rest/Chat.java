@@ -1,6 +1,7 @@
 package swag.rest;
 
-import javax.ejb.Stateless;
+import javax.ejb.EJB;
+import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -11,9 +12,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.UriInfo;
 
-@Stateless
-@Path("messages")
-public class Message {
+import swag.singletons.Chats;
+
+@Stateful
+@Path("chat")
+public class Chat {
 	@SuppressWarnings("unused")
 	@Context
 	private UriInfo context;
@@ -21,10 +24,13 @@ public class Message {
 	@PersistenceContext
 	private EntityManager em;
 
+	@EJB
+	Chats chats;
+	
 	/**
 	 * Default constructor. 
 	 */
-	public Message() {
+	public Chat() {
 	}
 
 	/**
