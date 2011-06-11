@@ -6,6 +6,7 @@ $.swag.menu.Login = function() {
 	this.registerFormTemplate = null;
 	this.showTemplate = location.hash ? location.hash.substr(1) : 'login';
 	this.init();
+	this.lastUsernameOk = false;
 };
 
 $.extend($.swag.menu.Login.prototype, {
@@ -75,7 +76,41 @@ $.extend($.swag.menu.Login.prototype, {
 	},
 	
 	submitRegister: function(data) {
-		console.log($('#'+this.mainId).find('form').serialize(true));
+		var formdata = $('#'+this.mainId).find('form').serializeArray();
+		console.log(formdata);
+		if (!formdata.username) {
+			alert("Please enter a username!");
+			return;
+		} else {
+			if (!this.lastUsernameOk) {
+				alert("Please enter a valid username!");
+				return;
+			}
+		}
+		if (!formdata.email) {
+			alert("Please enter a email address!");
+			return;
+		}
+		if (!formdata.name) {
+			alert("Please enter your name!");
+			return;
+		}
+		if (!formdata.address) {
+			alert("Please enter your home address!");
+			return;
+		}
+		if (!formdata.timezone) {
+			alert("Please select a timezone!");
+			return;
+		}
+		
+		$.post($.swag.Main.BASE+'/auth/register', formdata, this.registrationComplete.bind(this));
+	},
+	
+	registrationComplete: function(data) {
+		$(document).append('<span style="display:none" id="registrationComplete">Registration complete, please check your email for login.</span>');
+		$('#registrationComplete').dialog($.swag.Main.DIALOG_DEFAULT, {title:'Registration complete'});
+		window.history.pushState(null, '', '#login');
 	},
 	
 	checkUsername: function() {
@@ -91,11 +126,13 @@ $.extend($.swag.menu.Login.prototype, {
 			$('#unique-username').css({
 				color: '#CC0000'
 			});
+			this.lastUsernameOk = false;
 		} else {
 			$('#unique-username').html("Username ok!");
 			$('#unique-username').css({
 				color: '#00CC00'
 			});
+			this.lastUsernameOk = true;
 		}
 	},
 	

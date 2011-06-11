@@ -1,8 +1,6 @@
 package swag.rest;
 
 import java.io.Serializable;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import java.util.List;
 
 import javax.ejb.Stateful;
@@ -20,7 +18,9 @@ import javax.ws.rs.Produces;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import swag.Utils;
 import swag.db.model.User;
+import swag.game.map.MapManager;
 import swag.rest.session.UserSession;
 
 @Stateful
@@ -65,6 +65,44 @@ public class Authentication implements Serializable {
 	}
 	
 	@POST
+	@Path("register")
+	@Produces("application/json")
+	public User register(
+		@FormParam("username") String username,
+		@FormParam("email") String email,
+		@FormParam("address") String address,
+		@FormParam("name") String name,
+		@FormParam("timezone") Integer timezone
+	) {
+		MapManager.createBase();
+		User newUser = new User();
+		
+		newUser.setAddress(address);
+		newUser.setEmail(email);
+		newUser.setName(name);
+		newUser.setTimezone(timezone);
+		newUser.setUsername(username);
+		
+		String password = "";
+		for (int i = 0; i < 8; i++) {
+			password += (char)((int)Math.random()*128);
+		}
+		String salt = "";
+		for (int i = 0; i < 8; i++) {
+			salt += (char)((int)Math.random()*128);
+		}
+		
+		System.out.println("\n\n\n\n\nNEW USER: "+username+"\nPassword: "+password+"\n\n\n\n");
+		
+		newUser.setPassword(Utils.md5(Utils.md5(password)+salt));
+		newUser.setSalt(salt);
+		
+		em.persist(newUser);
+		
+		return newUser;
+	}
+	
+	@POST
 	@Path("checkusername")
 	@Produces("application/json")
 	public String checkusername(@FormParam("username") String username) {
@@ -104,32 +142,18 @@ public class Authentication implements Serializable {
 		if (user != null) return DEBUG ? "{\"status\":\"user already authenticated\"}" : defaultError;
 		if (result.size() != 1) return DEBUG ? "{\"status\":\"user not found\"}" : defaultError;
 		
-		try {
-			MessageDigest md = MessageDigest.getInstance("MD5");
-			
-			hashedpw += result.get(0).getSalt();
-			
-			md.update(hashedpw.getBytes());
-			byte[] digest = md.digest();
-			String md5 = "";
-			for ( int i=0; i < digest.length; i++ ) {
-				String s = Integer.toHexString( digest[i]&0xFF );
-				md5 += (s.length() == 1 ) ? "0"+s : s;
-			}
-			
-			qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname AND u.password LIKE :pwd", User.class);
-			qry.setParameter("uname", username);
-			qry.setParameter("pwd", md5);
-			result = qry.getResultList();
-			
-			if (result.size() == 1) {
-				user = result.get(0);
-				return result.get(0);
-			} else {
-				return DEBUG ? "{\"status\":\"not found with pw\"}"+md5 : defaultError;
-			}
-		} catch (NoSuchAlgorithmException e) {
-			return DEBUG ? "{\"status\":\"no such algorithm\"}" : defaultError;
+		hashedpw += result.get(0).getSalt();
+		
+		qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname AND u.password LIKE :pwd", User.class);
+		qry.setParameter("uname", username);
+		qry.setParameter("pwd", hashedpw);
+		result = qry.getResultList();
+		
+		if (result.size() == 1) {
+			user = result.get(0);
+			return result.get(0);
+		} else {
+			return DEBUG ? "{\"status\":\"not found with pw\"}" : defaultError;
 		}
 	}
 }

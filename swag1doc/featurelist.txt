@@ -1,0 +1,27 @@
+- user can quit the account at any time, in which case all his/her stored information and in-game data have to be deleted.
+- Every user can send in-game messages to other users.
+- Every map consists of a variable number of squares which can be chosen during map creation. The players use these squares to construct bases (similar to small villages), in which they create buildings, generate resources and train troops. Each user starts with an empty base and can obtain new bases in the course of the game (see below for details).
+- Users may go offline and online at any time, without losing their current game state. The game data of all users (also of offline users) is constantly stored and updated in the "background".
+- Provide a possibility for each user to discover the map. You can display a part of the whole map as a simple table with entries for bases or create graphical overviews if you want to. This view should also be available to send troops to other bases or attack other players.
+- A user can choose the desired map at login and can play in more than one map (simultaneously).
+- A user joining a map has to start from scratch on this map - it is not possible to exchange troops or resources between maps.
+- Provide different types of buildings: to create (train) troops, to generate (mine) resources and to upgrade troops.
+- If a starter base is attacked and the attacker wins the battle, the attacker robs the resources of the base.
+- Insert a number of empty privileged squares spread over the map during creation of a map. When a user starts playing, create a basic base on a random place that is at least 2 squares away from the territory of the other players. Note that all user bases provided at the beginning have to be equal.
+- A user can send his troops from one square to another. On their way they can not be attacked. So troops can only be attacked on squares.
+- If a user sends troops to one of his own bases they are stationed at the target base. If the target base belongs to another user, it is attacked.
+- Every troop type has an associated speed attribute that determines how long it takes to pass one square of the map. So it is possible to calculate how long it takes to get from one square to another and back
+- In a battle the winner is determined based on the strength of the involved troops. Simply calculate the total strength difference of the involved troops of the two battling users.
+- Attacking a user's buildings is only possible if this user has no more troops on the map. Destroying a building takes a certain amount of time, depending on the total strength of the attacking troops.
+- A user who is currently logged in should be notified about every action in the game directly via the graphical user interface.
+- Provide an overview of all troop movements with a counter that decrements until the troops arrive. Also provide an overview about creation of troops and buildings and how long a user has to wait.
+- Every important action in the system has to be logged.
+
+
+---------------- delayed :
+- Resource buildings can be upgraded to produce more resources (the upgrading takes a certain amount of time).
+- There have to be different kind of troops with different strength values. Think about different values that are important and common for all troops.
+- Provide the possibility to send troops from different squares to one target square simultaneously. So the target should be reached at the same time from all sent troops. This is needed to attack a square from different squares with higher strength.
+- A user is notified via mail about each message he/she receives while being offline.
+- A user is also notified if his/her territory is attacked or if a battle was fought by his troops. Furthermore, send a notification with the outcome of the battle.
+- There should be a user ranking which can be seen by every user: user with most points, richest user, strongest troop type, and so on
