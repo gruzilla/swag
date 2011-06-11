@@ -12,4 +12,5 @@ modelDrivenSwag/bin
 .metadata
 modelDrivenSwag/build
 modelDrivenSwag/src-gen/*
+modelDrivenSwag/.classpath
 !.gitignore
