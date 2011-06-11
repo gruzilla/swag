@@ -11,7 +11,9 @@ public class Mailer {
 
 		//Set the host smtp address
 		Properties props = new Properties();
-		props.put("mail.smpt.host", "email.aon.at");
+		props.put("mail.smtp.host", "email.aon.at");
+		props.put("mail.smtp.user", "p.raich@aon.at");
+		props.put("mail.smtp.password", "email");
 	
 	    // create some properties and get the default Session
 	    Session session = Session.getDefaultInstance(props, null);
