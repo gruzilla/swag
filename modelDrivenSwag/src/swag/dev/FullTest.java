@@ -12,6 +12,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import swag.rest.session.UserSession;
+import swag.singletons.Chats;
 
 
 @Stateful
@@ -26,7 +27,7 @@ public class FullTest {
 	UserSession session;
 	
 	@EJB
-	LessTest less;
+	Chats chats;
 	
 	Integer beanCounter = 0;
 	
@@ -46,8 +47,9 @@ public class FullTest {
 		return "amount: "+wsContext.getMessageContext().get("counter");
 		*/
 		return "normaL amount: "+beanCounter+"\n"+
-			(session==null?"sessnull":session.isValid())+"\n"+
-			(em==null?"emnull":"")+"\n";
+			(session==null?"sessnull":"valid?:"+session.isValid())+"\n"+
+			(em==null?"emnull":"emexists")+"\n"+
+			(chats==null?"chatsnull":"chatsexist: "+(chats.getManager()==null?"singleemNull" : "single em exists"))+"\n";
 	}
 	
 	@GET

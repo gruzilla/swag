@@ -10,6 +10,7 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 
 import swag.rest.session.UserSession;
+import swag.singletons.Chats;
 
 
 @Stateless
@@ -23,7 +24,7 @@ public class LessTest {
 	UserSession session;
 	
 	@EJB
-	FullTest full;
+	Chats chats;
 	
 	Integer beanCounter = 0;
 	
@@ -43,8 +44,8 @@ public class LessTest {
 		return "amount: "+wsContext.getMessageContext().get("counter");
 		*/
 		return "less amount: "+beanCounter+"\n"+
-		(session==null?"sessnull":session.isValid())+"\n"+
-		(em==null?"emnull":"")+"\n";
+		(session==null?"sessnull":"session: "+session.isValid())+"\n"+
+		(em==null?"emnull":"emexists")+"\n";
 	}
 	/*
 	Cannot resolve an ambiguous dependency between
@@ -72,7 +73,8 @@ public class LessTest {
 		
 		return "incamount: "+beanCounter+"\n"+
 		(session==null?"sessnull":session.isValid())+"\n"+
-		(em==null?"emnull":"em exists")+"\n";
+		(em==null?"emnull":"em exists")+"\n"+
+		(chats==null?"chatsnull":"chatsexist: "+(chats.getManager()==null?"singleemNull" : "single em exists"))+"\n";
 	}
 	
 	@GET

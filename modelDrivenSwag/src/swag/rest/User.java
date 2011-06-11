@@ -10,8 +10,6 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.ws.rs.Path;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 
 import swag.rest.session.UserSession;
 
@@ -19,10 +17,6 @@ import swag.rest.session.UserSession;
 @SessionScoped
 @Path("user")
 public class User {
-	@SuppressWarnings("unused")
-	@Context
-	private UriInfo context;
-	
 	@PersistenceContext
 	private EntityManager em;
 	

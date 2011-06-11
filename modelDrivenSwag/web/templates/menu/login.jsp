@@ -13,11 +13,10 @@
 				</dd>
 				<dt></dt>
 				<dd class="submit">
-					<button class="submit" onclick="return false;">Request</button>
+					<button class="submit" onclick="return false;">Request</button> <a href="#login">cancel</a>
 				</dd>
 			</dl>
 		</form>
-		<a href="#login">abort</a>
 	</div>
 	<div class="register-form">
 		<form>
@@ -91,11 +90,10 @@
 				</dd>
 				<dt></dt>
 				<dd class="submit">
-					<button class="submit" onclick="return false;">Register</button>
+					<button class="submit" onclick="return false;">Register</button> <a href="#login">cancel</a>
 				</dd>
 			</dl>
 		</form>
-		<a href="#login">abort</a>
 	</div>
 	<div class="login-form">
 		<form>

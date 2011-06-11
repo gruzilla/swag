@@ -18,6 +18,7 @@
     <features name="name" type="//@types.0"/>
     <features name="address" type="//@types.0"/>
     <features name="salt" type="//@types.0"/>
+    <features name="email" type="//@types.0"/>
     <features name="timezone" type="//@types.1"/>
     <featuresId name="id" type="//@types.1" generationType="GenerationType.TABLE"/>
   </types>

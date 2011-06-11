@@ -16,8 +16,6 @@ import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
-import javax.ws.rs.core.Context;
-import javax.ws.rs.core.UriInfo;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -35,10 +33,6 @@ public class Authentication implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private static final boolean DEBUG = true;
 
-	@SuppressWarnings("unused")
-	@Context
-	private UriInfo context;
-	
 	@PersistenceContext
 	private EntityManager em;
 
@@ -55,13 +49,33 @@ public class Authentication implements Serializable {
 		System.out.println("instanciating auth");
 	}
 
-	@GET @Path("isloggedin")
+	@GET
+	@Path("isloggedin")
 	@Produces("application/json")
 	public String isloggedin() {
 		JSONObject message = new JSONObject();
 		
 		try {
 			message.put("status", user != null);
+		} catch (JSONException e) {
+			e.printStackTrace();
+		}
+		
+		return message.toString();
+	}
+	
+	@POST
+	@Path("checkusername")
+	@Produces("application/json")
+	public String checkusername(@FormParam("username") String username) {
+		JSONObject message = new JSONObject();
+		
+		TypedQuery<User> qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname", User.class);
+		qry.setParameter("uname", username);
+		List<User> result = qry.getResultList();
+		
+		try {
+			message.put("status", result.size() == 1);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

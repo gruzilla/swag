@@ -4,7 +4,7 @@ $.swag.menu.Login = function() {
 	this.loginFormTemplate = null;
 	this.renewPasswordTemplate = null;
 	this.registerFormTemplate = null;
-	this.showTemplate = 'login';
+	this.showTemplate = location.hash ? location.hash.substr(1) : 'login';
 	this.init();
 };
 
@@ -39,12 +39,16 @@ $.extend($.swag.menu.Login.prototype, {
 	show: function() {
 		if (this.showTemplate  == 'login') {
 			$('#'+this.mainId).html(this.loginFormTemplate);
+			$('#'+this.mainId).find('button').click(this.submitLogin.bind(this));
 		} else if (this.showTemplate == 'register') {
 			$('#'+this.mainId).html(this.registerFormTemplate);
+			$('#'+this.mainId).find('input[name=username]').change(this.checkUsername.bind(this));
+			$('#'+this.mainId).find('button').click(this.submitRegister.bind(this));
 		} else if (this.showTemplate == 'renew-password'){
 			$('#'+this.mainId).html(this.renewPasswordTemplate);
+			$('#'+this.mainId).find('button').click(this.submitRenewPassword.bind(this));
 		}
-		$('#'+this.mainId).find('button').click(this.submit.bind(this));
+		$.swag.Main.INSTANCE.updateLayout();
 	},
 	
 	/**
@@ -61,13 +65,42 @@ $.extend($.swag.menu.Login.prototype, {
 	/**
 	 * hashes the pw locally and sends it to the server, to check authentication
 	 */
-	submit: function(data) {
+	submitLogin: function(data) {
 		$('#'+this.mainId).find('input[name=hashed]').val(MD5($('#'+this.mainId).find('input[name=password]').val()));
 		$('#'+this.mainId+" .error").hide();
 		$.post($.swag.Main.BASE+'/auth/login', {
 			username: $('#'+this.mainId).find('input[name=username]').val()
 		,	hashed: $('#'+this.mainId).find('input[name=hashed]').val()
 		}, this.checkResult.bind(this));
+	},
+	
+	submitRegister: function(data) {
+		console.log($('#'+this.mainId).find('form').serialize(true));
+	},
+	
+	checkUsername: function() {
+		$('#unique-username').html("");
+		$.post($.swag.Main.BASE+'/auth/checkusername', {
+			username: $('#'+this.mainId).find('input[name=username]').val()
+		}, this.checkUsernameResult.bind(this));
+	},
+	
+	checkUsernameResult: function(data) {
+		if (data.status) {
+			$('#unique-username').html("Username exists!");
+			$('#unique-username').css({
+				color: '#CC0000'
+			});
+		} else {
+			$('#unique-username').html("Username ok!");
+			$('#unique-username').css({
+				color: '#00CC00'
+			});
+		}
+	},
+	
+	submitRenewPassword: function(data) {
+		
 	},
 	
 	/**
