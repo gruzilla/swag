@@ -16,15 +16,30 @@ $.extend($.swag.menu.Map.prototype, {
 		$('#'+$.swag.Main.CONTENT_ID).html(this.map);
 		
 		// fill map
-		this.fillMap();
+		$.get($.swag.Main.BASE+'/map/query', this.fillMap.bind(this));
 	},
 	
-	fillMap: function() {
+	fillMap: function(result) {
 		$('#'+$.swag.Main.CONTENT_ID+' .map table').html('');
-		for (var i = 0; i < 10; i++) {
+		for (var y = 0; y < 10; y++) {
 			var line = '<tr>';
-			for (var j = 0; j < 10; j++) {
-				line += '<td></td>';
+			for (var x = 0; x < 10; x++) {
+				line += '<td>';
+				for(var i = 0; i < result.length; i++) {
+					var sqr = result[i];
+					if(sqr.x == x && sqr.y == y) {
+						if(sqr.squad) {
+							line += 'squad : ' + sqr.squad;
+						}
+						else if(sqr.base) {
+							line += 'base : ' + sqr.base;
+						}
+						else if(sqr.resource) {
+							line += sqr.resource;
+						}
+					}
+				}
+				line += '</td>';
 			}
 			line += '</tr>';
 			$('#'+$.swag.Main.CONTENT_ID+' .map table').append(line);

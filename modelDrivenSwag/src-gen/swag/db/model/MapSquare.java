@@ -10,6 +10,10 @@ import java.util.Date;
 @Entity(name = "swa_mapSquare")
 public class MapSquare implements Serializable {
 
+	private static final long serialVersionUID = 4554818442192066843L;
+
+	private Integer id;
+	
 	public MapSquare() {
 	}
 
@@ -18,10 +22,6 @@ public class MapSquare implements Serializable {
 		this.positionX = positionX;
 		this.positionY = positionY;
 	}
-
-	private static final long serialVersionUID = 4554818442192066843L;
-
-	private Integer id;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -77,6 +77,7 @@ public class MapSquare implements Serializable {
 	}
 
 	@OneToOne(optional = true)
+	@JoinColumn(name="BOOST_ID") 
 	public SquareBoost getBoostedBySquareBoost() {
 		return boostedBySquareBoost;
 	}
@@ -122,82 +123,27 @@ public class MapSquare implements Serializable {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-
-		MapSquare other = (MapSquare) obj;
-
-		if (!isOnSquadSet.equals(other.isOnSquadSet))
-			return false;
-
-		if (!boostedBySquareBoost.equals(other.boostedBySquareBoost))
-			return false;
-
-		if (!isOnMapObjectSet.equals(other.isOnMapObjectSet))
-			return false;
-
-		if (!fromSquadMovement.equals(other.fromSquadMovement))
-			return false;
-
-		if (!toSquadMovement.equals(other.toSquadMovement))
-			return false;
-
-		if (!partOfMap.equals(other.partOfMap))
-			return false;
-
-		if (positionX == null) {
-			if (other.positionX != null)
-				return false;
-		} else if (!positionX.equals(other.positionX))
-			return false;
-
-		if (positionY == null) {
-			if (other.positionY != null)
-				return false;
-		} else if (!positionY.equals(other.positionY))
-			return false;
-
-		return true;
-	}
-
-	@Override
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-
-		result = prime * result
-				+ ((isOnSquadSet == null) ? 0 : isOnSquadSet.hashCode());
-
-		result = prime
-				* result
-				+ ((boostedBySquareBoost == null) ? 0 : boostedBySquareBoost
-						.hashCode());
-
-		result = prime
-				* result
-				+ ((isOnMapObjectSet == null) ? 0 : isOnMapObjectSet.hashCode());
-
-		result = prime
-				* result
-				+ ((fromSquadMovement == null) ? 0 : fromSquadMovement
-						.hashCode());
-
-		result = prime * result
-				+ ((toSquadMovement == null) ? 0 : toSquadMovement.hashCode());
-
-		result = prime * result
-				+ ((partOfMap == null) ? 0 : partOfMap.hashCode());
-
-		result = prime * result
-				+ ((positionX == null) ? 0 : positionX.hashCode());
-
-		result = prime * result
-				+ ((positionY == null) ? 0 : positionY.hashCode());
-
+		result = prime * result + ((id == null) ? 0 : id.hashCode());
 		return result;
 	}
 
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		MapSquare other = (MapSquare) obj;
+		if (id == null) {
+			if (other.id != null)
+				return false;
+		} else if (!id.equals(other.id))
+			return false;
+		return true;
+	}
 }
