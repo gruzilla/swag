@@ -1,6 +1,5 @@
 $.swag.menu.Login = function() {
 	this.templateId = 'menu-content-login';
-	this.mainId = 'content';
 	this.loginFormTemplate = null;
 	this.renewPasswordTemplate = null;
 	this.registerFormTemplate = null;
@@ -39,15 +38,15 @@ $.extend($.swag.menu.Login.prototype, {
 	
 	show: function() {
 		if (this.showTemplate  == 'login') {
-			$('#'+this.mainId).html(this.loginFormTemplate);
-			$('#'+this.mainId).find('button').click(this.submitLogin.bind(this));
+			$('#'+$.swag.Main.CONTENT_ID).html(this.loginFormTemplate);
+			$('#'+$.swag.Main.CONTENT_ID).find('button').click(this.submitLogin.bind(this));
 		} else if (this.showTemplate == 'register') {
-			$('#'+this.mainId).html(this.registerFormTemplate);
-			$('#'+this.mainId).find('input[name=username]').change(this.checkUsername.bind(this));
-			$('#'+this.mainId).find('button').click(this.submitRegister.bind(this));
+			$('#'+$.swag.Main.CONTENT_ID).html(this.registerFormTemplate);
+			$('#'+$.swag.Main.CONTENT_ID).find('input[name=username]').change(this.checkUsername.bind(this));
+			$('#'+$.swag.Main.CONTENT_ID).find('button').click(this.submitRegister.bind(this));
 		} else if (this.showTemplate == 'renew-password'){
-			$('#'+this.mainId).html(this.renewPasswordTemplate);
-			$('#'+this.mainId).find('button').click(this.submitRenewPassword.bind(this));
+			$('#'+$.swag.Main.CONTENT_ID).html(this.renewPasswordTemplate);
+			$('#'+$.swag.Main.CONTENT_ID).find('button').click(this.submitRenewPassword.bind(this));
 		}
 		$.swag.Main.INSTANCE.updateLayout();
 	},
@@ -57,7 +56,7 @@ $.extend($.swag.menu.Login.prototype, {
 	 */
 	checkLogin: function(data) {
 		if (data.status) {
-			$('#'+this.mainId).append("You area already logged in!");
+			$('#'+$.swag.Main.CONTENT_ID).append("You area already logged in!");
 		} else {
 			this.show();
 		}
@@ -67,16 +66,16 @@ $.extend($.swag.menu.Login.prototype, {
 	 * hashes the pw locally and sends it to the server, to check authentication
 	 */
 	submitLogin: function(data) {
-		$('#'+this.mainId).find('input[name=hashed]').val(MD5($('#'+this.mainId).find('input[name=password]').val()));
-		$('#'+this.mainId+" .error").hide();
+		$('#'+$.swag.Main.CONTENT_ID).find('input[name=hashed]').val(MD5($('#'+$.swag.Main.CONTENT_ID).find('input[name=password]').val()));
+		$('#'+$.swag.Main.CONTENT_ID+" .error").hide();
 		$.post($.swag.Main.BASE+'/auth/login', {
-			username: $('#'+this.mainId).find('input[name=username]').val()
-		,	hashed: $('#'+this.mainId).find('input[name=hashed]').val()
+			username: $('#'+$.swag.Main.CONTENT_ID).find('input[name=username]').val()
+		,	hashed: $('#'+$.swag.Main.CONTENT_ID).find('input[name=hashed]').val()
 		}, this.checkResult.bind(this));
 	},
 	
 	submitRegister: function(data) {
-		var formArray = $('#'+this.mainId).find('form').serializeArray();
+		var formArray = $('#'+$.swag.Main.CONTENT_ID).find('form').serializeArray();
 		var formData = {};
 		for (var entry in formArray) {
 			formData[formArray[entry].name] = formArray[entry].value.trim();
@@ -121,7 +120,7 @@ $.extend($.swag.menu.Login.prototype, {
 	checkUsername: function() {
 		$('#unique-username').html("");
 		$.post($.swag.Main.BASE+'/auth/checkusername', {
-			username: $('#'+this.mainId).find('input[name=username]').val()
+			username: $('#'+$.swag.Main.CONTENT_ID).find('input[name=username]').val()
 		}, this.checkUsernameResult.bind(this));
 	},
 	
@@ -154,7 +153,7 @@ $.extend($.swag.menu.Login.prototype, {
 			sessionStorage.setItem("authenticated", data);
 			window.location.reload();
 		} else {
-			$('#'+this.mainId+" .error").show();
+			$('#'+$.swag.Main.CONTENT_ID+" .error").show();
 		}
 	}
 });

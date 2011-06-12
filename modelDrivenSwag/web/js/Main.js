@@ -22,6 +22,7 @@ require(["jquery.bind", "jquery.ui", "jquery.cookie", "md5"], function() {
 	
 	// static attributes
 	$.swag.Main.BASE = '/resources';
+	$.swag.Main.CONTENT_ID = 'content';
 	$.swag.Main.DIALOG_DEFAULT = {
 		modal: true,
 		buttons: [
