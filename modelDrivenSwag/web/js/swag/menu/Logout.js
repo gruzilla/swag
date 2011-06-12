@@ -11,6 +11,7 @@ $.extend($.swag.menu.Logout.prototype, {
 	
 	logoutComplete: function(data) {
 		$.cookie('JSESSIONID', null);
+		$.cookie('sessionId', null);
 		$.cookie('JSESSIONID');
 		sessionStorage.removeItem("authenticated");
 		window.location.reload();

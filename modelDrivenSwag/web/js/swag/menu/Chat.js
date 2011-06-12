@@ -16,7 +16,6 @@ $.extend($.swag.menu.Chat.prototype, {
 	},
 	
 	handle: function() {
-		console.log("we handle this");
 		$('#'+$.swag.Main.CONTENT_ID).html(this.userList);
 		$('#'+$.swag.Main.CONTENT_ID).append(this.chatList);
 		$('#'+$.swag.Main.CONTENT_ID+' .user-list select').change(this.selectUser.bind(this));
@@ -27,7 +26,7 @@ $.extend($.swag.menu.Chat.prototype, {
 		users = users.user;
 		if (!$.isArray(users)) users = [users];
 		
-		$('#'+$.swag.Main.CONTENT_ID+' .user-list select').attr('size', users.length);
+		$('#'+$.swag.Main.CONTENT_ID+' .user-list select').attr('size', users.length+1);
 		
 		var select = $('#'+$.swag.Main.CONTENT_ID+' .user-list select')[0];
 		
