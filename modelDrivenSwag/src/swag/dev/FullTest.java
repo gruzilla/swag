@@ -4,12 +4,10 @@ import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceContextType;
 import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.CookieParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
-import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
@@ -21,7 +19,7 @@ import swag.singletons.SessionManager;
 @Path("full")
 public class FullTest {
 	
-	@PersistenceContext(type=PersistenceContextType.EXTENDED)
+	@PersistenceContext
 	EntityManager em;
 	
 	@EJB
@@ -30,11 +28,11 @@ public class FullTest {
 	@EJB
 	SessionManager manager;
 	
-	Integer beanCounter = 0;
-
 	@Context
 	private HttpServletRequest request;
 	
+	Integer beanCounter = 0;
+
 	public FullTest() {
 		System.out.println("full test instanciated");
 	}
@@ -51,7 +49,8 @@ public class FullTest {
 		return "amount: "+wsContext.getMessageContext().get("counter");
 		*/
 		return "normaL amount: "+beanCounter+"\n"+
-			(manager==null?"reqNULL":"YYEEEEE: "+(manager.getSession(request)==null?"session is null":"SEEESSSSSION!!"))+"\n"+
+			(request==null?"reqNULL":"req is nice")+"\n"+
+			(manager==null?"manNULL":"YYEEEEE: "+(manager.getSession(request)==null?"session is null":"SEEESSSSSION!!"))+"\n"+
 			(em==null?"emnull":"emexists")+"\n"+
 			(rofl==null?"sessionId null":"cookie: "+rofl)+"\n"+
 			"via cookie class: "+Cookie.valueOf("sessionId").getValue()+"\n"+

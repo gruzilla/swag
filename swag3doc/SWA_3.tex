@@ -250,6 +250,39 @@ Related Artifacts	&	All\\
 \hline
 \end{tabular}\\
 
+\begin{tabular}[t]{|l|p{10cm}|}
+\hline
+\textbf{Issue}	&	All game-related information should be logged\\
+\hline
+Decision & An Interceptor is implemented that calls the Logger-Service explicitly\\
+\hline
+Status	& Proposal\\
+\hline
+Constraints	&	None\\
+\hline
+Related Principles	&	Interceptor\\
+\hline
+Related Artifacts	&	LoggingInterceptor\\
+\hline
+\end{tabular}\\
+
+
+\begin{tabular}[t]{|l|p{10cm}|}
+\hline
+\textbf{Issue}	&	All messages and transactions should be in the right order and the delivery reliable\\
+\hline
+Decision & A Message Queue is implemented that relays all messages and transactions\\
+\hline
+Status	& Proposal\\
+\hline
+Constraints	&	None\\
+\hline
+Related Principles	&	Message Queue\\
+\hline
+Related Artifacts	&	MessageQueue\\
+\hline
+\end{tabular}\\
+
 \subsection{Implementation Details}
 
 Application Server: \textbf{Glassfish 3.1}\\
@@ -275,7 +308,7 @@ The following JavaScript Libraries were used:
 \begin{figure}[ht!]
   \begin{center}
   \hspace*{-90pt}
-  \includegraphics[scale=0.60]{fig/components.png}
+  \includegraphics[scale=0.80]{fig/components.png}
   \label{fig:component_diagram}
   \caption{SWAG Component Diagram}
   \end{center}
@@ -283,7 +316,9 @@ The following JavaScript Libraries were used:
 
 \hspace*{0pt}
 
-The component diagram may be observed in figrue~\ref{fig:component_diagram}. The main feature of the architecture is the speed that achieved by minimizing the communication between the RESTful Services at the server side and the GUI at the client side. This is achieved by prefetching HTML-content at once and loading the corresponding HTML content client side by JavaScript. The communication overhead is minimized by using JSON-formatted messages for all Services.
+The component diagram may be observed in figure~\ref{fig:component_diagram}. The main feature of the architecture is the speed that achieved by minimizing the communication between the RESTful Services at the server side and the GUI at the client side.\\
+This is achieved by prefetching HTML-content at once and loading the corresponding HTML content client side by JavaScript. The communication overhead is minimized by using JSON-formatted messages for all Services.\\
+The components visible at the client side are thus only JavaScript components, rendering the information returned by the RESTful Services.
 
 \clearpage
 
