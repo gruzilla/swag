@@ -64,6 +64,13 @@ public class Authentication implements Serializable {
 		return message.toString();
 	}
 	
+	@GET
+	@Path("logout")
+	@Produces("application/json")
+	public void logout() {
+		
+	}
+	
 	@POST
 	@Path("register")
 	@Produces("application/json")
@@ -83,16 +90,33 @@ public class Authentication implements Serializable {
 		newUser.setTimezone(timezone);
 		newUser.setUsername(username);
 		
+		String validChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ1234567890";
 		String password = "";
 		for (int i = 0; i < 8; i++) {
-			password += (char)((int)Math.random()*128);
+			password += validChars.charAt((int)Math.floor(Math.random()*validChars.length()));
 		}
 		String salt = "";
 		for (int i = 0; i < 8; i++) {
-			salt += (char)((int)Math.random()*128);
+			salt += validChars.charAt((int)Math.floor(Math.random()*validChars.length()));
 		}
 		
-		System.out.println("\n\n\n\n\nNEW USER: "+username+"\nPassword: "+password+"\n\n\n\n");
+		/*
+		Mailer m = new Mailer();
+		try {
+			m.postMail(
+					new String[]{email},
+					"Welcome to SWAG",
+					"Dear "+name+"\n\nYour login is "+username+"\n\nYou may login with your password "+password+"\n\nTY!",
+					"swag@swag.at");
+		} catch (MessagingException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		*/
+		
+		System.out.println("\n\n\n\n\n========================================================\n\n"+
+				"NEW USER: "+username+"\nPassword: "+password+"\nSalt: "+salt+"\n\n\n" +
+				"========================================================\n\n\n\n");
 		
 		newUser.setPassword(Utils.md5(Utils.md5(password)+salt));
 		newUser.setSalt(salt);
@@ -142,7 +166,7 @@ public class Authentication implements Serializable {
 		if (user != null) return DEBUG ? "{\"status\":\"user already authenticated\"}" : defaultError;
 		if (result.size() != 1) return DEBUG ? "{\"status\":\"user not found\"}" : defaultError;
 		
-		hashedpw += result.get(0).getSalt();
+		hashedpw = Utils.md5(hashedpw + result.get(0).getSalt());
 		
 		qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname AND u.password LIKE :pwd", User.class);
 		qry.setParameter("uname", username);

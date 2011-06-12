@@ -76,9 +76,12 @@ $.extend($.swag.menu.Login.prototype, {
 	},
 	
 	submitRegister: function(data) {
-		var formdata = $('#'+this.mainId).find('form').serializeArray();
-		console.log(formdata);
-		if (!formdata.username) {
+		var formArray = $('#'+this.mainId).find('form').serializeArray();
+		var formData = {};
+		for (var entry in formArray) {
+			formData[formArray[entry].name] = formArray[entry].value.trim();
+		}
+		if (!formData.username) {
 			alert("Please enter a username!");
 			return;
 		} else {
@@ -87,28 +90,30 @@ $.extend($.swag.menu.Login.prototype, {
 				return;
 			}
 		}
-		if (!formdata.email) {
+		if (!formData.email) {
 			alert("Please enter a email address!");
 			return;
 		}
-		if (!formdata.name) {
+		if (!formData.name) {
 			alert("Please enter your name!");
 			return;
 		}
-		if (!formdata.address) {
+		if (!formData.address) {
 			alert("Please enter your home address!");
 			return;
 		}
-		if (!formdata.timezone) {
+		if (formData.timezone == "") {
 			alert("Please select a timezone!");
 			return;
+		} else {
+			formData.timezone = formData.timezone * 1;
 		}
 		
-		$.post($.swag.Main.BASE+'/auth/register', formdata, this.registrationComplete.bind(this));
+		$.post($.swag.Main.BASE+'/auth/register', formData, this.registrationComplete.bind(this));
 	},
 	
 	registrationComplete: function(data) {
-		$(document).append('<span style="display:none" id="registrationComplete">Registration complete, please check your email for login.</span>');
+		$(document.body).append('<span style="display:none" id="registrationComplete">Registration complete, please check your email for login.</span>');
 		$('#registrationComplete').dialog($.swag.Main.DIALOG_DEFAULT, {title:'Registration complete'});
 		window.history.pushState(null, '', '#login');
 	},
