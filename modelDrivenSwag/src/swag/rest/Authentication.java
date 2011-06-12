@@ -5,6 +5,7 @@ import java.util.List;
 
 import javax.ejb.EJB;
 import javax.ejb.Stateless;
+import javax.mail.MessagingException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
@@ -19,6 +20,7 @@ import javax.ws.rs.core.Context;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import swag.Mailer;
 import swag.Utils;
 import swag.db.model.User;
 import swag.game.map.MapManager;
@@ -103,7 +105,6 @@ public class Authentication implements Serializable {
 			salt += validChars.charAt((int)Math.floor(Math.random()*validChars.length()));
 		}
 		
-		/*
 		Mailer m = new Mailer();
 		try {
 			m.postMail(
@@ -115,7 +116,6 @@ public class Authentication implements Serializable {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		*/
 		
 		System.out.println("\n\n\n\n\n========================================================\n\n"+
 				"NEW USER: "+username+"\nPassword: "+password+"\nSalt: "+salt+"\n\n\n" +
