@@ -40,8 +40,6 @@ public class Map implements Serializable {
 
 	private Set<MapSquare> partOfMapSquareSet;
 
-	private Set<User> playsOnUserSet;
-
 	@Column(nullable = false)
 	public String getName() {
 		return name;
@@ -68,18 +66,7 @@ public class Map implements Serializable {
 	public void setPartOfMapSquareSet(Set<MapSquare> varMapSquare) {
 		partOfMapSquareSet = varMapSquare;
 	}
-
-	@ManyToMany(mappedBy = "playsOnMapSet")
-	public Set<User> getPlaysOnUserSet() {
-
-		return playsOnUserSet;
-	}
-
-	public void setPlaysOnUserSet(Set<User> varUser) {
-
-		playsOnUserSet = varUser;
-	}
-
+	
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -90,9 +77,6 @@ public class Map implements Serializable {
 		Map other = (Map) obj;
 
 		if (!partOfMapSquareSet.equals(other.partOfMapSquareSet))
-			return false;
-
-		if (!playsOnUserSet.equals(other.playsOnUserSet))
 			return false;
 
 		if (name == null) {
@@ -119,10 +103,6 @@ public class Map implements Serializable {
 				* result
 				+ ((partOfMapSquareSet == null) ? 0 : partOfMapSquareSet
 						.hashCode());
-
-		result = prime * result
-				+ ((playsOnUserSet == null) ? 0 : playsOnUserSet.hashCode());
-
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 
 		result = prime * result

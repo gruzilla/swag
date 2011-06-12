@@ -9,28 +9,20 @@
 \usepackage[utf8x]{inputenc}
 
 \newcommand{\TITLE}{SWAG - Assignment 3}
-\newcommand{\AUTHOR}{
-  Philipp Raich, \emph{0404014}\\
-  Frieder Ulm, \emph{0527031}\\
-	Matthias Steinböck, \emph{0527943}\\
-	Hubert Hirsch, \emph{0625008}\\
-	Eugen Dahm, \emph{0625325} 
-}
+\newcommand{\AUTHOR}{Philipp Raich, \emph{0404014}}
+\newcommand{\AUTHORTWO}{Frieder Ulm, \emph{0527031}}
+\newcommand{\AUTHORTHREE}{Matthias Steinboeck, \emph{0527943}}
+\newcommand{\AUTHORFOUR}{Hubert Hirsch, \emph{0625008}}
+\newcommand{\AUTHORFIVE}{Eugen Dahm, \emph{0625325}}
 \newcommand{\GROUP}{swa043}
 \newcommand{\SUBJECT}{Software Architecture}
 \newcommand{\KEYWORDS}{Software Architecture, Patterns, }
-\newcommand{\MAIL}{
-\href{mailto:e0404014@student.tuwien.ac.at}
-{e0404014@student.tuwien.ac.at}\\
-\href{mailto:e0527031@student.tuwien.ac.at}
-{e0527031@student.tuwien.ac.at}\\
-\href{mailto:e0527943@student.tuwien.ac.at}
-{e0527943@student.tuwien.ac.at}\\
-\href{mailto:e0625008@student.tuwien.ac.at}
-{e0625008@student.tuwien.ac.at}\\
-\href{mailto:e0625325@student.tuwien.ac.at}
-{e0625325@student.tuwien.ac.at}
-}
+\newcommand{\MAIL}{\href{mailto:e0404014@student.tuwien.ac.at}{e0404014@student.tuwien.ac.at}}
+\newcommand{\MAILTWO}{\href{mailto:e0527031@student.tuwien.ac.at}{0527031@student.tuwien.ac.at}}
+\newcommand{\MAILTHREE}{\href{mailto:e0527943@student.tuwien.ac.at}{e0527943@student.tuwien.ac.at}}
+\newcommand{\MAILFOUR}{\href{mailto:e0625008@student.tuwien.ac.at}{e0625008@student.tuwien.ac.at}}
+\newcommand{\MAILFIVE}{\href{mailto:e0625325@student.tuwien.ac.at}{e0625325@student.tuwien.ac.at}}
+
 \newcommand{\HRule}{\rule{\linewidth}{0.25mm}}
 
 \usepackage{hyperref}
@@ -63,7 +55,6 @@
   \end{center}
 \end{figure}
 
-
 \textsc{\LARGE TU Vienna}\\[1.5cm]
 
 \textsc{\Large Software Architecture}\\[0.5cm]
@@ -76,8 +67,12 @@
 \HRule \\[1.5cm]
 
 % Author and supervisor
-\emph{Author:}\\
-\large{\AUTHOR\\}
+\emph{Authors:}\\
+\large{\AUTHORTWO, \MAILTWO\\
+\AUTHORTHREE, \MAILTHREE\\
+\AUTHORFOUR, \MAILFOUR\\
+\AUTHORFIVE, \MAILFIVE\\
+\AUTHOR, \MAIL\\}
 \vfill
 \normalsize\emph{Group:}
 \large\textbf{\GROUP}\\
@@ -91,13 +86,21 @@
 
 \end{titlepage}
 
+\tableofcontents
+
+\clearpage
+
 \section{Use Cases}
 
-\begin{tabular}[t]{|l|l|l|}
+The following Use Cases where identified and implemented
+
+\begin{tabular}[t]{|l|l|p{7cm}|}
 \hline
 \textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Create User Account}}\\
 \hline
 Goal in Context	&	\multicolumn{2}{|l|}{User can create a account}\\
+\hline
+Additional Notes	&	\multicolumn{2}{|p{10cm}|}{Starting base is initialized, user gets an e-mail with his generated password}\\
 \hline
 \end{tabular}\\
 
@@ -106,6 +109,18 @@ Goal in Context	&	\multicolumn{2}{|l|}{User can create a account}\\
 \textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Delete User Account}}\\
 \hline
 Goal in Context	&	\multicolumn{2}{|l|}{User can delete his account}\\
+\hline
+Additional Notes	&	\multicolumn{2}{|l|}{Bases are abandoned and can be taken by other players}\\
+\hline
+\end{tabular}\\
+
+\begin{tabular}[t]{|l|l|p{7cm}|}
+\hline
+\textbf{Use Case}	&	\multicolumn{2}{|p{7cm}|}{\textbf{Login/Logout}}\\
+\hline
+Goal in Context	&	\multicolumn{2}{|p{7cm}|}{User can Login/Logout on/off his account}\\
+\hline
+Additional Notes	&	\multicolumn{2}{|p{10cm}|}{Game State must be saved correctly until next Login, while the game continues and already taken actions continue}\\
 \hline
 \end{tabular}\\
 
@@ -122,14 +137,6 @@ Goal in Context	&	\multicolumn{2}{|l|}{User can send ingame messages to other us
 \textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Receive Ingame Message}}\\
 \hline
 Goal in Context	&	\multicolumn{2}{|l|}{User can receive ingame messages from other users}\\
-\hline
-\end{tabular}\\
-
-\begin{tabular}[t]{|l|l|l|}
-\hline
-\textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Create Map}}\\
-\hline
-Goal in Context	&	\multicolumn{2}{|l|}{User can create a map to play on}\\
 \hline
 \end{tabular}\\
 
@@ -159,6 +166,14 @@ Goal in Context	&	\multicolumn{2}{|l|}{User can upgrade his existing buildings}\
 
 \begin{tabular}[t]{|l|l|l|}
 \hline
+\textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Navigate Maps}}\\
+\hline
+Goal in Context	&	\multicolumn{2}{|l|}{User can navigate through existing maps}\\
+\hline
+\end{tabular}\\
+
+\begin{tabular}[t]{|l|l|l|}
+\hline
 \textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Build Troops}}\\
 \hline
 Goal in Context	&	\multicolumn{2}{|l|}{User can build troops}\\
@@ -167,9 +182,19 @@ Goal in Context	&	\multicolumn{2}{|l|}{User can build troops}\\
 
 \begin{tabular}[t]{|l|l|l|}
 \hline
-\textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Move Troops}}\\
+\textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Form Squad}}\\
 \hline
-Goal in Context	&	\multicolumn{2}{|l|}{User can move his troops}\\
+Goal in Context	&	\multicolumn{2}{|l|}{User can form squads with built troops}\\
+\hline
+\end{tabular}\\
+
+\begin{tabular}[t]{|l|l|l|}
+\hline
+\textbf{Use Case}	&	\multicolumn{2}{|l|}{\textbf{Move Squads}}\\
+\hline
+Goal in Context	&	\multicolumn{2}{|l|}{User can move his sqauds to other squares}\\
+\hline
+Additional Notes	&	\multicolumn{2}{|p{10cm}|}{Squares occupied by foreign squads will be attacked by moving there, the "stronger" squads win, defeated troops disappear, if only foreign buildings remain on the square, they are attacked and will dissapear, remaning resources are assigned to the attacker}\\
 \hline
 \end{tabular}\\
 
@@ -179,64 +204,106 @@ Goal in Context	&	\multicolumn{2}{|l|}{User can move his troops}\\
 
 \begin{tabular}[t]{|l|p{10cm}|}
 \hline
-\textbf{Issue}	&	Message order and reliability of delivery is of upmost importance, lots of messages estimated.\\
+\textbf{Issue}	&	The Application must be able to scale according to a unknown player count\\
 \hline
-Decision	&	Establish a Message Queue\\
+Decision & Server load is minimized through gui-rendering executed client-side (html-prefetch \& JavaScript)\\
 \hline
-Status	& Proposal\\
+Status	& Implemented\\
 \hline
 Constraints	&	None\\
 \hline
-Related Principles	&	Use proven technologies\\
+Related Principles	&	Thick Client\\
 \hline
-Related Artifacts	&	MessagingSystem\\
+Related Artifacts	&	GUI\\
 \hline
 \end{tabular}\\
 
 \begin{tabular}[t]{|l|p{10cm}|}
 \hline
-\textbf{Issue}	&	Users shall not cheat\\
+\textbf{Issue}	&	Reliable and fast communication between GUI and Business Logic to minimize overhead and loading times\\
 \hline
-Decision	&	GameLogic is established completely on server side, and all game-related actions must pass the GameLogic thus no intervention of the user that would violate the game rules is possible.\\
+Decision	&	JSON-Format mesaging between GUI (Client) and Business Logic (Server)\\
 \hline
-Status	& Proposal\\
+Status	& Implemented\\
 \hline
 Constraints	&	None\\
 \hline
-Related Principles	&	Use proven technologies\\
+Related Principles	&	Thick Client\\
 \hline
-Related Artifacts	&	GameLogic\\
+Related Artifacts	&	All GUI-related Components\\
 \hline
 \end{tabular}\\
 
 \begin{tabular}[t]{|l|p{10cm}|}
 \hline
-\textbf{Issue}	&	Users access system from different time zones, but timebase must be common/persistent\\
+\textbf{Issue}	&	The application must be extensible\\
 \hline
-Decision	&	Servertime is established and presented through the UI to the user, the servertime is the only relevant for the game logic and thus all game-based decisions/rulings.\\
+Decision & New modules and Services can easily be implemented in the exisiting structure\\
 \hline
-Status	& Proposal\\
+Status	& Implemented\\
 \hline
 Constraints	&	None\\
 \hline
-Related Principles	&	Use proven technologies\\
+Related Principles	&	Extensibility\\
 \hline
-Related Artifacts	&	GameLogic, UI\\
+Related Artifacts	&	All\\
 \hline
 \end{tabular}\\
+
+\subsection{Implementation Details}
+
+Application Server: \textbf{Glassfish 3.1}\\
+Database: \textbf{PostgreSQL 8.4}\\
+Server-Side (Business Logic): \textbf{JAVA/JSP/AJAX}\\
+Client-Side (Rendering): \textbf{JavaScript}\\
+
+The following JavaScript Libraries were used:
+\begin{itemize}
+\item jquery
+\item requirejs
+\item jquery.cookie
+\item jquery.bind
+\item jquery.ui
+\item md5
+\end{itemize}
+
 
 \clearpage
 
 \section{Component Diagram}
 
+\begin{figure}[ht!]
+  \begin{center}
+  \hspace*{-90pt}
+  \includegraphics[scale=0.60]{fig/components.png}
+  \label{fig:component_diagram}
+  \caption{SWAG Component Diagram}
+  \end{center}
+\end{figure}
 
-\section{Deployment Diagram}
+\hspace*{0pt}
 
+The component diagram may be observed in figrue~\ref{fig:component_diagram}. The main feature of the architecture is the speed that achieved by minimizing the communication between the RESTful Services at the server side and the GUI at the client side. This is achieved by prefetching HTML-content at once and loading the corresponding HTML content client side by JavaScript. The communication overhead is minimized by using JSON-formatted messages for all Services.
+
+\clearpage
+
+%\section{Deployment Diagram}
+%\clearpage
 
 \section{Database Model}
 
+\begin{figure}[ht!]
+  \begin{center}
+  \hspace*{-90pt}
+  \includegraphics[scale=0.55]{fig/database_model.png}
+  \label{fig:database_model}
+	\caption{SWAG Database Model}
+  \end{center}
+\end{figure}
 
-\bibliographystyle{IEEEbib}
-\bibliography{bibtex}
+\hspace{0pt}
+
+%\bibliographystyle{IEEEbib}
+%\bibliography{bibtex}
 
 \end{document}
