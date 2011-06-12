@@ -16,6 +16,7 @@ $.extend($.swag.menu.Chat.prototype, {
 	},
 	
 	handle: function() {
+		console.log("we handle this");
 		$('#'+$.swag.Main.CONTENT_ID).html(this.userList);
 		$('#'+$.swag.Main.CONTENT_ID).append(this.chatList);
 		$('#'+$.swag.Main.CONTENT_ID+' .user-list select').change(this.selectUser.bind(this));
@@ -24,10 +25,13 @@ $.extend($.swag.menu.Chat.prototype, {
 	
 	updateUserList: function(users) {
 		users = users.user;
+		if (!$.isArray(users)) users = [users];
 		
 		$('#'+$.swag.Main.CONTENT_ID+' .user-list select').attr('size', users.length);
 		
 		var select = $('#'+$.swag.Main.CONTENT_ID+' .user-list select')[0];
+		
+		select.options[select.options.length] = new Option("Select user", "0", true, true);
 		
 		for (var userIndex in users) {
 			var user = users[userIndex];
@@ -37,6 +41,8 @@ $.extend($.swag.menu.Chat.prototype, {
 	
 	selectUser: function(event) {
 		var chatWith = $('#'+$.swag.Main.CONTENT_ID+' .user-list select').val();
+		if (chatWith == 0) return;
+		
 		var userName = $($('#'+$.swag.Main.CONTENT_ID+' .user-list select')[0].options[
 			$('#'+$.swag.Main.CONTENT_ID+' .user-list select')[0].selectedIndex
 		]).html();

@@ -1,7 +1,7 @@
 package swag.rest;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.Consumes;
@@ -12,7 +12,7 @@ import javax.ws.rs.Produces;
 
 import swag.singletons.Chats;
 
-@Stateful
+@Stateless
 @Path("chat")
 public class Chat {
 	@PersistenceContext
