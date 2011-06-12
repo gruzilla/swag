@@ -54,10 +54,12 @@ $.extend($.swag.Menu.prototype, {
 		for (var cont in this.pointHandlers) {
 			if (cont != controller && this.pointHandlers[cont] && this.pointHandlers[cont].destruct) {
 				this.pointHandlers[cont].destruct();
-				this.pointHandlers[cont] = null;
+				//this.pointHandlers[cont] = null;
 			}
 		}
-		this.pointHandlers[controller] = new (eval("$."+controller))();
+		if (!this.pointHandlers[controller]) {
+			this.pointHandlers[controller] = new (eval("$."+controller))();
+		}
 		this.handle(controller);
 	},
 	
