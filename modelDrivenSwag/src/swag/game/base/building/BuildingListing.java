@@ -1,7 +1,6 @@
 package swag.game.base.building;
 
 import java.util.List;
-
 import javax.ejb.EJB;
 import javax.ejb.LocalBean;
 import javax.ejb.Stateful;
@@ -15,8 +14,14 @@ import javax.persistence.NamedQuery;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.servlet.http.HttpServletRequest;
+import javax.ws.rs.GET;
+import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
+import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
+import javax.ws.rs.core.MediaType;
 
+import swag.db.model.Building;
 import swag.db.model.User;
 import swag.rest.session.UserSession;
 import swag.singletons.SessionManager;
@@ -33,6 +38,8 @@ import swag.singletons.SessionManager;
  */
 
 @Stateless
+
+@Path("base")
 public class BuildingListing {
 
 	
@@ -43,8 +50,8 @@ public class BuildingListing {
 	private EntityManager em;
 	
 
-	private String queryBuildingList = "select b.creationTime, bs.positionX, bs.positionY, bu.level, bu.currentHealth, bu.maxHealth, bu.creationTime" +
-	            		" from swa_user u, swa_base b, swa_basesquare bs, swa_building bu where bu.id = bs.id and bs.id = b.id and b.id = u.id and u.id = ?" +
+	private String queryBuildingList = "select b.id, b.dtype, b.creationTime, b.currentHealth, b.level, b.maxhealth, b.builtonbasesquare_id" +
+	            		" from swa_base b, swa_basesquare bs, swa_building bu where bu.builtonbasesquare_id = bs.id and bs.isonbase_id = b.id and b.id = ? AND b.belongstouser_id = ? " +
 	            		" and (Extract ( Milliseconds from CURRENT_TIMESTAMP) - 30000) > EXTRACT (MILLISECONDS from b.creationTime)";
 
 	@Context
@@ -58,13 +65,18 @@ public class BuildingListing {
         // TODO Auto-generated constructor stub
     }
     
-    public List listUserBuildings() {
+    @GET
+    @Path("buildings/{id}")
+    @Produces(MediaType.APPLICATION_JSON)
+    public List listUserBuildings(@PathParam("id") Integer baseId) {
     User user = manager.getSession(request).getUser();
 
    // Query query = em.createNamedQuery("listBuildings").setParameter(1, user.getId());
     Query createdQuery = em.createNativeQuery(queryBuildingList);
-    List resultList = createdQuery.setParameter(1, user.getId()).getResultList();
-    return resultList;
+    createdQuery.setParameter(1, baseId);
+    createdQuery.setParameter(2, user.getId());
+    
+    return ((List<Building>)createdQuery.getResultList());
     }
 
 }
