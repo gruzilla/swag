@@ -11,6 +11,8 @@
 *.log
 *.out
 *.toc
+# apple fuck
+*.DS_Store
 
 # unneccessary directories
 modelDrivenSwag/bin
