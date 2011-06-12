@@ -6,7 +6,6 @@ import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.servlet.http.HttpServletRequest;
-import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 
 import swag.db.model.User;
@@ -22,15 +21,11 @@ public class UserSession implements Serializable {
 	@PersistenceContext
 	EntityManager em;
 	
-	@Context
-	HttpServletRequest servletRequest;
-	
 	private User user;
 	
 	public UserSession() {
 		Cookie sessionId = Cookie.valueOf("JSESSIONID");
-		System.out.println("we have a sessionid: "+sessionId.getValue()+"\n"+
-				"request: "+(servletRequest==null));
+		System.out.println("we have a sessionid: "+sessionId.getValue()+"\n");
 		//Response.seeOther(new URI("/"));
 	}
 	
