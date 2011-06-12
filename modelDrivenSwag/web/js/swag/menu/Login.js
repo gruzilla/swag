@@ -149,8 +149,9 @@ $.extend($.swag.menu.Login.prototype, {
 	 * null means user is not found, pw is wrong or an exception was thrown
 	 */
 	checkResult: function(data) {
-		if (data.id) {
-			sessionStorage.setItem("authenticated", data);
+		if (data.sessionId) {
+			$.cookie("sessionId", data.sessionId);
+			sessionStorage.setItem("authenticated", data.sessionId);
 			window.location.reload();
 		} else {
 			$('#'+$.swag.Main.CONTENT_ID+" .error").show();

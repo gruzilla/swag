@@ -3,17 +3,18 @@ package swag.rest;
 import java.io.Serializable;
 import java.util.List;
 
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
+import javax.ejb.EJB;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
+import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
+import javax.ws.rs.core.Context;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -22,9 +23,9 @@ import swag.Utils;
 import swag.db.model.User;
 import swag.game.map.MapManager;
 import swag.rest.session.UserSession;
+import swag.singletons.SessionManager;
 
-@Stateful
-@SessionScoped
+@Stateless
 @Path("auth")
 public class Authentication implements Serializable {
 	/**
@@ -36,11 +37,11 @@ public class Authentication implements Serializable {
 	@PersistenceContext
 	private EntityManager em;
 
-	@Inject
-	private UserSession session;
+	@EJB
+	private SessionManager sessionManager;
 	
-	private User user;
-	
+	@Context
+	private HttpServletRequest request;
 	
 	/**
 	 * Default constructor. 
@@ -56,7 +57,9 @@ public class Authentication implements Serializable {
 		JSONObject message = new JSONObject();
 		
 		try {
-			message.put("status", user != null);
+			UserSession session = sessionManager.getSession(request);
+			if (session == null) message.put("status", false);
+			else message.put("status",  session.getUser() != null);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
@@ -151,11 +154,10 @@ public class Authentication implements Serializable {
 	 */
 	@POST @Path("login")
 	@Produces("application/json")
-	public Object login(@FormParam("username") String username, @FormParam("hashed") String hashedpw) {
+	public String login(@FormParam("username") String username, @FormParam("hashed") String hashedpw) {
 		
 		String defaultError = "{\"status\":\"error\"}";
 		
-		if (session == null) return DEBUG ? "{\"status\":\"session is null\"}" : defaultError;
 		if (em == null) return DEBUG ? "{\"status\":\"em is null\"}" : defaultError;
 		
 		TypedQuery<User> qry = em.createQuery("SELECT u FROM swa_user u WHERE u.username LIKE :uname", User.class);
@@ -163,7 +165,6 @@ public class Authentication implements Serializable {
 		List<User> result = qry.getResultList();
 		
 		
-		if (user != null) return DEBUG ? "{\"status\":\"user already authenticated\"}" : defaultError;
 		if (result.size() != 1) return DEBUG ? "{\"status\":\"user not found\"}" : defaultError;
 		
 		hashedpw = Utils.md5(hashedpw + result.get(0).getSalt());
@@ -174,8 +175,21 @@ public class Authentication implements Serializable {
 		result = qry.getResultList();
 		
 		if (result.size() == 1) {
-			user = result.get(0);
-			return result.get(0);
+			User user = result.get(0);
+			JSONObject response = new JSONObject();
+			
+			UserSession session = sessionManager.createSession();
+			session.setUser(user);
+			
+			System.out.println("assigning user "+user.getUsername()+" to session "+(session==null?"EMPTY":"NOT null"));
+			
+			try {
+				response.put("sessionId", session.getSessionId());
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			
+			return response.toString();
 		} else {
 			return DEBUG ? "{\"status\":\"not found with pw\"}" : defaultError;
 		}

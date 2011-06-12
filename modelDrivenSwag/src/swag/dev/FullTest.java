@@ -1,9 +1,7 @@
 package swag.dev;
 
 import javax.ejb.EJB;
-import javax.ejb.Stateful;
-import javax.enterprise.context.SessionScoped;
-import javax.inject.Inject;
+import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceContextType;
@@ -15,22 +13,26 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.Cookie;
 
-import swag.rest.session.UserSession;
 import swag.singletons.Chats;
+import swag.singletons.SessionManager;
 
+@Stateless
 @Path("full")
 public class FullTest {
 	
 	@PersistenceContext(type=PersistenceContextType.EXTENDED)
 	EntityManager em;
 	
-	@Context
-	HttpServletRequest request;
-	
 	@EJB
 	Chats chats;
 	
+	@EJB
+	SessionManager manager;
+	
 	Integer beanCounter = 0;
+
+	@Context
+	private HttpServletRequest request;
 	
 	public FullTest() {
 		System.out.println("full test instanciated");
@@ -48,7 +50,7 @@ public class FullTest {
 		return "amount: "+wsContext.getMessageContext().get("counter");
 		*/
 		return "normaL amount: "+beanCounter+"\n"+
-			(request==null?"reqNULL":"YYEEEEE:"+request.getCookies())+"\n"+
+			(manager==null?"reqNULL":"YYEEEEE: "+(manager.getSession(request)==null?"session is null":"SEEESSSSSION!!"))+"\n"+
 			(em==null?"emnull":"emexists")+"\n"+
 			(rofl==null?"sessionId null":"cookie: "+rofl)+"\n"+
 			"via cookie class: "+Cookie.valueOf("sessionId").getValue()+"\n"+
@@ -72,7 +74,7 @@ public class FullTest {
 		*/
 		beanCounter++;
 		return "incamount: "+beanCounter+"\n"+
-		(request==null?"reqNULL":"YYEEEEE:"+request.getCookies())+"\n"+
+		(manager==null?"reqNULL":"YYEEEEE: "+(manager.getSession(request)==null?"session is null":"SEEESSSSSION!!"))+"\n"+
 		(rofl==null?"sessionId null":"cookie: "+rofl)+"\n"+
 		"via cookie class: "+Cookie.valueOf("sessionId").getValue()+"\n"+
 		(em==null?"emnull":"em exists")+"\n";
@@ -95,7 +97,7 @@ public class FullTest {
 		*/
 		beanCounter--;
 		return "decamount: "+beanCounter+"\n"+
-		(request==null?"reqNULL":"YYEEEEE:"+request.getCookies())+"\n"+
+		(manager==null?"reqNULL":"YYEEEEE: "+(manager.getSession(request)==null?"session is null":"SEEESSSSSION!!"))+"\n"+
 		(em==null?"emnull":"em exists")+"\n";
 	}
 }
