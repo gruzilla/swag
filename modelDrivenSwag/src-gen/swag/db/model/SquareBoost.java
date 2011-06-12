@@ -24,12 +24,8 @@ public class SquareBoost implements Serializable {
 		super();
 		this.id = id;
 		this.level = level;
-		this.boostedByBaseSquare = boostedByBaseSquare;
-		this.boostedByMapSquare = boostedByMapSquare;
 		this.boostsResources = boostsResources;
 	}
-
-
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -43,10 +39,6 @@ public class SquareBoost implements Serializable {
 
 	private Double level;
 
-	private BaseSquare boostedByBaseSquare;
-
-	private MapSquare boostedByMapSquare;
-
 	private Resources boostsResources;
 
 	@Column(nullable = false)
@@ -57,25 +49,7 @@ public class SquareBoost implements Serializable {
 	public void setLevel(Double level) {
 		this.level = level;
 	}
-
-	@OneToOne(mappedBy = "boostedBySquareBoost")
-	public BaseSquare getBoostedByBaseSquare() {
-		return boostedByBaseSquare;
-	}
-
-	public void setBoostedByBaseSquare(BaseSquare varBaseSquare) {
-		boostedByBaseSquare = varBaseSquare;
-	}
-
-	@OneToOne(mappedBy = "boostedBySquareBoost")
-	public MapSquare getBoostedByMapSquare() {
-		return boostedByMapSquare;
-	}
-
-	public void setBoostedByMapSquare(MapSquare varMapSquare) {
-		boostedByMapSquare = varMapSquare;
-	}
-
+	
 	@ManyToOne(optional = true)
 	public Resources getBoostsResources() {
 		return boostsResources;
@@ -93,13 +67,6 @@ public class SquareBoost implements Serializable {
 			return false;
 
 		SquareBoost other = (SquareBoost) obj;
-
-		if (!boostedByBaseSquare.equals(other.boostedByBaseSquare))
-			return false;
-
-		if (!boostedByMapSquare.equals(other.boostedByMapSquare))
-			return false;
-
 		if (!boostsResources.equals(other.boostsResources))
 			return false;
 
@@ -116,16 +83,6 @@ public class SquareBoost implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-
-		result = prime
-				* result
-				+ ((boostedByBaseSquare == null) ? 0 : boostedByBaseSquare
-						.hashCode());
-
-		result = prime
-				* result
-				+ ((boostedByMapSquare == null) ? 0 : boostedByMapSquare
-						.hashCode());
 
 		result = prime * result
 				+ ((boostsResources == null) ? 0 : boostsResources.hashCode());

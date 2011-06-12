@@ -17,7 +17,10 @@ import org.json.JSONObject;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.json.JettisonMappedXmlDriver;
 
+import swag.db.model.Base;
+import swag.db.model.MapObject;
 import swag.db.model.MapSquare;
+import swag.db.model.Squad;
 
 @Stateless
 @Path("map")
@@ -25,10 +28,20 @@ public class Map {
 	@PersistenceContext
 	private EntityManager em;
 	
-	//@Produces("application/json")
+	@Produces("application/json")
 	@GET
 	@Path("query")
 	public String query() {
+		return query_backend();
+	}
+	
+	@GET
+	@Path("queryt")
+	public String queryt() {
+		return query_backend();
+	}
+	
+	private String query_backend() {
 		TypedQuery<swag.db.model.Map> q = em.createQuery("SELECT s FROM swa_map s", swag.db.model.Map.class);
 		List<swag.db.model.Map> maps = q.getResultList();
 		swag.db.model.Map map = maps.get(0);
@@ -51,16 +64,23 @@ public class Map {
 			}
 			
 			try {
-				jso.append("boosted_resource", mapsqr.getBoostedBySquareBoost().getBoostsResources().getName());
+				jso.append("resource", mapsqr.getBoostedBySquareBoost().getBoostsResources().getName());
 			}
 			catch(Throwable e) {
-				//no booster
+				//none
 			}
 			try {
-				jso.append("boosted_resource", mapsqr.getIsOnSquadSet().iterator().next());
+				for(MapObject mo : mapsqr.getIsOnMapObjectSet()) {
+					if(mo instanceof Base) {
+						jso.append("base", ((Base)mo).getBelongsToUser().getName());
+					}
+					else if(mo instanceof Squad) {
+						jso.append("squad", ((Squad)mo).getId());
+					}
+				}
 			}
 			catch(Throwable e) {
-				//no booster
+				//none
 			}
 			jsa.put(jso);
 		}

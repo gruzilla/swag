@@ -2,6 +2,7 @@ package swag.db.model;
 
 import javax.xml.bind.annotation.*;
 import javax.persistence.*;
+
 import java.util.Set;
 import java.io.Serializable;
 import java.util.Date;
@@ -10,6 +11,9 @@ import java.util.Date;
 @Entity(name = "swa_baseSquare")
 public class BaseSquare implements Serializable {
 
+	private static final long serialVersionUID = 6189193686682220456L;
+
+	private Integer id;
 	
 	public BaseSquare() {
 		super();
@@ -26,11 +30,6 @@ public class BaseSquare implements Serializable {
 		this.builtOnBuilding = builtOnBuilding;
 		this.isOnBase = isOnBase;
 	}
-
-
-	private static final long serialVersionUID = 6189193686682220456L;
-
-	private Integer id;
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.TABLE)
@@ -71,6 +70,7 @@ public class BaseSquare implements Serializable {
 	}
 
 	@OneToOne(optional = true)
+	@JoinColumn(name="BOOST_ID") 
 	public SquareBoost getBoostedBySquareBoost() {
 		return boostedBySquareBoost;
 	}
@@ -132,6 +132,27 @@ public class BaseSquare implements Serializable {
 
 	@Override
 	public int hashCode() {
-		return super.hashCode();
+		final int prime = 31;
+		int result = 1;
+
+		result = prime
+				* result
+				+ ((boostedBySquareBoost == null) ? 0 : boostedBySquareBoost
+						.hashCode());
+
+		result = prime * result
+				+ ((builtOnBuilding == null) ? 0 : builtOnBuilding.hashCode());
+
+		result = prime * result
+				+ ((isOnBase == null) ? 0 : isOnBase.hashCode());
+
+		result = prime * result
+				+ ((positionX == null) ? 0 : positionX.hashCode());
+
+		result = prime * result
+				+ ((positionY == null) ? 0 : positionY.hashCode());
+
+		return result;
 	}
+
 }
