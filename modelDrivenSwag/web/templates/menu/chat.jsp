@@ -6,20 +6,15 @@
 	</div>
 	
 	<!-- active chats list -->
-	<div class="chat-list">
+	<div class="chat-list" style="float:left; width: 600px">
 		<ul class="tab-selectors">
 		</ul>
 	</div>
 	
 	<!-- chat template -->
-	<div class="chat-template">
-		<textarea rows="15" cols="50"></textarea>
-	</div>
-	
-	<div class="chat-form">
-	<form name="chat">
+	<div class="chat">
+		<textarea rows="5" cols="50"></textarea><br />
 		<input type="text" name="message" />
 		<button class="send">Send message</button>
-	</form>
 	</div>
 </div>

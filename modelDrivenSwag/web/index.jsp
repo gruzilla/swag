@@ -16,6 +16,6 @@
     <%@ include file="elements/menu.jsp" %>
     <%@ include file="elements/iewarning.jsp" %>
     
-    <div id="content"></div>
+    <div id="content" style="width:800px"></div>
 </body>
 </html> 

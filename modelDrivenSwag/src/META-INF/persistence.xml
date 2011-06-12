@@ -5,7 +5,7 @@
   <persistence-unit name="swag" transaction-type="JTA">
     <jta-data-source>swag</jta-data-source>
     <properties>
-      <property name="toplink.ddl-generation" value="create-tables"/>
+      <property name="toplink.ddl-generation" value="drop-and-create-tables"/>
       <property name="toplink.ddl-generation.output-mode" value="both"/>
       <property name="toplink.logging.level" value="FINE"/>
       <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>

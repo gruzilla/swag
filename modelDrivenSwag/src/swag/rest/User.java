@@ -2,6 +2,7 @@ package swag.rest;
 
 import java.util.List;
 
+import javax.ejb.EJB;
 import javax.ejb.Stateful;
 import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
@@ -12,12 +13,17 @@ import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import swag.rest.session.UserSession;
+
 @Stateful
 @SessionScoped
 @Path("user")
 public class User {
 	@PersistenceContext
 	private EntityManager em;
+	
+	@EJB
+	UserSession session;
 	
 	@GET
 	@Path("list")
@@ -26,8 +32,11 @@ public class User {
 		TypedQuery<swag.db.model.User> qry = em.createQuery("SELECT u FROM swa_user u", swag.db.model.User.class);
 		List<swag.db.model.User> result = qry.getResultList();
 		
-		System.out.println("selected all users: "+result.size());
+		result.remove(session.getUser());
+		
+		System.out.println("selected all users: "+result.size()+" session: "+(session==null ? " nothing ":session.getUser()));
 		
 		return result;
 	}
 }
+
