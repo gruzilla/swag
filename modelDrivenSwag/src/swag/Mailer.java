@@ -9,7 +9,7 @@ public class Mailer {
 	
 	private static final String SMTP_HOST_NAME = "smtp.gmail.com";
 	private static final String SMTP_HOST_PORT = "465";
-	private static final String SMTP_AUTH_USER = "p.raich@aon.at";
+	private static final String SMTP_AUTH_USER = "swag.043.11@gmail.com";
 	private static final String SMTP_AUTH_PWD  = "whattheduck";
 	private static final boolean SMTP_AUTH_SET = true;
 	private static final boolean SMTP_TLS_SET = true;
