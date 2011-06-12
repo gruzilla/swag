@@ -42,17 +42,11 @@ public class Map {
 	}
 	
 	private String query_backend() {
-		TypedQuery<swag.db.model.Map> q = em.createQuery("SELECT s FROM swa_map s", swag.db.model.Map.class);
-		List<swag.db.model.Map> maps = q.getResultList();
-		swag.db.model.Map map = maps.get(0);
-
-		//XStream xstream = new XStream(new JettisonMappedXmlDriver());
-		//xstream.setMode(XStream.XPATH_ABSOLUTE_REFERENCES);
-		//xstream.alias("square", MapSquare.class);
+		TypedQuery<MapSquare> q = em.createQuery("SELECT s FROM swa_mapSquare s WHERE s.partOfMap.id = 1000", MapSquare.class);
 		
 		JSONArray jsa = new JSONArray();
 		String s = "";
-		for(MapSquare mapsqr : map.getPartOfMapSquareSet()) {
+		for(MapSquare mapsqr : q.getResultList()) {
 			JSONObject jso = new JSONObject();
 			try {
 				jso.append("x", mapsqr.getPositionX());
@@ -73,6 +67,7 @@ public class Map {
 				for(MapObject mo : mapsqr.getIsOnMapObjectSet()) {
 					if(mo instanceof Base) {
 						jso.append("base", ((Base)mo).getBelongsToUser().getName());
+						jso.append("baseid", ((Base)mo).getId());
 					}
 					else if(mo instanceof Squad) {
 						jso.append("squad", ((Squad)mo).getId());

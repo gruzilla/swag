@@ -88,27 +88,23 @@ public class Base extends MapObject implements Serializable {
 		if (belongsToUser == null) {
 			if (other.belongsToUser != null)
 				return false;
-		}
-		else if (!belongsToUser.equals(other.belongsToUser))
+		} else if (!belongsToUser.equals(other.belongsToUser))
 			return false;
 		if (creationTime == null) {
 			if (other.creationTime != null)
 				return false;
-		}
-		else if (!creationTime.equals(other.creationTime))
+		} else if (!creationTime.equals(other.creationTime))
 			return false;
 		if (isOnBaseSquareSet == null) {
 			if (other.isOnBaseSquareSet != null)
 				return false;
-		}
-		else if (!isOnBaseSquareSet.equals(other.isOnBaseSquareSet))
+		} else if (!isOnBaseSquareSet.equals(other.isOnBaseSquareSet))
 			return false;
 		if (isStarterBase == null) {
 			if (other.isStarterBase != null)
 				return false;
-		}
-		else if (!isStarterBase.equals(other.isStarterBase))
+		} else if (!isStarterBase.equals(other.isStarterBase))
 			return false;
 		return true;
-	}	
+	}
 }

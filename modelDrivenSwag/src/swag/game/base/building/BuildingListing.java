@@ -50,9 +50,8 @@ public class BuildingListing {
 	private EntityManager em;
 	
 
-	private String queryBuildingList = "select b.id, b.dtype, b.creationTime, b.currentHealth, b.level, b.maxhealth, b.builtonbasesquare_id" +
-	            		" from swa_base b, swa_basesquare bs, swa_building bu where bu.builtonbasesquare_id = bs.id and bs.isonbase_id = b.id and b.id = ? AND b.belongstouser_id = ? " +
-	            		" and (Extract ( Milliseconds from CURRENT_TIMESTAMP) - 30000) > EXTRACT (MILLISECONDS from b.creationTime)";
+	private String queryBuildingList = "select bu.id, bu.dtype, bu.creationTime, bu.currentHealth, bu.level, bu.maxhealth, bu.builtonbasesquare_id" +
+	            		" from swa_base b, swa_basesquare bs, swa_building bu where bu.builtonbasesquare_id = bs.id and bs.isonbase_id = b.id and b.id = ? AND b.belongstouser_id = ?";
 
 	@Context
 	private HttpServletRequest request;
@@ -75,6 +74,8 @@ public class BuildingListing {
     Query createdQuery = em.createNativeQuery(queryBuildingList);
     createdQuery.setParameter(1, baseId);
     createdQuery.setParameter(2, user.getId());
+    
+    System.out.println("buildings queried " + createdQuery.getResultList().size());
     
     return ((List<Building>)createdQuery.getResultList());
     }

@@ -19,7 +19,7 @@ public class QueryTest {
 	@GET
 	@Path("buildingQueryTest")
 	public String testQueries() {
-		listing.listUserBuildings();
+//		listing.listUserBuildings();
 		return listing.toString();
 	}
 }
