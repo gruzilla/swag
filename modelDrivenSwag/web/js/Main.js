@@ -1,4 +1,4 @@
-require(["jquery.bind", "jquery.ui", "md5"], function() {
+require(["jquery.bind", "jquery.ui", "jquery.cookie", "md5"], function() {
 
 	$.swag = {};
 	
