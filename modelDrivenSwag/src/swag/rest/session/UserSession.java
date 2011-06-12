@@ -3,6 +3,7 @@ package swag.rest.session;
 import java.io.Serializable;
 
 import javax.ejb.Stateful;
+import javax.enterprise.context.SessionScoped;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.ws.rs.core.Cookie;
@@ -10,6 +11,7 @@ import javax.ws.rs.core.Cookie;
 import swag.db.model.User;
 
 @Stateful
+@SessionScoped
 public class UserSession implements Serializable {
 
 	/**
