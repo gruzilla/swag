@@ -5,7 +5,6 @@ import java.io.Serializable;
 import javax.ejb.Stateful;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.servlet.http.HttpServletRequest;
 import javax.ws.rs.core.Cookie;
 
 import swag.db.model.User;
