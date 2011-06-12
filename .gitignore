@@ -6,9 +6,11 @@
 *.exe
 *.o
 *.so
+# latex
 *.aux
 *.log
 *.out
+*.toc
 
 # unneccessary directories
 modelDrivenSwag/bin

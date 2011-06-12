@@ -254,7 +254,8 @@ Related Artifacts	&	All\\
 
 Application Server: \textbf{Glassfish 3.1}\\
 Database: \textbf{PostgreSQL 8.4}\\
-Client-Side (Rendering): \textbf{AJAX}\\
+Server-Side (Business Logic): \textbf{JAVA/JSP/AJAX}\\
+Client-Side (Rendering): \textbf{JavaScript}\\
 
 The following JavaScript Libraries were used:
 \begin{itemize}
@@ -281,6 +282,8 @@ The following JavaScript Libraries were used:
 \end{figure}
 
 \hspace*{0pt}
+
+The component diagram may be observed in figrue~\ref{fig:component_diagram}. The main feature of the architecture is the speed that achieved by minimizing the communication between the RESTful Services at the server side and the GUI at the client side. This is achieved by prefetching HTML-content at once and loading the corresponding HTML content client side by JavaScript. The communication overhead is minimized by using JSON-formatted messages for all Services.
 
 \clearpage
 
