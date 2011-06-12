@@ -9,9 +9,6 @@ import java.util.Date;
 @XmlRootElement
 @Entity(name = "swa_resources")
 public class Resources implements Serializable {
-
-	
-	
 	private static final long serialVersionUID = 7009138202323899272L;
 	
 	public Resources() {
@@ -41,14 +38,6 @@ public class Resources implements Serializable {
 
 	private Boolean defaultResource;
 
-	private Set<SquareBoost> boostsSquareBoostSet;
-
-	private Set<ResourceBuilding> producesResourceBuildingSet;
-
-	private Set<UserResourceCount> hasUserSet;
-
-	private Set<TroopCost> costsTroopTypesSet;
-
 	@Column(nullable = false)
 	public String getName() {
 		return name;
@@ -67,47 +56,6 @@ public class Resources implements Serializable {
 		this.defaultResource = defaultResource;
 	}
 
-	@OneToMany(mappedBy = "boostsResources")
-	public Set<SquareBoost> getBoostsSquareBoostSet() {
-		return boostsSquareBoostSet;
-	}
-
-	public void setBoostsSquareBoostSet(Set<SquareBoost> varSquareBoost) {
-		boostsSquareBoostSet = varSquareBoost;
-	}
-
-	@OneToMany(mappedBy = "producesResources")
-	public Set<ResourceBuilding> getProducesResourceBuildingSet() {
-		return producesResourceBuildingSet;
-	}
-
-	public void setProducesResourceBuildingSet(
-			Set<ResourceBuilding> varResourceBuilding) {
-		producesResourceBuildingSet = varResourceBuilding;
-	}
-
-	@OneToMany(mappedBy = "hasResources")
-	public Set<UserResourceCount> getHasUserSet() {
-
-		return hasUserSet;
-	}
-
-	public void setHasUserSet(Set<UserResourceCount> varUser) {
-
-		hasUserSet = varUser;
-	}
-
-	@OneToMany(mappedBy = "costsResources")
-	public Set<TroopCost> getCostsTroopTypesSet() {
-
-		return costsTroopTypesSet;
-	}
-
-	public void setCostsTroopTypesSet(Set<TroopCost> varTroopTypes) {
-
-		costsTroopTypesSet = varTroopTypes;
-	}
-
 	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
@@ -116,20 +64,7 @@ public class Resources implements Serializable {
 			return false;
 
 		Resources other = (Resources) obj;
-
-		if (!boostsSquareBoostSet.equals(other.boostsSquareBoostSet))
-			return false;
-
-		if (!producesResourceBuildingSet
-				.equals(other.producesResourceBuildingSet))
-			return false;
-
-		if (!hasUserSet.equals(other.hasUserSet))
-			return false;
-
-		if (!costsTroopTypesSet.equals(other.costsTroopTypesSet))
-			return false;
-
+		
 		if (name == null) {
 			if (other.name != null)
 				return false;
@@ -149,26 +84,6 @@ public class Resources implements Serializable {
 	public int hashCode() {
 		final int prime = 31;
 		int result = 1;
-
-		result = prime
-				* result
-				+ ((boostsSquareBoostSet == null) ? 0 : boostsSquareBoostSet
-						.hashCode());
-
-		result = prime
-				* result
-				+ ((producesResourceBuildingSet == null)
-						? 0
-						: producesResourceBuildingSet.hashCode());
-
-		result = prime * result
-				+ ((hasUserSet == null) ? 0 : hasUserSet.hashCode());
-
-		result = prime
-				* result
-				+ ((costsTroopTypesSet == null) ? 0 : costsTroopTypesSet
-						.hashCode());
-
 		result = prime * result + ((name == null) ? 0 : name.hashCode());
 
 		result = prime * result

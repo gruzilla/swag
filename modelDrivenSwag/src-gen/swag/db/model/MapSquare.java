@@ -77,7 +77,6 @@ public class MapSquare implements Serializable {
 	}
 
 	@OneToOne(optional = true)
-	@JoinColumn(name="BOOST_ID") 
 	public SquareBoost getBoostedBySquareBoost() {
 		return boostedBySquareBoost;
 	}

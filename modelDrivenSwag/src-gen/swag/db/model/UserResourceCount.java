@@ -2,12 +2,15 @@ package swag.db.model;
 
 import javax.xml.bind.annotation.*;
 import javax.persistence.*;
+
+import com.sun.xml.bind.CycleRecoverable;
+
 import java.util.Set;
 import java.util.Date;
 
 @XmlRootElement
 @Entity(name = "swa_userResourceCount")
-public class UserResourceCount {
+public class UserResourceCount implements CycleRecoverable {
 
 	private UserResourceCountPK userResourceCountPK;
 	private User hasUser;
@@ -65,6 +68,13 @@ public class UserResourceCount {
 
 	public void setHasResources(Resources rofl) {
 		this.hasResources = rofl;
+	}
+
+	@Override
+	public Object onCycleDetected(Context arg0) {
+		UserResourceCount n = new UserResourceCount();
+		n.setUserResourceCountPK(this.getUserResourceCountPK());
+		return n;
 	}
 
 }

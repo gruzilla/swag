@@ -1,5 +1,6 @@
 package swag.db.model;
 
+import com.sun.xml.bind.CycleRecoverable;
 import javax.xml.bind.annotation.*;
 import javax.persistence.*;
 import java.util.Set;
@@ -8,7 +9,7 @@ import java.util.Date;
 
 @XmlRootElement
 @Entity(name = "swa_user")
-public class User implements Serializable {
+public class User implements Serializable, CycleRecoverable  {
 
 	private static final long serialVersionUID = 8763303792339334944L;
 
@@ -59,12 +60,6 @@ public class User implements Serializable {
 	private Set<Message> toMessageSet;
 
 	private Set<UserResourceCount> hasResourcesSet;
-
-	private Set<Squad> belongsToSquadSet;
-
-	private Set<Map> playsOnMapSet;
-
-	private Set<Base> belongsToBaseSet;
 
 	@Column(nullable = false)
 	public String getUsername() {
@@ -155,38 +150,7 @@ public class User implements Serializable {
 	}
 
 	public void setHasResourcesSet(Set<UserResourceCount> varResources) {
-
 		hasResourcesSet = varResources;
-	}
-
-	@OneToMany(mappedBy = "belongsToUser")
-	public Set<Squad> getBelongsToSquadSet() {
-		return belongsToSquadSet;
-	}
-
-	public void setBelongsToSquadSet(Set<Squad> varSquad) {
-		belongsToSquadSet = varSquad;
-	}
-
-	@ManyToMany
-	@JoinTable(name = "User_Map_association")
-	public Set<Map> getPlaysOnMapSet() {
-
-		return playsOnMapSet;
-	}
-
-	public void setPlaysOnMapSet(Set<Map> varMap) {
-
-		playsOnMapSet = varMap;
-	}
-
-	@OneToMany(mappedBy = "belongsToUser")
-	public Set<Base> getBelongsToBaseSet() {
-		return belongsToBaseSet;
-	}
-
-	public void setBelongsToBaseSet(Set<Base> varBase) {
-		belongsToBaseSet = varBase;
 	}
 
 	@Override
@@ -205,15 +169,6 @@ public class User implements Serializable {
 			return false;
 
 		if (!hasResourcesSet.equals(other.hasResourcesSet))
-			return false;
-
-		if (!belongsToSquadSet.equals(other.belongsToSquadSet))
-			return false;
-
-		if (!playsOnMapSet.equals(other.playsOnMapSet))
-			return false;
-
-		if (!belongsToBaseSet.equals(other.belongsToBaseSet))
 			return false;
 
 		if (username == null) {
@@ -275,18 +230,6 @@ public class User implements Serializable {
 		result = prime * result
 				+ ((hasResourcesSet == null) ? 0 : hasResourcesSet.hashCode());
 
-		result = prime
-				* result
-				+ ((belongsToSquadSet == null) ? 0 : belongsToSquadSet
-						.hashCode());
-
-		result = prime * result
-				+ ((playsOnMapSet == null) ? 0 : playsOnMapSet.hashCode());
-
-		result = prime
-				* result
-				+ ((belongsToBaseSet == null) ? 0 : belongsToBaseSet.hashCode());
-
 		result = prime * result
 				+ ((username == null) ? 0 : username.hashCode());
 
@@ -307,4 +250,12 @@ public class User implements Serializable {
 		return result;
 	}
 
+	@Override
+	public Object onCycleDetected(Context arg0) {
+		User n = new User();
+		n.setId(this.getId());
+		return n;
+	}
+
+	
 }

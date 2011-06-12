@@ -34,33 +34,4 @@ public class ResourceBuilding extends Building implements Serializable {
 	public void setProducesResources(Resources varResources) {
 		producesResources = varResources;
 	}
-
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null || getClass() != obj.getClass())
-			return false;
-
-		ResourceBuilding other = (ResourceBuilding) obj;
-
-		if (!producesResources.equals(other.producesResources))
-			return false;
-
-		return true;
-	}
-
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-
-		result = prime
-				* result
-				+ ((producesResources == null) ? 0 : producesResources
-						.hashCode());
-
-		return result;
-	}
-
 }
