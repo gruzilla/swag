@@ -66,12 +66,10 @@ $.extend($.swag.menu.Map.prototype, {
 	loadBuildings : function(result) {
 		$('#'+$.swag.Main.CONTENT_ID+' .map table').html('');
 		
-		var buildings = result.buildings;
 		$('#'+$.swag.Main.CONTENT_ID+' .map table').append('<tr><td>Buildings</td></tr>');
-		for(var i = 0; i < buildings.length; i++) {
-			var building = buildings[i];
+		for(var i = 0; i < result.length; i++) {
 			var line = '<tr><td>';
-			line += building.name;
+			line += result[i].id;
 			line += '</td></tr>';
 			$('#'+$.swag.Main.CONTENT_ID+' .map table').append(line);
 		}

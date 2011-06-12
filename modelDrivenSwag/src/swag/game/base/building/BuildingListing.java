@@ -21,6 +21,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.Context;
 import javax.ws.rs.core.MediaType;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import swag.db.model.Building;
 import swag.db.model.User;
 import swag.rest.session.UserSession;
@@ -67,7 +70,7 @@ public class BuildingListing {
     @GET
     @Path("buildings/{id}")
     @Produces(MediaType.APPLICATION_JSON)
-    public List listUserBuildings(@PathParam("id") Integer baseId) {
+    public String listUserBuildings(@PathParam("id") Integer baseId) {
     User user = manager.getSession(request).getUser();
 
    // Query query = em.createNamedQuery("listBuildings").setParameter(1, user.getId());
@@ -75,9 +78,21 @@ public class BuildingListing {
     createdQuery.setParameter(1, baseId);
     createdQuery.setParameter(2, user.getId());
     
-    System.out.println("buildings queried " + createdQuery.getResultList().size());
+    JSONArray arr = new JSONArray();
     
-    return ((List<Building>)createdQuery.getResultList());
+    for(Object o : createdQuery.getResultList()) {
+    	Object [] lol = (Object [])o;
+    	JSONObject jso = new JSONObject();
+    	try {
+    		jso.put("id", (Integer)(lol[0]));
+    	}
+    	catch(Throwable e) {
+    		e.printStackTrace();
+    	}
+    	arr.put(jso);
+    }
+    
+    return arr.toString();
     }
 
 }
